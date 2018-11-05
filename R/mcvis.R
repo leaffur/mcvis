@@ -1,35 +1,35 @@
 #' @author Chen Lin
-#' @title Visualization of collinearty
+#' @title Multi-collinearity Visualization
 #' @param Y respose numeric vector
 #' @param X design matrix
 #' @import igraph
-#' @export visualization
+#' @export mcvis
 #' @examples
 #' library(mplot)
 #' data("artificialeg")
-#' n=dim(artificialeg)[1]
 #' p=dim(artificialeg)[2]-1
-#' n1=as.matrix(rep(1,n))
-#' X=as.matrix(cbind(n1,artificialeg[,1:p]))
-#' Y=artificialeg[,p+1]
-#' visualization(Y,X)
+#' X=artificialeg[,1:p]
+#' mcvis(X)
 
-visualization <- function(Y, X, tau = 1.5, steps=1000,
-                          p=dim(X)[2]-1,
-                          col.names=colnames(X)[2:(p+1)],
+
+mcvis <- function(X, tau = 1.5, steps=1000,
+                          col.names=as.character(c(1:p)),
                           eig.max=p, vol.max=p,
-                          method="bootstrap")
+                          method="bootstrap",
+                          col.one= FALSE)
 {
   n<-dim(X)[1]
   n1<-as.matrix(rep(1,n))
-  if (length(col.names)==0) {col.names<-as.character(c(1:p))}
+  if (col.one) {p=dim(X)[2]} else {p=dim(X)[2]-1}
+  if (length(colnames(X))!=0)
+  {if (col.one) {col.names=colnames(X)[1:p]} else {col.names=colnamse(X)[2:p+1]}}
   eig.max<-min(p,eig.max)
   vol.max<-min(p,vol.max)
   #one can choose the max variables and eigenvectors he want to plot.
 
   #
-  vifd=v2=vD=matrix(0,p,steps)
-  mv2=kZ1=numeric(0)
+  vif=v2=matrix(0,p,steps)
+  mv2=numeric(0)
   if (method=="cv") {method=2}
   if (method=="bootstrap") {method=1}
 
@@ -40,30 +40,27 @@ visualization <- function(Y, X, tau = 1.5, steps=1000,
       sample(n,replace = FALSE)[1:(floor(sqrt(p*n)))]
     )
     #use bootstrap or cross-validation
-    Y.b <- Y[index.b]
+
     X.b <- X[index.b,]
-    n1<-as.matrix(rep(1,length(Y.b)))
-    b<-solve(t(X.b)%*%X.b)%*%t(X.b)%*%Y.b
-    X1<-cbind(X.b[,2:(p+1)])
+    n1<-as.matrix(rep(1,dim(X.b)[1]))
+    if (col.one) {X1<-X.b} else {X1<-cbind(X.b[,2:(p+1)])}
     X2<-X1-n1%*%colMeans(X1)
 
     s<-as.matrix(sqrt(diag(t(X2)%*%X2)))
     Z<-X2[,1]/s[1,]
     for (j in 2:p)   { Z<-as.matrix(cbind(Z,X2[,j]/s[j,])) }
-    a<-solve(t(Z)%*%Z)%*%t(Z)%*%Y.b
     #Z is the centering and standarding of X1
 
     v<-numeric(0)
     for (j in 1:p){ v[j]<-s[j,]/sqrt(sum(X.b[,j+1]^2)) }
     D<-diag(v)
-    vD[,i]<-diag(D)
     Z1<-Z%*%D
-    d<-solve(D)%*%a
     #note! I use Z*D rather than D to calculate the eigenvalue and variance inflation factors.
 
     v2[,i]<-t(eigen(crossprod(Z1,Z1))$values)
-    vifd[,i]<-1/(t(diag(solve(t(Z1)%*%Z1)))) #inverse of vif of d
+    vif[,i]<-1/(t(diag(solve(t(Z1)%*%Z1)))) #inverse of vif of d
   }
+
 
   g<-tor<-matrix(0,p,p)
   for (j in 1:p){
@@ -71,7 +68,7 @@ visualization <- function(Y, X, tau = 1.5, steps=1000,
     for (i in 1:10) {
       ji<-(i-1)*steps/10+1
       ki<-i*steps/10
-      da <- lm(v2[j,ji:ki] ~ t(vifd[,ji:ki]))
+      da <- lm(v2[j,ji:ki] ~ t(vif[,ji:ki]))
       t[,i] <- coef(da) / sqrt(diag(vcov(da))) # t-value
     }
     for (i in 2:(p+1)) {
@@ -100,7 +97,7 @@ visualization <- function(Y, X, tau = 1.5, steps=1000,
   G.text<-paste('x',or," -- ", col.names,sep="")
   val<-paste('v',1:eig.max,sep="")
   col<-paste('x',or,sep="")
-  igraph::plot(G,
+  plot(G,
        edge.color = grey(graph_attr(G,'weight')),
        vertex.size=20,
        vertex.label=c(val,col),
