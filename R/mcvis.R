@@ -15,7 +15,8 @@
 mcvis <- function(X, tau = 1.5,
                           col.names,
                           col.one= FALSE,
-                          eig.max=dim(X)[2]-col.one, vol.max=dim(X)[2]-col.one,
+                          eig.max=dim(X)[2]-col.one,
+                          vol.max=dim(X)[2]-col.one,
                           method="bootstrap"
                           )
 {
@@ -104,7 +105,7 @@ mcvis <- function(X, tau = 1.5,
        vertex.color=c("yellow","cyan")[V(G)$type+1],
        edge.width=(rep(1,length(vec))-graph_attr(G,'weight'))*10,
        layout=layout_as_bipartite,
-       main="Visualization"
+       main="mcvis"
   )
   if (vol.max>1)
   {text(x=rep(2,vol.max),y=(1:vol.max)*2/(1-vol.max)+(vol.max+1)/(vol.max-1),G.text)}
