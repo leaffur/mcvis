@@ -1,7 +1,11 @@
 #' @author Chen Lin
 #' @title Multi-collinearity Visualization
-#' @param Y respose numeric vector
-#' @param X design matrix
+#' @param X a matrix of regressors
+#' @param firstcol logical; if the first column of X is constant of ones.
+#' @param col.names the name of variables
+#' @param eig.max the maximum number of eigenvalues to be displayed on the plot
+#' @param vol.max the maximum number of variables to be displayed on the plot
+#' @param method "bootstrap" or "cv"(cross-validation); the method used to resample the data.
 #' @import igraph
 #' @export mcvis
 #' @examples
@@ -13,24 +17,23 @@
 
 
 mcvis <- function(X, tau = 1.5,
-                          col.names,
-                          col.one= FALSE,
-                          eig.max=dim(X)[2]-col.one,
-                          vol.max=dim(X)[2]-col.one,
-                          method="bootstrap"
-                          )
+                  col.names,
+                  firstcol = FALSE,
+                  eig.max=dim(X)[2]-firstcol,
+                  vol.max=dim(X)[2]-firstcol,
+                  method="bootstrap"
+                  )
 {
   n<-dim(X)[1]
   n1<-as.matrix(rep(1,n))
-  p<-dim(X)[2]-col.one
-  if (col.one) {col.names<-colnames(X)[2:(p+1)]} else {col.names<-colnames(X)}
+  p<-dim(X)[2]-firstcol
+  col.names<-colnames(X)[(2-firstcol):(p+1-firstcol)]
   eig.max<-min(p,eig.max)
   vol.max<-min(p,vol.max)
   #one can choose the max variables and eigenvectors he want to plot.
 
   #
   vif=v2=matrix(0,p,steps)
-  mv2=numeric(0)
   if (method=="cv") {method=2}
   if (method=="bootstrap") {method=1}
 
@@ -44,7 +47,7 @@ mcvis <- function(X, tau = 1.5,
 
     X.b <- as.matrix(X[index.b,])
     n1<-as.matrix(rep(1,dim(X.b)[1]))
-    if (col.one==FALSE) {X1<-X.b} else {X1<-cbind(X.b[,2:(p+1)])}
+    if (firstcol==FALSE) {X1<-X.b} else {X1<-cbind(X.b[,2:(p+1)])}
     X2<-X1-n1%*%colMeans(X1)
 
     s<-as.matrix(sqrt(diag(t(X2)%*%X2)))
@@ -72,6 +75,7 @@ mcvis <- function(X, tau = 1.5,
       da <- lm(v2[j,ji:ki] ~ t(vif[,ji:ki]))
       t[,i] <- coef(da) / sqrt(diag(vcov(da))) # t-value
     }
+
     for (i in 2:(p+1)) {
       tor[j,i-1]<-mean(t[i,]^2)
     }
@@ -98,6 +102,7 @@ mcvis <- function(X, tau = 1.5,
   G.text<-paste('x',or," -- ", col.names,sep="")
   val<-paste('v',1:eig.max,sep="")
   col<-paste('x',or,sep="")
+
   plot(G,
        edge.color = grey(graph_attr(G,'weight')),
        vertex.size=20,

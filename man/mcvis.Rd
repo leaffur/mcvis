@@ -4,13 +4,21 @@
 \alias{mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis(X, tau = 1.5, col.names, col.one = FALSE, eig.max = dim(X)[2] -
-  col.one, vol.max = dim(X)[2] - col.one, method = "bootstrap")
+mcvis(X, tau = 1.5, col.names, firstcol = FALSE, eig.max = dim(X)[2]
+  - firstcol, vol.max = dim(X)[2] - firstcol, method = "bootstrap")
 }
 \arguments{
-\item{X}{design matrix}
+\item{X}{a matrix of regressors}
 
-\item{Y}{respose numeric vector}
+\item{col.names}{the name of variables}
+
+\item{firstcol}{logical; if the first column of X is constant of ones.}
+
+\item{eig.max}{the maximum number of eigenvalues to be displayed on the plot}
+
+\item{vol.max}{the maximum number of variables to be displayed on the plot}
+
+\item{method}{"bootstrap" or "cv"(cross-validation); the method used to resample the data.}
 }
 \description{
 Multi-collinearity Visualization
