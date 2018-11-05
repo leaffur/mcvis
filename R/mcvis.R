@@ -21,7 +21,7 @@ mcvis <- function(X, tau = 1.5, steps=1000,
   n<-dim(X)[1]
   n1<-as.matrix(rep(1,n))
   if (col.one) {p=dim(X)[2]} else {p=dim(X)[2]-1}
-  if (col.one) {col.names=colnames(X)[1:p]} else {col.names=colnamse(X)[2:p+1]}
+  if (col.one) {col.names=colnames(X)[1:p]} else {col.names=colnames(X)[2:p+1]}
   eig.max<-min(p,eig.max)
   vol.max<-min(p,vol.max)
   #one can choose the max variables and eigenvectors he want to plot.
