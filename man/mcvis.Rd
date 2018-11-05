@@ -4,8 +4,8 @@
 \alias{mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis(X, tau = 1.5, steps = 1000, col.names, eig.max, vol.max,
-  method = "bootstrap", col.one = FALSE)
+mcvis(X, tau = 1.5, col.names, col.one = FALSE, eig.max = dim(X)[2] -
+  col.one, vol.max = dim(X)[2] - col.one, method = "bootstrap")
 }
 \arguments{
 \item{X}{design matrix}

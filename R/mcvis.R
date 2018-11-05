@@ -12,16 +12,17 @@
 #' mcvis(X)
 
 
-mcvis <- function(X, tau = 1.5, steps=1000,
+mcvis <- function(X, tau = 1.5,
                           col.names,
-                          eig.max, vol.max,
-                          method="bootstrap",
-                          col.one= FALSE)
+                          col.one= FALSE,
+                          eig.max=dim(X)[2]-col.one, vol.max=dim(X)[2]-col.one,
+                          method="bootstrap"
+                          )
 {
   n<-dim(X)[1]
   n1<-as.matrix(rep(1,n))
-  if (col.one) {p=dim(X)[2]} else {p=dim(X)[2]-1}
-  if (col.one) {col.names=colnames(X)[1:p]} else {col.names=colnames(X)[2:p+1]}
+  p<-dim(X)[2]-col.one
+  if (col.one) {col.names<-colnames(X)[2:(p+1)]} else {col.names<-colnames(X)}
   eig.max<-min(p,eig.max)
   vol.max<-min(p,vol.max)
   #one can choose the max variables and eigenvectors he want to plot.
@@ -40,9 +41,9 @@ mcvis <- function(X, tau = 1.5, steps=1000,
     )
     #use bootstrap or cross-validation
 
-    X.b <- X[index.b,]
+    X.b <- as.matrix(X[index.b,])
     n1<-as.matrix(rep(1,dim(X.b)[1]))
-    if (col.one) {X1<-X.b} else {X1<-cbind(X.b[,2:(p+1)])}
+    if (col.one==FALSE) {X1<-X.b} else {X1<-cbind(X.b[,2:(p+1)])}
     X2<-X1-n1%*%colMeans(X1)
 
     s<-as.matrix(sqrt(diag(t(X2)%*%X2)))
@@ -51,16 +52,16 @@ mcvis <- function(X, tau = 1.5, steps=1000,
     #Z is the centering and standarding of X1
 
     v<-numeric(0)
-    for (j in 1:p){ v[j]<-s[j,]/sqrt(sum(X.b[,j+1]^2)) }
+    for (j in 1:p){ v[j]<-s[j,]/sqrt(sum(X1[,j]^2)) }
     D<-diag(v)
     Z1<-Z%*%D
     #note! I use Z*D rather than D to calculate the eigenvalue and variance inflation factors.
 
-    v2[,i]<-t(eigen(crossprod(Z1,Z1))$values)
-    vif[,i]<-1/(t(diag(solve(t(Z1)%*%Z1)))) #inverse of vif of d
+    v2[,i]<-1/t(eigen(crossprod(Z1,Z1))$values)
+    vif[,i]<-(t(diag(solve(t(Z1)%*%Z1)))) #inverse of vif of d
   }
 
-
+  steps=1000
   g<-tor<-matrix(0,p,p)
   for (j in 1:p){
     t<-matrix(0,p+1,10)
