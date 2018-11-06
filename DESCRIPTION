@@ -5,8 +5,7 @@ Version: 0.1.0
 Authors@R: c(
     person(given = "Chen", family = "Lin", email = "16300180053@fudan.edu.cn", role = c("aut", "cre")),
     person(given = "Samuel", family = "Mueller", email = "samuel.mueller@sydney.edu.au", role = c("aut")),
-    person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut"))
-    )
+    person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut")))
 Maintainer: Chen Lin <16300180053@fudan.edu.cn>
 Description: A package to visulize the relationship between valuables and eigenvalues of the design matrix in multiple linear regression model,
     which helps to deduce the cause of collinearity.
