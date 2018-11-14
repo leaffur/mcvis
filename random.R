@@ -1,29 +1,9 @@
-#' @author Chen Lin
-#' @title Multi-collinearity Visualization
-#' @param X a matrix of regressors
-#' @param firstcol logical; if the first column of X is constant of ones.
-#' @param col.names the name of variables
-#' @param eig.max the maximum number of eigenvalues to be displayed on the plot
-#' @param vol.max the maximum number of variables to be displayed on the plot
-#' @param method "bootstrap" or "cv"(cross-validation); the method used to resample the data.
-#' @import igraph
-#' @export mcvis
-#' @examples
-#' library(mplot)
-#' data("artificialeg")
-#' p=dim(artificialeg)[2]-1
-#' X=artificialeg[,1:p]
-#' mcvis(X)
-
-
-mcvis <- function(X, tau = 1.5,
-                  col.names,
-                  firstcol = FALSE,
-                  eig.max=dim(X)[2]-firstcol,
-                  vol.max=dim(X)[2]-firstcol,
+library(igraph)
+tau = 1.5
+                  firstcol = FALSE
+                  eig.max=dim(X)[2]-firstcol
+                  vol.max=dim(X)[2]-firstcol
                   method="bootstrap"
-                  )
-{
   n<-dim(X)[1]
   n1<-as.matrix(rep(1,n))
   p<-dim(X)[2]-firstcol
@@ -72,8 +52,8 @@ mcvis <- function(X, tau = 1.5,
     for (i in 1:10) {
       ji<-(i-1)*steps/10+1
       ki<-i*steps/10
-      da <- lm(v2[j,ji:ki] ~ t(vif[,ji:ki]))
-      t[,i] <- coef(da) / sqrt(diag(vcov(da))) # t-value
+      da <- lm(vif[j,ji:ki] ~ t(v2[,ji:ki]))
+      t[,i] <- coef(da) # t-value
     }
 
     for (i in 2:(p+1)) {
@@ -116,4 +96,3 @@ mcvis <- function(X, tau = 1.5,
   {text(x=rep(2,vol.max),y=(1:vol.max)*2/(1-vol.max)+(vol.max+1)/(vol.max-1),G.text)}
   if (vol.max==1) {text(x=2,y=0,G.text)}
   text(x=-2,y=0,"v1: the smallest eigenvalue")
-}
