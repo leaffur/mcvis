@@ -55,8 +55,8 @@ mcvis <- function(X, tau = 1.5,
     for (j in 2:p)   { Z<-as.matrix(cbind(Z,X2[,j]/s[j,])) }
     #Z is the centering and standarding of X1
 
-    v<-numeric(0)
-    for (j in 1:p){ v[j]<-s[j,]/sqrt(sum(X1[,j]^2)) }
+    x.norm<-as.matrix(sqrt(diag(t(X1)%*%X1)))
+    v<-as.vector(s/x.norm)
     D<-diag(v)
     Z1<-Z%*%D
     #note! I use Z*D rather than D to calculate the eigenvalue and variance inflation factors.
