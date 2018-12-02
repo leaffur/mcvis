@@ -1,11 +1,13 @@
 #' @author Chen Lin
 #' @title Multi-collinearity Visualization
-#' @param X a matrix of regressors
-#' @param firstcol logical; if the first column of X is constant of ones.
-#' @param col.names the name of variables
-#' @param eig.max the maximum number of eigenvalues to be displayed on the plot
-#' @param vol.max the maximum number of variables to be displayed on the plot
-#' @param method "bootstrap" or "cv"(cross-validation); the method used to resample the data.
+#' @param X A matrix of regressors.
+#' @param tau A parameter for plotting line thickness
+#' @param firstcol Logical; if the first column of X is constant of ones.
+#' @param col.names The name of variables.
+#' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
+#' @param vol.max The maximum number of variables to be displayed on the plot.
+#' @param method The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).
+#' @param steps Number of sampling runs we perform. Default to 1000.
 #' @import igraph
 #' @import ggplot2
 #' @export mcvis
@@ -27,7 +29,7 @@ mcvis <- function(X,
 )
 {
   n = dim(X)[1]
-  n1 = as.matrix(rep(1,n))
+  # n1 = as.matrix(rep(1,n)) ## Kevin: I don't think it was used until redefined
   p = dim(X)[2] - firstcol ## If firstcol is FALSE, then p is p, otherwise we have an extra intercept term to consider
   col.names = colnames(X)[(2-firstcol):(p+1-firstcol)]
   eig.max = min(p, eig.max)
@@ -52,7 +54,7 @@ mcvis <- function(X,
 
     ## Sampling on the rows of the design matrix
     X.b = as.matrix(X[index.b,])
-    n1 = as.matrix(rep(1, nrow(X.b)))
+    # n1 = as.matrix(rep(1, nrow(X.b)))
 
 
     ## If the input X does not have an intercept, then, we will use X as is.Otherwise, we will remove it.
@@ -60,9 +62,10 @@ mcvis <- function(X,
       X1 = X.b[ ,2:(p+1)]
     }
 
-    X2 = X1 - n1 %*% colMeans(X1)
-
-    s = as.matrix(sqrt(diag(crossprod(X2, X2))))
+    # X2 = X1 - n1 %*% colMeans(X1)
+    X2 = sweep(x = X1, MARGIN = 2, STATS = colMeans(X1), FUN = "-")
+    # s = as.matrix(sqrt(diag(crossprod(X2, X2))))
+    s = as.matrix(sqrt(colSums(X2^2)))
 
     Z = sweep(x = X2, MARGIN = 2, STATS = as.vector(s), FUN = "/")
 
@@ -79,7 +82,10 @@ mcvis <- function(X,
 
     ## Z is the centering and standarding of X1 (Kevin: I think there is an easy way to do this.)
     # x.norm = as.matrix(sqrt(diag(t(X1) %*% X1)))
-    x.norm = as.matrix(sqrt(diag(crossprod(X1, X1))))
+
+    # x.norm = as.matrix(sqrt(diag(crossprod(X1, X1))))
+    x.norm = as.matrix(sqrt(colSums(X1^2)))
+
     v = as.vector(s/x.norm)
     D = diag(v)
     Z1 = Z %*% D
@@ -89,6 +95,7 @@ mcvis <- function(X,
     # v2[,i] = 1/t(eigen(crossprod(Z1,Z1))$values)
 
     crossprodZ1 = crossprod(Z1, Z1)
+
     v2[,i] = 1/t(svd(crossprodZ1)$d)
     ## Inverse of vif of d
     vif[,i] = t(diag(solve(crossprodZ1)))
@@ -169,7 +176,7 @@ mcvis <- function(X,
     theme(axis.text=element_blank()) +
     theme(axis.ticks=element_blank()) +
     theme(panel.grid=element_blank()) +
-    geom_segment(aes(x=x1_norm, xend=x2_norm, y=y1, yend=y2, colour = X1,
+    geom_segment(aes(x=x1_norm, xend=x2_norm, y=y1, yend=y2, colour = X2,
                      size = thicknessCategory, alpha = thickness)) +
     scale_size_manual(values = c(0, 0.1, 0.2, 0.3, 1.5)) +
     geom_segment(x=0, xend=1, y=0, yend=0, size=0.7) +
@@ -181,13 +188,13 @@ mcvis <- function(X,
     geom_segment(data=axis_2, aes(x=x, xend=x, y=y, yend=y+0.025), size=0.7) +
     geom_text(data=axis_1, aes(label=label, x=x, y=y - 0.075)) +
     geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
-    labs(caption = "Eigen 9: smallest Eigenvalue")
+    labs(caption = "Largest Eigen = smallest Eigenvalue")
 
-  print(gg)
   ############################
   ## igraph plotting
 
-  g.or[g.or > 1-tau/p] = 1 ## For plotting purpose, if the values of g.or is above a certain threshold, then we set it to 1
+  g.or[g.or > 1-tau/p] = 1
+  ## For plotting purpose, if the values of g.or is above a certain threshold, then we set it to 1
   col.names = col.names[or]
   ## reorder the variables by the connection with the smallest eigenvalue
 
@@ -220,7 +227,7 @@ mcvis <- function(X,
   text(x=-2,y=0,"v1: the smallest eigenvalue")
 
   ## No returns??
-
+return(gg)
 }
 ##################
 rangeTransform = function(x){ (x - min(x)) / (max(x) - min(x))}

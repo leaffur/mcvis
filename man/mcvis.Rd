@@ -9,17 +9,21 @@ mcvis(X, tau = 1.5, firstcol = FALSE, eig.max = dim(X)[2] - firstcol,
   steps = 1000L)
 }
 \arguments{
-\item{X}{a matrix of regressors}
+\item{X}{A matrix of regressors.}
 
-\item{firstcol}{logical; if the first column of X is constant of ones.}
+\item{tau}{A parameter for plotting line thickness}
 
-\item{eig.max}{the maximum number of eigenvalues to be displayed on the plot}
+\item{firstcol}{Logical; if the first column of X is constant of ones.}
 
-\item{vol.max}{the maximum number of variables to be displayed on the plot}
+\item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
 
-\item{method}{"bootstrap" or "cv"(cross-validation); the method used to resample the data.}
+\item{vol.max}{The maximum number of variables to be displayed on the plot.}
 
-\item{col.names}{the name of variables}
+\item{method}{The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).}
+
+\item{steps}{Number of sampling runs we perform. Default to 1000.}
+
+\item{col.names}{The name of variables.}
 }
 \description{
 Multi-collinearity Visualization
