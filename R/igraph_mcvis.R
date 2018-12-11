@@ -1,6 +1,7 @@
 #' @author Chen Lin
 #' @title Multi-collinearity Visualization
 #' @param mcvis_result Output of the mcvis function
+#' @param tau A parameter determining below which thickness the plotting lines hide.
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
 #' @param vol.max The maximum number of variables to be displayed on the plot.
 #' @import igraph
@@ -8,32 +9,32 @@
 #' @examples
 #' library(mplot)
 #' data("artificialeg")
-#' p=dim(artificialeg)[2]-1
-#' X=artificialeg[,1:p]
+#' X=artificialeg[,1:9]
 #' mcvis_result = mcvis2(X)
 #' igraph_mcvis(mcvis_result)
 
 
-igraph_mcvis <- function(mcvis_result, 
-                         eig.max = ncol(g), 
-                         vol.max = ncol(g))
+igraph_mcvis <- function(mcvis_result,
+                         tau = 1.5,
+                         eig.max = ncol(mcvis_result$g),
+                         vol.max = ncol(mcvis_result$g))
 {
   #####################
   g = mcvis_result$g
   col.names = mcvis_result$col.names
   #####################
-  
+
   p = ncol(g)
   eig.max = min(p, eig.max)
   vol.max = min(p, vol.max)
-  or = order(g[p,]) ## Order the columns of g by the smallest eigen value
+  or = order(g[p,]) ## Order the columns of g by the smallest eigenvalue
   or = or[1:vol.max]
   g.or = g[,or]
   if (vol.max > 1) {g.or = g.or[p:(p-eig.max+1),]} else {g.or = as.matrix(g.or[p:(p-eig.max+1)])}
   if (eig.max == 1) {g.or = t(g.or)}
+
  ######################
   ## igraph plotting
-  tau = 1.5
   g.or[g.or > 1-tau/p] = 1
   ## For plotting purpose, if the values of g.or is above a certain threshold, then we set it to 1
   col.names = col.names[or]

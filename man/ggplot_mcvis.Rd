@@ -4,7 +4,8 @@
 \alias{ggplot_mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-ggplot_mcvis(mcvis_result, eig.max = ncol(g), vol.max = ncol(g))
+ggplot_mcvis(mcvis_result, eig.max = ncol(mcvis_result$g),
+  vol.max = ncol(mcvis_result$g))
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function}
@@ -19,8 +20,7 @@ Multi-collinearity Visualization
 \examples{
 library(mplot)
 data("artificialeg")
-p=dim(artificialeg)[2]-1
-X=artificialeg[,1:p]
+X=artificialeg[,1:9]
 mcvis_result = mcvis2(X)
 ggplot_mcvis(mcvis_result)
 }

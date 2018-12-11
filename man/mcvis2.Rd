@@ -4,21 +4,14 @@
 \alias{mcvis2}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis2(X, eig.max = dim(X)[2], vol.max = dim(X)[2],
-  method = "bootstrap", steps = 1000L)
+mcvis2(X, method = "bootstrap", steps = 1000L)
 }
 \arguments{
-\item{X}{A matrix of regressors.}
-
-\item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
-
-\item{vol.max}{The maximum number of variables to be displayed on the plot.}
+\item{X}{A matrix of regressors (without intercept terms).}
 
 \item{method}{The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).}
 
 \item{steps}{Number of sampling runs we perform. Default to 1000.}
-
-\item{tau}{A parameter for plotting line thickness}
 }
 \description{
 Multi-collinearity Visualization
@@ -26,8 +19,7 @@ Multi-collinearity Visualization
 \examples{
 library(mplot)
 data("artificialeg")
-p=dim(artificialeg)[2]-1
-X=artificialeg[,1:p]
+X=artificialeg[,1:9]
 mcvis2(X)
 }
 \author{
