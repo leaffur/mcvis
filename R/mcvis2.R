@@ -1,9 +1,6 @@
 #' @author Chen Lin, Kevin Wang
 #' @title Multi-collinearity Visualization
-#' @param X A matrix of regressors.
-#' @param tau A parameter for plotting line thickness
-#' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
-#' @param vol.max The maximum number of variables to be displayed on the plot.
+#' @param X A matrix of regressors (without intercept terms).
 #' @param method The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).
 #' @param steps Number of sampling runs we perform. Default to 1000.
 #' @import igraph
@@ -14,17 +11,13 @@
 #' @examples
 #' library(mplot)
 #' data("artificialeg")
-#' p=dim(artificialeg)[2]-1
-#' X=artificialeg[,1:p]
+#' X=artificialeg[,1:9]
 #' mcvis2(X)
 
 
 mcvis2 <- function(X,
-                   eig.max = dim(X)[2],
-                   vol.max = dim(X)[2],
                    method = "bootstrap",
-                   steps = 1000L
-)
+                   steps = 1000L)
 {
   n = dim(X)[1]
   p = dim(X)[2] ## We now enforce no intercept terms
@@ -45,14 +38,14 @@ mcvis2 <- function(X,
     index.b = replicate(steps, sample(n, replace = FALSE)[1:(floor(sqrt(p*n)))], simplify = FALSE)
   }
 
-  X1 = purrr::map(index.b, ~ X[.x, ])
-  X2 = purrr::map(X1, ~ sweep(x = .x, MARGIN = 2, STATS = colMeans(.x), FUN = "-"))
+  X1 = purrr::map(index.b, ~ X[.x, ]) ## Resampling
+  X2 = purrr::map(X1, ~ sweep(x = .x, MARGIN = 2, STATS = colMeans(.x), FUN = "-")) ## Centering
   s = purrr::map(X2, ~ as.matrix(sqrt(colSums(.x^2))))
   Z = purrr::map2(
     .x = X2,
     .y = s,
     .f = ~ sweep(x = .x, MARGIN = 2, STATS = as.vector(.y), FUN = "/")
-  )
+  ) ## Standardizing
   x.norm = purrr::map(X1, ~as.matrix(sqrt(colSums(.x^2))))
   v = purrr::map2(.x = x.norm,
                   .y = s,
@@ -85,11 +78,12 @@ mcvis2 <- function(X,
   }
 
   g = 1 - sweep(tor, 1, rowSums(tor), "/")
-  # ## g[j,i]: jth small eigenvalue with ith column vector
-  rownames(g) = paste0("eigen", 1:p)
-  colnames(g) = paste0("variable", 1:p)
+  ## g[j,i]: jth smallest eigenvalue with ith variable
+  rownames(g) = paste0("eig", 1:p)
+  colnames(g) = paste0("col", 1:p)
   ####################################################################
   result = list(
+    tor = tor,
     g = g,
     col.names = col.names
   )

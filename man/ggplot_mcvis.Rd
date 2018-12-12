@@ -20,8 +20,7 @@ Multi-collinearity Visualization
 \examples{
 library(mplot)
 data("artificialeg")
-p=dim(artificialeg)[2]-1
-X=artificialeg[,1:p]
+X=artificialeg[,1:9]
 mcvis_result = mcvis2(X)
 ggplot_mcvis(mcvis_result)
 }

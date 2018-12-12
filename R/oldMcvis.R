@@ -47,6 +47,7 @@ oldMcvis <- function(X, tau = 1.5,
     #use bootstrap or cross-validation
 
     X.b <- as.matrix(X[index.b,])
+
     n1<-as.matrix(rep(1,dim(X.b)[1]))
     if (firstcol==FALSE) {X1<-X.b} else {X1<-cbind(X.b[,2:(p+1)])}
     X2<-X1-n1%*%colMeans(X1)

@@ -9,8 +9,7 @@
 #' @examples
 #' library(mplot)
 #' data("artificialeg")
-#' p=dim(artificialeg)[2]-1
-#' X=artificialeg[,1:p]
+#' X=artificialeg[,1:9]
 #' mcvis_result = mcvis2(X)
 #' ggplot_mcvis(mcvis_result)
 
@@ -20,7 +19,6 @@ ggplot_mcvis = function(mcvis_result,
   g = mcvis_result$g
   col.names = mcvis_result$col.names
   p = ncol(g)
-
   eig.max = min(p, eig.max)
   vol.max = min(p, vol.max)
   or = order(g[p,]) ## Order the columns of g by the smallest eigen value
@@ -29,7 +27,7 @@ ggplot_mcvis = function(mcvis_result,
   if (vol.max > 1) {g.or = g.or[p:(p-eig.max+1),]} else {g.or = as.matrix(g.or[p:(p-eig.max+1)])}
   if (eig.max == 1) {g.or = t(g.or)}
 
-  # ###############  ggplot #######################
+  #################  ggplot #######################
   dat = reshape2::melt(g.or,
                        varnames = c("X2", "X1"),
                        value.name = "weights") %>%

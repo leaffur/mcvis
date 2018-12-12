@@ -4,10 +4,13 @@
 \alias{igraph_mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-igraph_mcvis(mcvis_result, eig.max = ncol(g), vol.max = ncol(g))
+igraph_mcvis(mcvis_result, tau = 1.5, eig.max = ncol(mcvis_result$g),
+  vol.max = ncol(mcvis_result$g))
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function}
+
+\item{tau}{A parameter determining below which thickness the plotting lines hide.}
 
 \item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
 
@@ -19,8 +22,7 @@ Multi-collinearity Visualization
 \examples{
 library(mplot)
 data("artificialeg")
-p=dim(artificialeg)[2]-1
-X=artificialeg[,1:p]
+X=artificialeg[,1:9]
 mcvis_result = mcvis2(X)
 igraph_mcvis(mcvis_result)
 }
