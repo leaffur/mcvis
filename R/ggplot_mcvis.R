@@ -1,4 +1,4 @@
-#' @author Chen Lin
+#' @author Chen Lin, Kevin Wang
 #' @title Multi-collinearity Visualization
 #' @param mcvis_result Output of the mcvis function
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
@@ -15,11 +15,12 @@
 #' ggplot_mcvis(mcvis_result)
 
 ggplot_mcvis = function(mcvis_result,
-                        eig.max = ncol(g), 
-                        vol.max = ncol(g)){
+                        eig.max = ncol(mcvis_result$g),
+                        vol.max = ncol(mcvis_result$g)){
   g = mcvis_result$g
   col.names = mcvis_result$col.names
-  
+  p = ncol(g)
+
   eig.max = min(p, eig.max)
   vol.max = min(p, vol.max)
   or = order(g[p,]) ## Order the columns of g by the smallest eigen value
@@ -76,7 +77,7 @@ ggplot_mcvis = function(mcvis_result,
     geom_text(data=axis_1, aes(label=label, x=x, y=y - 0.075)) +
     geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
     labs(caption = "Largest Eigen = smallest Eigenvalue")
-  
+
   return(gg)
 }
 

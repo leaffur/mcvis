@@ -31,5 +31,5 @@ X=artificialeg[,1:p]
 mcvis2(X)
 }
 \author{
-Chen Lin
+Chen Lin, Kevin Wang
 }

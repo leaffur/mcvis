@@ -12,9 +12,11 @@ Description: A package to visulize the relationship between valuables and eigenv
     which helps to deduce the cause of collinearity.
 Encoding: UTF-8
 Imports:
+  DT,
   igraph,
   ggplot2,
   purrr, 
   magrittr,
-  reshape2
+  reshape2,
+  shiny
 RoxygenNote: 6.1.1
