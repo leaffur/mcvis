@@ -22,7 +22,7 @@ data("artificialeg")
 p=dim(artificialeg)[2]-1
 X=artificialeg[,1:p]
 mcvis_result = mcvis2(X)
-shiny_mcvis(mcvis_result)
+shiny_mcvis()
 }
 \author{
 Chen Lin, Kevin Wang
