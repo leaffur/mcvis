@@ -38,14 +38,16 @@ mcvis2 <- function(X,
     index.b = replicate(steps, sample(n, replace = FALSE)[1:(floor(sqrt(p*n)))], simplify = FALSE)
   }
 
-  X1 = purrr::map(index.b, ~ X[.x, ]) ## Resampling
-  X2 = purrr::map(X1, ~ sweep(x = .x, MARGIN = 2, STATS = colMeans(.x), FUN = "-")) ## Centering
+
+  X1 = purrr::map(index.b, ~ X[.x, ]) ##Resampling
+  X2 = purrr::map(X1, ~ sweep(x = .x, MARGIN = 2, STATS = colMeans(.x), FUN = "-")) ##Centering
   s = purrr::map(X2, ~ as.matrix(sqrt(colSums(.x^2))))
   Z = purrr::map2(
     .x = X2,
     .y = s,
     .f = ~ sweep(x = .x, MARGIN = 2, STATS = as.vector(.y), FUN = "/")
   ) ## Standardizing
+
   x.norm = purrr::map(X1, ~as.matrix(sqrt(colSums(.x^2))))
   v = purrr::map2(.x = x.norm,
                   .y = s,
