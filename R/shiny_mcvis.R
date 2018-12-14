@@ -9,12 +9,14 @@
 #' @importFrom psych describe
 #' @export
 #' @examples
+#' **## Not run:**
 #' library(mplot)
 #' data("artificialeg")
 #' p = dim(artificialeg)[2]-1
 #' X = artificialeg[,1:p]
 #' mcvis_result = mcvis(X)
 #' shiny_mcvis(mcvis_result)
+#' ## End(**Not run**)
 
 shiny_mcvis <- function(mcvis_result) {
   .GlobalEnv$mcvis_result <- mcvis_result

@@ -13,12 +13,14 @@ shiny_mcvis(mcvis_result)
 Shiny app for mcvis exploration
 }
 \examples{
+**## Not run:**
 library(mplot)
 data("artificialeg")
 p = dim(artificialeg)[2]-1
 X = artificialeg[,1:p]
 mcvis_result = mcvis(X)
 shiny_mcvis(mcvis_result)
+## End(**Not run**)
 }
 \author{
 Chen Lin, Kevin Wang

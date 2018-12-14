@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multi-collinearity Visualization — oldMcvis • mcvis</title>
+<title>Shiny app for mcvis exploration — shiny_mcvis • mcvis</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Multi-collinearity Visualization — oldMcvis" />
+<meta property="og:title" content="Shiny app for mcvis exploration — shiny_mcvis" />
 
-<meta property="og:description" content="Multi-collinearity Visualization" />
+<meta property="og:description" content="Shiny app for mcvis exploration" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,58 +94,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Multi-collinearity Visualization</h1>
+    <h1>Shiny app for mcvis exploration</h1>
     
-    <div class="hidden name"><code>oldMcvis.Rd</code></div>
+    <div class="hidden name"><code>shiny_mcvis.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Multi-collinearity Visualization</p>
+    <p>Shiny app for mcvis exploration</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>oldMcvis</span>(<span class='no'>X</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='no'>col.names</span>, <span class='kw'>firstcol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>eig.max</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>X</span>)[<span class='fl'>2</span>] - <span class='no'>firstcol</span>, <span class='kw'>vol.max</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>X</span>)[<span class='fl'>2</span>] - <span class='no'>firstcol</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bootstrap"</span>)</pre>
+    <pre class="usage"><span class='fu'>shiny_mcvis</span>(<span class='no'>mcvis_result</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>X</th>
-      <td><p>a matrix of regressors</p></td>
-    </tr>
-    <tr>
-      <th>col.names</th>
-      <td><p>the name of variables</p></td>
-    </tr>
-    <tr>
-      <th>firstcol</th>
-      <td><p>logical; if the first column of X is constant of ones.</p></td>
-    </tr>
-    <tr>
-      <th>eig.max</th>
-      <td><p>the maximum number of eigenvalues to be displayed on the plot</p></td>
-    </tr>
-    <tr>
-      <th>vol.max</th>
-      <td><p>the maximum number of variables to be displayed on the plot</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>"bootstrap" or "cv"(cross-validation); the method used to resample the data.</p></td>
+      <th>mcvis_result</th>
+      <td><p>Output of the mcvis function.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mplot</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"artificialeg"</span>)
-<span class='no'>p</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>artificialeg</span>)[<span class='fl'>2</span>]-<span class='fl'>1</span>
-<span class='no'>X</span><span class='kw'>=</span><span class='no'>artificialeg</span>[,<span class='fl'>1</span>:<span class='no'>p</span>]
-<span class='no'>steps</span> <span class='kw'>=</span> <span class='fl'>1000L</span>
-<span class='fu'>oldMcvis</span>(<span class='no'>X</span>)</div><div class='output co'>#&gt; <span class='error'>Error in matrix(0, p, steps): object 'steps' not found</span></div></pre>
+    <pre class="examples"><div class='input'>**## Not run:**
+library(mplot)
+data("artificialeg")
+p = dim(artificialeg)[2]-1
+X = artificialeg[,1:p]
+mcvis_result = mcvis(X)
+shiny_mcvis(mcvis_result)
+## End(**Not run**)
+</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:1:1: unexpected '^'</span>
+#&gt; <span class='error'>1: **</span>
+#&gt; <span class='error'>    ^</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -156,7 +139,7 @@
     </ul>
 
     <h2>Author</h2>
-    <p>Chen Lin</p>
+    <p>Chen Lin, Kevin Wang</p>
   </div>
 </div>
 
