@@ -55,7 +55,7 @@ ggplot_mcvis = function(mcvis_result,
     thickness > sizeCategory5 ~ "category5"
   )
 
-  ggplotAlphaManual = c(0.1, 0.2, 0.5, 0.8, 1.0)
+  ggplotAlphaManual = c(0, 0.2, 0.5, 0.8, 1.0)
 
   dat = preDat %>%
     dplyr::mutate(

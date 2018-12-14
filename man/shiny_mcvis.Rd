@@ -4,14 +4,10 @@
 \alias{shiny_mcvis}
 \title{Shiny app for mcvis exploration}
 \usage{
-shiny_mcvis()
+shiny_mcvis(mcvis_result)
 }
 \arguments{
-\item{mcvis_result}{Output of the mcvis function}
-
-\item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
-
-\item{vol.max}{The maximum number of variables to be displayed on the plot.}
+\item{mcvis_result}{Output of the mcvis function.}
 }
 \description{
 Shiny app for mcvis exploration
@@ -19,10 +15,10 @@ Shiny app for mcvis exploration
 \examples{
 library(mplot)
 data("artificialeg")
-p=dim(artificialeg)[2]-1
-X=artificialeg[,1:p]
-mcvis_result = mcvis2(X)
-shiny_mcvis()
+p = dim(artificialeg)[2]-1
+X = artificialeg[,1:p]
+mcvis_result = mcvis(X)
+shiny_mcvis(mcvis_result)
 }
 \author{
 Chen Lin, Kevin Wang

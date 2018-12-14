@@ -86,6 +86,7 @@ mcvis <- function(X,
   colnames(g) = paste0("col", 1:p)
   ####################################################################
   result = list(
+    X = X,
     tor = tor,
     g = g,
     col.names = col.names

@@ -1,12 +1,11 @@
 library(shiny)
+library(ggplot2)
 # library(DT)
-library(mplot)
-library(psych)
 
-data("artificialeg")
-p = dim(artificialeg)[2]-1
-X = artificialeg[,1:p]
-mcvis_result = mcvis(X)
+# data("artificialeg")
+# p = dim(artificialeg)[2]-1
+# X = artificialeg[,1:p]
+# mcvis_result = mcvis(X)
 
 
 
@@ -14,7 +13,8 @@ mcvis_result = mcvis(X)
 shinyServer(function(input, output, session) {
 
   output$variableTables = DT::renderDataTable(
-    cleanDigits(psych::describe(X))
+    cleanDigits(psych::describe(mcvis_result$X))
+
     )
 
 
@@ -74,8 +74,8 @@ shinyServer(function(input, output, session) {
 
     ggplotAlphaManual = c(0, 0.5, 0.5, 0.5, 1.0)
 
-    dat = preDat %>%
-      dplyr::mutate(
+    dat = dplyr::mutate(
+        preDat,
         thickness,
         ggplotSizeCategory
       )

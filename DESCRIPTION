@@ -1,7 +1,7 @@
 Package: mcvis
 Type: Package
 Title: Multi-collinearity Visualization
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: c(
     person(given = "Chen", family = "Lin", email = "16300180053@fudan.edu.cn", role = c("aut", "cre")),
     person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut")),

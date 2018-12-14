@@ -1,5 +1,3 @@
-library(shiny)
-
 fluidPage(
 
   title = 'mcvis',
