@@ -4,26 +4,14 @@
 \alias{mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis(X, tau = 1.5, firstcol = FALSE, eig.max = dim(X)[2] - firstcol,
-  vol.max = dim(X)[2] - firstcol, method = "bootstrap",
-  steps = 1000L)
+mcvis(X, method = "bootstrap", steps = 1000L)
 }
 \arguments{
-\item{X}{A matrix of regressors.}
-
-\item{tau}{A parameter for plotting line thickness}
-
-\item{firstcol}{Logical; if the first column of X is constant of ones.}
-
-\item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
-
-\item{vol.max}{The maximum number of variables to be displayed on the plot.}
+\item{X}{A matrix of regressors (without intercept terms).}
 
 \item{method}{The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).}
 
 \item{steps}{Number of sampling runs we perform. Default to 1000.}
-
-\item{col.names}{The name of variables.}
 }
 \description{
 Multi-collinearity Visualization
@@ -31,10 +19,9 @@ Multi-collinearity Visualization
 \examples{
 library(mplot)
 data("artificialeg")
-p=dim(artificialeg)[2]-1
-X=artificialeg[,1:p]
+X=artificialeg[,1:9]
 mcvis(X)
 }
 \author{
-Chen Lin
+Chen Lin, Kevin Wang
 }

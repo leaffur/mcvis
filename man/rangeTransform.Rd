@@ -2,12 +2,15 @@
 % Please edit documentation in R/ggplot_mcvis.R
 \name{rangeTransform}
 \alias{rangeTransform}
-\title{range transform}
+\title{Range transform}
 \usage{
 rangeTransform(x)
 }
+\arguments{
+\item{x}{numeric vector}
+}
 \description{
-range transform
+Range transform
 }
 \author{
 Chen Lin, Kevin Wang

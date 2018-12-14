@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny_mcvis.R
 \name{shiny_mcvis}
 \alias{shiny_mcvis}
-\title{Multi-collinearity Visualization}
+\title{Shiny app for mcvis exploration}
 \usage{
 shiny_mcvis()
 }
@@ -14,7 +14,7 @@ shiny_mcvis()
 \item{vol.max}{The maximum number of variables to be displayed on the plot.}
 }
 \description{
-Multi-collinearity Visualization
+Shiny app for mcvis exploration
 }
 \examples{
 library(mplot)
