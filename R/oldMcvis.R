@@ -83,6 +83,7 @@ oldMcvis <- function(X, tau = 1.5,
     }
     g[j,]<-rep(1,p)-tor[j,]/sum(tor[j,])
   }
+  return(tor)
   #g[j,i]: jth small eigenvalue with ith column vector
 
   # or<-order(g[p,])

@@ -15,7 +15,9 @@
 
 ggplot_mcvis = function(mcvis_result,
                         eig.max = ncol(mcvis_result$g),
-                        vol.max = ncol(mcvis_result$g)){
+                        vol.max = ncol(mcvis_result$g))
+##if eig.max==1 or vol.max==1, the function fails to give an output.
+{
   g = mcvis_result$g
   col.names = mcvis_result$col.names
 
@@ -75,7 +77,7 @@ ggplot_mcvis = function(mcvis_result,
     geom_segment(data=axis_2, aes(x=x, xend=x, y=y, yend=y+0.025), size=0.7) +
     geom_text(data=axis_1, aes(label=label, x=x, y=y - 0.075)) +
     geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
-    labs(caption = "Largest Eigen = smallest Eigenvalue")
+    labs(caption = "Largest Eig = smallest Eigenvalue")
 
   return(gg)
 }
