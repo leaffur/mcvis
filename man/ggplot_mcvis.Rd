@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_mcvis.R
 \name{ggplot_mcvis}
 \alias{ggplot_mcvis}
-\title{Multi-collinearity Visualization}
+\title{ggplot visualisation for mcvis method}
 \usage{
 ggplot_mcvis(mcvis_result, eig.max = ncol(mcvis_result$g),
   vol.max = ncol(mcvis_result$g))
@@ -15,15 +15,15 @@ ggplot_mcvis(mcvis_result, eig.max = ncol(mcvis_result$g),
 \item{vol.max}{The maximum number of variables to be displayed on the plot.}
 }
 \description{
-Multi-collinearity Visualization
+ggplot visualisation for mcvis method
 }
 \examples{
 library(mplot)
 data("artificialeg")
 X=artificialeg[,1:9]
-mcvis_result = mcvis2(X)
+mcvis_result = mcvis(X)
 ggplot_mcvis(mcvis_result)
 }
 \author{
-Chen Lin
+Chen Lin, Kevin Wang
 }

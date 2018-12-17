@@ -23,7 +23,7 @@ Multi-collinearity Visualization
 library(mplot)
 data("artificialeg")
 X=artificialeg[,1:9]
-mcvis_result = mcvis2(X)
+mcvis_result = mcvis(X)
 igraph_mcvis(mcvis_result)
 }
 \author{
