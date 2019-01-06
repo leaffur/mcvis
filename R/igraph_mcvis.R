@@ -59,7 +59,7 @@ igraph_mcvis <- function(mcvis_result,
        vertex.color=c("yellow","cyan")[V(G)$type+1],
        edge.width=(rep(1,length(vec))-graph_attr(G,'weight'))*10,
        layout=layout_as_bipartite,
-       main="mcvis2"
+       main="mcvis"
   )
 
   if (vol.max>1)

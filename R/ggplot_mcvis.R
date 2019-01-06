@@ -99,11 +99,11 @@ ggplot_mcvis = function(mcvis_result,
     geom_segment(data=axis_2, aes(x=x, xend=x, y=y, yend=y+0.025), size=0.7) +
     geom_text(data=axis_1, aes(label=label, x=x, y=y - 0.075)) +
     geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
-<<<<<<< HEAD
-    labs(caption = "Largest Eig = smallest Eigenvalue")
+#<<<<<<< HEAD
+ #   labs(caption = "Largest Eig = smallest Eigenvalue")
 
-  return(gg)
-=======
+  #return(gg)
+#=======
     labs(caption = "Largest Eigen = smallest Eigenvalue") +
     guides(
       colour = FALSE,
@@ -111,7 +111,7 @@ ggplot_mcvis = function(mcvis_result,
       alpha = guide_legend(title = "")
       )
   gg
->>>>>>> 8d70808389bff25f7054d8408ad267cbcccc2c15
+#>>>>>>> 8d70808389bff25f7054d8408ad267cbcccc2c15
 }
 
 ##################
