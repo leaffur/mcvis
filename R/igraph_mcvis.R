@@ -15,12 +15,12 @@
 
 
 igraph_mcvis <- function(mcvis_result,
-                         tau = 1.5,
+                         tau = 2/3,
                          eig.max = ncol(mcvis_result$g),
                          vol.max = ncol(mcvis_result$g))
 {
   #####################
-  g = mcvis_result$g
+  g = 1-mcvis_result$g
   col.names = mcvis_result$col.names
   #####################
 
@@ -63,8 +63,8 @@ igraph_mcvis <- function(mcvis_result,
   )
 
   if (vol.max>1)
-  {text(x=rep(2,vol.max),y=(1:vol.max)*2/(1-vol.max)+(vol.max+1)/(vol.max-1),G.text)}
+  {text(x=rep(1.7,vol.max),y=(1:vol.max)*2/(1-vol.max)+(vol.max+1)/(vol.max-1),G.text)}
 
   if (vol.max==1) {text(x=2,y=0,G.text)}
-  text(x=-2,y=0,"v1: the smallest eigenvalue")
+  text(x=0,y=-1.4,"v1: the smallest eigenvalue")
 }

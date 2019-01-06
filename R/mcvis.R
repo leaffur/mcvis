@@ -87,7 +87,7 @@ mcvis <- function(X,
   ####################################################################
   result = list(
     t = tor,
-    g = g,
+    g = 1-g,
     col.names = col.names
   )
   return(result)
