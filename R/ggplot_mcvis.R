@@ -18,7 +18,7 @@ ggplot_mcvis = function(mcvis_result,
                         vol.max = ncol(mcvis_result$g))
 ##if eig.max==1 or vol.max==1, the function fails to give an output.
 {
-  g = mcvis_result$g
+  g = 1-mcvis_result$g
   col.names = mcvis_result$col.names
   p = ncol(g)
   eig.max = min(p, eig.max)
