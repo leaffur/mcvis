@@ -16,11 +16,11 @@
 
 igraph_mcvis <- function(mcvis_result,
                          tau = 2/3,
-                         eig.max = ncol(mcvis_result$g),
-                         vol.max = ncol(mcvis_result$g))
+                         eig.max = ncol(mcvis_result$MC),
+                         vol.max = ncol(mcvis_result$MC))
 {
   #####################
-  g = 1-mcvis_result$g
+  g = 1-mcvis_result$MC
   col.names = mcvis_result$col.names
   #####################
 

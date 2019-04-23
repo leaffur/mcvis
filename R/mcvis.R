@@ -82,11 +82,11 @@ mcvis <- function(X,
 
   MC = 1 - sweep(tor, 1, rowSums(tor), "/")
   ## MC[j,i]: jth smallest eigenvalue with ith variable
-  rownames(MC) = paste0("eig", 1:p)
+  rownames(MC) = paste0("τ", p:1)
   colnames(MC) = paste0("col", 1:p)
   ####################################################################
   result = list(
-    t = tor,
+    t_sqaure = tor,
     MC = 1-MC,
     col.names = col.names
   )
