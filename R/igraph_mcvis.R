@@ -49,7 +49,7 @@ igraph_mcvis <- function(mcvis_result,
   graph_attr(G,'weight') = vec
   par(bg="white")
   G.text<-paste('x',or," -- ", col.names,sep="")
-  val<-paste('v',1:eig.max,sep="")
+  val<-paste('τ',p:(p-eig.max+1),sep="")
   col<-paste('x',or,sep="")
 
   plot(G,
@@ -66,5 +66,5 @@ igraph_mcvis <- function(mcvis_result,
   {text(x=rep(1.7,vol.max),y=(1:vol.max)*2/(1-vol.max)+(vol.max+1)/(vol.max-1),G.text)}
 
   if (vol.max==1) {text(x=2,y=0,G.text)}
-  text(x=0,y=-1.4,"v1: the smallest eigenvalue")
+  text(x=0,y=-1.4,"τ1: the inverse of the smallest eigenvalue")
 }
