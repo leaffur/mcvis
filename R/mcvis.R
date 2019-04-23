@@ -80,14 +80,14 @@ mcvis <- function(X,
     tor[j, ] = rowMeans(tstatMat^2)[-1]
   }
 
-  g = 1 - sweep(tor, 1, rowSums(tor), "/")
-  ## g[j,i]: jth smallest eigenvalue with ith variable
-  rownames(g) = paste0("eig", 1:p)
-  colnames(g) = paste0("col", 1:p)
+  MC = 1 - sweep(tor, 1, rowSums(tor), "/")
+  ## MC[j,i]: jth smallest eigenvalue with ith variable
+  rownames(MC) = paste0("eig", 1:p)
+  colnames(MC) = paste0("col", 1:p)
   ####################################################################
   result = list(
     t = tor,
-    g = 1-g,
+    MC = 1-MC,
     col.names = col.names
   )
   return(result)
