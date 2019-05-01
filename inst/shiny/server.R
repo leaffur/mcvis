@@ -1,6 +1,6 @@
-library(shiny)
-library(ggplot2)
-library(DT)
+# library(shiny)
+# library(ggplot2)
+# library(DT)
 
 # data("artificialeg")
 # p = dim(artificialeg)[2]-1
