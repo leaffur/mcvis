@@ -4,7 +4,7 @@
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
 #' @param vol.max The maximum number of variables to be displayed on the plot.
 #' @import ggplot2
-#' @import reshape2
+#' @importFrom reshape2 melt
 #' @export
 #' @examples
 #' library(mplot)
@@ -18,7 +18,7 @@ ggplot_mcvis = function(mcvis_result,
                         vol.max = ncol(mcvis_result$g))
 ##if eig.max==1 or vol.max==1, the function fails to give an output.
 {
-  g = 1-mcvis_result$g
+  g = 1-mcvis_result$MC
   col.names = mcvis_result$col.names
   p = ncol(g)
   eig.max = min(p, eig.max)

@@ -1,6 +1,6 @@
 library(shiny)
 library(ggplot2)
-# library(DT)
+library(DT)
 
 # data("artificialeg")
 # p = dim(artificialeg)[2]-1
@@ -23,9 +23,10 @@ shinyServer(function(input, output, session) {
     s = input$variableTables_rows_selected
     if(is.null(s)) {return(ggplot_mcvis(mcvis_result))}
 
-    eig.max = ncol(mcvis_result$g)
-    vol.max = ncol(mcvis_result$g)
-    g = mcvis_result$g
+    g = mcvis_result$MC
+    eig.max = ncol(g)
+    vol.max = ncol(g)
+
     col.names = mcvis_result$col.names
     p = ncol(g)
 

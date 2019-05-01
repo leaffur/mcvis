@@ -4,10 +4,10 @@
 #' @param method The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).
 #' @param steps Number of sampling runs we perform. Default to 1000.
 #' @import igraph
-#' @import ggplot2
-#' @importFrom purrr map
-#' @importFrom purrr map2
-#' @import magrittr
+#' @importFrom magrittr %>%
+#' @importFrom purrr map map2
+#' @importFrom stats coef lm
+#' @importFrom graphics par plot text
 #' @export
 #' @examples
 #' library(mplot)
@@ -82,10 +82,11 @@ mcvis <- function(X,
 
   MC = 1 - sweep(tor, 1, rowSums(tor), "/")
   ## MC[j,i]: jth smallest eigenvalue with ith variable
-  rownames(MC) = paste0("τ", p:1)
+  rownames(MC) = paste0("tau", p:1)
   colnames(MC) = paste0("col", 1:p)
   ####################################################################
   result = list(
+    X = X,
     t_sqaure = tor,
     MC = 1-MC,
     col.names = col.names
