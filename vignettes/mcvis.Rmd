@@ -43,7 +43,6 @@ The `mcvis` visualisation plot identified that the 8th variable is the main caus
 
 ```{r}
 library(mplot)
-library(pairsD3)
 data("artificialeg")
 X = artificialeg[,1:9]
 
