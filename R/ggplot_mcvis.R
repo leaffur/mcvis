@@ -4,7 +4,7 @@
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
 #' @param vol.max The maximum number of variables to be displayed on the plot.
 #' @import ggplot2
-#' @import reshape2
+#' @importFrom reshape2 melt
 #' @export
 #' @examples
 #' library(mplot)
@@ -18,7 +18,7 @@ ggplot_mcvis = function(mcvis_result,
                         vol.max = ncol(mcvis_result$g))
 ##if eig.max==1 or vol.max==1, the function fails to give an output.
 {
-  g = 1-mcvis_result$g
+  g = 1-mcvis_result$MC
   col.names = mcvis_result$col.names
   p = ncol(g)
   eig.max = min(p, eig.max)
@@ -99,19 +99,15 @@ ggplot_mcvis = function(mcvis_result,
     geom_segment(data=axis_2, aes(x=x, xend=x, y=y, yend=y+0.025), size=0.7) +
     geom_text(data=axis_1, aes(label=label, x=x, y=y - 0.075)) +
     geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
-#<<<<<<< HEAD
- #   labs(caption = "Largest Eig = smallest Eigenvalue")
-
-  #return(gg)
-#=======
-    labs(caption = "Largest Eigen = smallest Eigenvalue") +
+    labs(title = "Visualise tau against original variables",
+         caption = "Largest Eigen = smallest Eigenvalue") +
     guides(
       colour = FALSE,
       size = guide_legend(title = ""),
       alpha = guide_legend(title = "")
       )
-  gg
-#>>>>>>> 8d70808389bff25f7054d8408ad267cbcccc2c15
+  return(gg)
+
 }
 
 ##################

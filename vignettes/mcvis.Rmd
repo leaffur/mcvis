@@ -1,0 +1,64 @@
+---
+title: "mcvis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mcvis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mcvis)
+```
+
+
+# Introduction
+
+The `mcvis` package is a methodology that identifies multi-collinearity in linear regression. The `mcvis` method derives its own statistic (the `tau` statistic) that identify the relationship between the eigenvalues of the matrix $X^\top X$ and each of the original variable in $X$. 
+
+
+
+# Basic usage 
+
+Suppose that we have a simple scenario that two predictors are highly correlated. This high correlation is a potential cause of multicollinearity which could cause problems. 
+
+```{r}
+
+```
+
+
+# An advanced example from the `mplot` package
+
+In practice, collinearity may not be solely caused by a single pair of highly correlated variables. In the `mplot` package, a simulated data was created with each of its column being a linear combination of other columns. In this case, the cause of the collinearity is not clear from the correlation matrix. 
+
+
+The `mcvis` visualisation plot identified that the 8th variable is the main cause of collinearity of this data. Upon consultation with the data generation in this simulation, we see that the X8 is a linear combination of all other predictor variables. 
+
+```{r}
+library(mplot)
+library(pairsD3)
+data("artificialeg")
+X = artificialeg[,1:9]
+
+mcvis_result = mcvis(X)
+igraph_mcvis(mcvis_result)
+ggplot_mcvis(mcvis_result)
+
+# pairsD3::pairsD3(X)
+```
+
+# Shiny implementation
+
+We also offer a shiny app implementation of `mcvis` in our package. Suppose that we have a `mcvis` object stored in the memory of `R`. You can simply call the function `shiny_mcvis` to load up a Shiny app. 
+
+```{r, eval = FALSE}
+shiny_mcvis(mcvis_result)
+```
+

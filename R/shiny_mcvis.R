@@ -1,7 +1,6 @@
 #' @author Chen Lin, Kevin Wang
 #' @title Shiny app for mcvis exploration
 #' @param mcvis_result Output of the mcvis function.
-#' @import shiny
 #' @import ggplot2
 #' @importFrom dplyr case_when
 #' @importFrom dplyr mutate
@@ -9,14 +8,14 @@
 #' @importFrom psych describe
 #' @export
 #' @examples
-#' **## Not run:**
+#' \dontrun{
 #' library(mplot)
-#' data("artificialeg")
+#' data("artificialeg", package = "mplot")
 #' p = dim(artificialeg)[2]-1
 #' X = artificialeg[,1:p]
 #' mcvis_result = mcvis(X)
 #' shiny_mcvis(mcvis_result)
-#' ## End(**Not run**)
+#' }
 
 shiny_mcvis <- function(mcvis_result) {
   .GlobalEnv$mcvis_result <- mcvis_result
