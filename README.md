@@ -14,9 +14,9 @@ design matrix.
 ## Installation
 
 ``` r
-devtools::install_github("kevinwang09/mcvis")
+devtools::install_github("leaffur/mcvis")
 ```
 
 ## Vignette
 
-<https://kevinwang09.github.io/mcvis/>
+<https://leaffur.github.io/mcvis/>
