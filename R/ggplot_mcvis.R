@@ -14,8 +14,8 @@
 #' ggplot_mcvis(mcvis_result)
 
 ggplot_mcvis = function(mcvis_result,
-                        eig.max = ncol(mcvis_result$g),
-                        vol.max = ncol(mcvis_result$g))
+                        eig.max = ncol(mcvis_result$MC),
+                        vol.max = ncol(mcvis_result$MC))
 ##if eig.max==1 or vol.max==1, the function fails to give an output.
 {
   g = 1-mcvis_result$MC
