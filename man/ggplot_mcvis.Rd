@@ -4,8 +4,8 @@
 \alias{ggplot_mcvis}
 \title{ggplot visualisation for mcvis method}
 \usage{
-ggplot_mcvis(mcvis_result, eig.max = ncol(mcvis_result$g),
-  vol.max = ncol(mcvis_result$g))
+ggplot_mcvis(mcvis_result, eig.max = ncol(mcvis_result$MC),
+  vol.max = ncol(mcvis_result$MC))
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function}
