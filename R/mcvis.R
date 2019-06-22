@@ -1,8 +1,9 @@
 #' @author Chen Lin, Kevin Wang
 #' @title Multi-collinearity Visualization
 #' @param X A matrix of regressors (without intercept terms).
-#' @param method The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).
-#' @param steps Number of sampling runs we perform. Default to 1000.
+#' @param method The resampling method for the data.
+#' Currently supports "bootstrap" or "cv" (cross-validation).
+#' @param steps Number of resampling runs we perform. Default is set to 1000.
 #' @import igraph
 #' @importFrom magrittr %>%
 #' @importFrom purrr map map2

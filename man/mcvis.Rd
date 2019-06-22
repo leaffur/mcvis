@@ -9,9 +9,10 @@ mcvis(X, method = "bootstrap", steps = 1000L)
 \arguments{
 \item{X}{A matrix of regressors (without intercept terms).}
 
-\item{method}{The resampling method for the data. Current supports "bootstrap" or "cv"(cross-validation).}
+\item{method}{The resampling method for the data.
+Currently supports "bootstrap" or "cv" (cross-validation).}
 
-\item{steps}{Number of sampling runs we perform. Default to 1000.}
+\item{steps}{Number of resampling runs we perform. Default is set to 1000.}
 }
 \description{
 Multi-collinearity Visualization

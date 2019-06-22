@@ -58,8 +58,6 @@ X = artificialeg[,1:9]
 mcvis_result = mcvis(X)
 igraph_mcvis(mcvis_result)
 ggplot_mcvis(mcvis_result)
-
-# pairsD3::pairsD3(X)
 ```
 
 # Shiny implementation
