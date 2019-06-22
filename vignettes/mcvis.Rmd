@@ -1,8 +1,8 @@
 ---
-title: "mcvis"
+title: "mcvis: Multi-collinearity Visualization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{mcvis}
+  %\VignetteIndexEntry{mcvis_demo}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,9 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(mcvis)
-```
 
 
 # Introduction
@@ -29,7 +26,9 @@ The `mcvis` package is a methodology that identifies multi-collinearity in linea
 
 Suppose that we have a simple scenario that two predictors are highly correlated. This high correlation is a potential cause of multicollinearity which could cause problems. 
 
-```{r}
+```{r setup, warning=FALSE, message=FALSE}
+library(mcvis)
+
 set.seed(1)
 p = 10
 n = 100
