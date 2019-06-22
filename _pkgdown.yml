@@ -1,1 +1,16 @@
-destination: docs
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    intro:
+      text: Vignette
+      href: articles/mcvis.html
+    reference:
+      text: Reference
+      href: reference/index.html
