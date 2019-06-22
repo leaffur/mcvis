@@ -10,7 +10,7 @@ navbar:
       href: index.html
     intro:
       text: Vignette
-      href: articles/mcvis.html
+      href: articles/mcvis_demo.html
     reference:
       text: Reference
       href: reference/index.html
