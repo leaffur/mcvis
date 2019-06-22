@@ -2,7 +2,7 @@
 title: "mcvis: Multi-collinearity Visualization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{mcvis_demo}
+  %\VignetteIndexEntry{mcvis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
