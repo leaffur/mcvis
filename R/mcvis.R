@@ -20,10 +20,12 @@
 #' @export
 #' @examples
 #' set.seed(1)
-#' library(mplot)
-#' data("artificialeg")
-#' X=artificialeg[,1:9]
-#' mcvis(X)
+#' p = 10
+#' n = 100
+#' X = matrix(rnorm(n*p), ncol = p)
+#' X[,1] = X[,2] + X[,3] + rnorm(n, 0, 0.1)
+#' mcvis_result = mcvis(X)
+#' mcvis_result$MC
 
 
 mcvis <- function(X,

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mcvis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.9</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>mcvis</span>(<span class='no'>X</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bootstrap"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000L</span>)</pre>
+    <pre class="usage"><span class='fu'>mcvis</span>(<span class='no'>X</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bootstrap"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000L</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>10L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -126,130 +126,71 @@ Currently supports "bootstrap" or "cv" (cross-validation).</p></td>
       <th>steps</th>
       <td><p>Number of resampling runs we perform. Default is set to 1000.</p></td>
     </tr>
+    <tr>
+      <th>k</th>
+      <td><p>Number of partitions in averaging theMC index. Default is set to 10.</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of outputs:</p><ul>
+<li><p>X: The original matrix of regressors (for plotting purposes)</p></li>
+<li><p>t_square: The t^2 statistics for the regression between the VIFs and the tau's.</p></li>
+<li><p>MC: The MC indices</p></li>
+<li><p>col.names: Column names (for plotting purposes)</p></li>
+</ul>
+
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mplot</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"artificialeg"</span>)
-<span class='no'>X</span><span class='kw'>=</span><span class='no'>artificialeg</span>[,<span class='fl'>1</span>:<span class='fl'>9</span>]
-<span class='fu'>mcvis</span>(<span class='no'>X</span>)</div><div class='output co'>#&gt; $X
-#&gt;         x1   x2   x3    x4   x5   x6   x7   x8   x9
-#&gt;  [1,]  0.1 -3.1 -0.6   2.4 -0.2  0.9  2.2 -7.9 -1.4
-#&gt;  [2,]  1.9 -3.2  1.9  -1.4 -2.5 -7.1  0.2  4.5 -0.2
-#&gt;  [3,] -0.7  0.2  2.2  -1.6 -4.2 -4.4  0.8  2.9  4.8
-#&gt;  [4,] -0.9 -2.9  2.4  -2.6  4.5 -4.7 -0.6  0.1 -4.2
-#&gt;  [5,]  1.7 -3.2 -0.6  -0.5 -1.0 -1.2  2.8 -0.8  0.5
-#&gt;  [6,]  0.0  2.0  0.9   3.8 -2.5 -1.5  1.2  1.4  3.7
-#&gt;  [7,] -0.1  0.7  0.0   2.2  1.7  1.9 -1.6  0.4  0.5
-#&gt;  [8,] -2.0 -1.6 -2.1  -3.8  1.6  0.4 -2.2  1.9 -2.5
-#&gt;  [9,] -5.8  1.7 -1.6  -0.5 -1.3  4.9 -5.9 -0.5  3.3
-#&gt; [10,] -1.0  0.7  1.7  -1.8  6.6  2.4  1.0 -3.7 -2.8
-#&gt; [11,] -1.3  0.1 -0.1   0.2 -1.0  0.5  0.5 -1.9  2.5
-#&gt; [12,]  0.8  1.3  2.2   3.2 -2.7 -3.1  0.6  2.6  3.9
-#&gt; [13,]  1.1  2.0 -3.7  -0.7 -1.1  0.8 -3.0 13.1  1.8
-#&gt; [14,] -2.4 -3.6 -1.7  -7.7  0.4 -1.5 -3.4  3.9 -2.0
-#&gt; [15,]  0.4  2.2  0.6   5.5 -0.3  4.1 -0.4 -4.1  3.1
-#&gt; [16,] -1.4 -0.1 -2.7   1.0  2.1  5.2 -2.9 -0.6 -0.5
-#&gt; [17,]  3.2 -5.4 -0.4  -2.6  5.1 -1.7  0.6  5.7 -0.7
-#&gt; [18,] -0.3 -0.7 -0.9   1.3 -0.5  4.6  3.1 -9.4  1.1
-#&gt; [19,]  3.3 -0.4  1.8  -3.7  2.0 -6.1  2.5  5.5 -4.3
-#&gt; [20,] -0.3  4.3  1.3  -1.4 -3.5 -0.7 -3.3  8.2  5.4
-#&gt; [21,]  2.8 -4.0 -0.1  -2.4  0.1 -5.5 -1.5  8.5 -2.4
-#&gt; [22,]  0.2 -4.4  2.7   1.2  3.0 -5.3  2.2 -5.5 -4.0
-#&gt; [23,] -0.6  0.1 -0.9   4.7 -5.7 -0.7  1.3 -3.1  3.7
-#&gt; [24,]  0.3 -2.0 -1.2  -3.2  1.6  5.3 -0.8 -6.2 -2.5
-#&gt; [25,]  3.7 -0.3 -0.4   1.0 -0.2 -1.3  2.0  2.3 -0.9
-#&gt; [26,] -2.0  1.4 -0.5  -2.3 -2.0  1.9  0.2 -3.4  0.5
-#&gt; [27,] -1.9 -2.2  2.9  -4.4  2.5 -3.8 -6.7  6.9  1.1
-#&gt; [28,]  4.1  3.1  2.5  -0.3 -2.2 -2.3  3.2  2.3  0.9
-#&gt; [29,]  1.4 -0.2  0.0  -1.6 -2.5 -5.2  5.5  3.2  1.2
-#&gt; [30,] -3.8  2.1 -1.2   3.7 -2.4  5.4 -3.2 -3.1  5.8
-#&gt; [31,]  3.2 -2.7 -5.1 -10.0  5.7  4.3  2.1  5.5 -4.8
-#&gt; [32,]  2.1  2.6 -0.7   4.4 -6.5 -1.1 -0.5  5.8  5.4
-#&gt; [33,] -2.9  2.2  1.1  -1.3 -2.6 -2.3 -3.6  2.0 -0.5
-#&gt; [34,] -1.3 -4.8  0.8  -0.8 -2.4 -3.0  3.4 -8.3  0.0
-#&gt; [35,]  2.7  5.9  8.5  -1.4 -6.1 -9.3 -2.0  5.2  3.5
-#&gt; [36,]  1.1  0.5 -1.1  -0.4 -0.4  1.6  3.0 -4.2 -1.9
-#&gt; [37,]  1.9  2.2  3.8  -2.5  0.8 -0.1  0.8 -2.8 -0.7
-#&gt; [38,] -1.2 -1.4  0.4  -0.9  1.5  2.4 -2.5 -4.1 -1.5
-#&gt; [39,]  0.1 -4.0 -3.0  -1.2  3.9  4.2  1.2 -3.9 -2.4
-#&gt; [40,]  1.2  6.9  0.6   4.4 -9.3 -6.4 -5.4 17.7  5.7
-#&gt; [41,]  0.9 -0.9 -2.4  -2.2  1.8  3.3  2.0 -2.8 -3.0
-#&gt; [42,] -1.0 -0.4 -5.7  -1.2  2.1  8.1  2.6 -1.9  0.7
-#&gt; [43,]  0.7 -0.6 -3.1   4.6 -1.5  1.5 -0.7  5.9  3.6
-#&gt; [44,] -0.3 -2.6  0.7   4.1 -1.2 -5.7 -1.4  5.7  3.1
-#&gt; [45,]  1.4  2.4  2.6  -5.7 -1.7 -0.8 -2.0  0.8 -1.6
-#&gt; [46,] -3.7 -1.6  1.2   0.6 -0.1  0.7 -0.3 -5.2  3.8
-#&gt; [47,] -1.1  3.4 -0.7   0.2 -0.3  2.6  0.1 -3.2 -1.4
-#&gt; [48,]  0.8 -2.6 -4.1  -1.1  0.6  1.8  0.3  5.2  0.9
-#&gt; [49,]  0.8 -2.2 -2.5   0.7 -0.6 -3.7 -0.9 10.0  0.4
-#&gt; [50,] -1.1 -0.8 -0.2  -3.7 -0.8 -0.5 -0.7  1.8  1.6
-#&gt; 
-#&gt; $t_sqaure
-#&gt;             [,1]        [,2]        [,3]       [,4]       [,5]         [,6]
-#&gt;  [1,]   1.967760   0.7533387    2.624832  2.6114367  10.767830    0.7480155
-#&gt;  [2,]  16.032110   2.2569054    7.218395  7.5825411   2.032889   20.4196600
-#&gt;  [3,]   3.437810   1.3532097    2.400201 10.6328265   7.100490    7.8497550
-#&gt;  [4,]   1.033215   2.0102518    3.363883  1.2552388   1.507252    9.1448258
-#&gt;  [5,]   1.050024   1.1186139    1.633117  5.8506628   4.022500    1.3793730
-#&gt;  [6,]   3.763165   3.0997907    6.728832  0.8355621   8.390723    6.0357221
-#&gt;  [7,]   2.350868   4.0946500    8.353349  1.0231678   2.712280    1.5936541
-#&gt;  [8,]   4.880053   1.8269292    7.732470  2.2292740   1.365317    6.0632721
-#&gt;  [9,] 243.598793 357.1597561 7805.817782 55.5882700 850.200266 7998.3809004
-#&gt;              [,7]         [,8]        [,9]
-#&gt;  [1,]   0.8059256 2.720554e+00   0.7197472
-#&gt;  [2,]   2.7586832 8.895822e+00   1.4112125
-#&gt;  [3,]   6.7732471 3.742916e+00   1.9963607
-#&gt;  [4,]   0.7270293 1.604581e+00   1.2288196
-#&gt;  [5,]   3.6031774 1.161977e+00   0.7398536
-#&gt;  [6,]   0.6175760 3.385134e+00   1.5857500
-#&gt;  [7,]   1.2693415 3.434905e-01   2.8461249
-#&gt;  [8,]   2.7493466 1.085598e+00   2.1959969
-#&gt;  [9,] 417.2315569 1.038225e+04 535.7736271
-#&gt; 
-#&gt; $MC
-#&gt;             col1       col2       col3        col4       col5       col6
-#&gt; tau9 0.082959790 0.03176039 0.11066164 0.110096896 0.45396645 0.03153597
-#&gt; tau8 0.233676231 0.03289555 0.10521181 0.110519428 0.02963040 0.29762703
-#&gt; tau7 0.075911939 0.02988088 0.05299999 0.234788566 0.15678934 0.17333422
-#&gt; tau6 0.047232461 0.09189682 0.15377685 0.057382092 0.06890267 0.41804733
-#&gt; tau5 0.051072968 0.05440915 0.07943448 0.284575008 0.19565357 0.06709241
-#&gt; tau4 0.109260131 0.08999964 0.19536560 0.024259796 0.24361712 0.17524178
-#&gt; tau3 0.095614551 0.16653769 0.33974760 0.041614305 0.11031392 0.06481714
-#&gt; tau2 0.161975947 0.06063840 0.25665176 0.073992799 0.04531683 0.20124869
-#&gt; tau1 0.008503762 0.01246805 0.27249240 0.001940525 0.02967954 0.27921456
-#&gt;            col7       col8       col9
-#&gt; tau9 0.03397743 0.11469724 0.03034419
-#&gt; tau8 0.04020922 0.12966117 0.02056915
-#&gt; tau7 0.14956333 0.08264913 0.04408260
-#&gt; tau6 0.03323548 0.07335195 0.05617436
-#&gt; tau5 0.17525779 0.05651830 0.03598632
-#&gt; tau4 0.01793076 0.09828434 0.04604083
-#&gt; tau3 0.05162668 0.01397045 0.11575766
-#&gt; tau2 0.09125475 0.03603254 0.07288828
-#&gt; tau1 0.01456509 0.36243281 0.01870326
-#&gt; 
-#&gt; $col.names
-#&gt; [1] "x1" "x2" "x3" "x4" "x5" "x6" "x7" "x8" "x9"
-#&gt; </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>
+<span class='no'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='no'>X</span>[,<span class='fl'>1</span>] <span class='kw'>=</span> <span class='no'>X</span>[,<span class='fl'>2</span>] + <span class='no'>X</span>[,<span class='fl'>3</span>] + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>, <span class='fl'>0</span>, <span class='fl'>0.1</span>)
+<span class='no'>mcvis_result</span> <span class='kw'>=</span> <span class='fu'>mcvis</span>(<span class='no'>X</span>)
+<span class='no'>mcvis_result</span>$<span class='no'>MC</span></div><div class='output co'>#&gt;             col1       col2       col3         col4         col5         col6
+#&gt; tau10 0.51176833 0.23356262 0.18530682 5.794124e-03 1.956601e-02 8.241155e-03
+#&gt; tau9  0.18954718 0.05582030 0.10974693 2.242612e-01 1.922421e-02 1.391731e-02
+#&gt; tau8  0.26393131 0.12724836 0.12260071 6.323172e-02 4.488702e-02 1.482363e-01
+#&gt; tau7  0.21164243 0.09668578 0.12048910 4.915850e-02 8.084175e-02 8.612692e-02
+#&gt; tau6  0.10240685 0.08530655 0.05976011 9.486651e-02 1.192905e-01 1.335532e-01
+#&gt; tau5  0.09239208 0.14014434 0.05298829 1.620782e-02 8.244494e-02 2.128902e-02
+#&gt; tau4  0.04232123 0.03532059 0.04870816 6.903832e-02 1.246710e-01 5.454640e-02
+#&gt; tau3  0.04530333 0.02762711 0.03161900 2.563378e-01 1.046091e-01 8.564887e-02
+#&gt; tau2  0.01359146 0.01702145 0.02023582 1.222307e-01 5.794797e-02 2.189361e-01
+#&gt; tau1  0.50482360 0.23264155 0.26253164 3.449305e-07 3.404215e-07 2.812451e-07
+#&gt;               col7         col8         col9        col10
+#&gt; tau10 8.686841e-03 6.945818e-03 4.148424e-03 1.597986e-02
+#&gt; tau9  2.730120e-02 2.235433e-01 3.402609e-02 1.026122e-01
+#&gt; tau8  4.279712e-02 7.834091e-02 3.639241e-02 7.233408e-02
+#&gt; tau7  5.050651e-02 1.358341e-01 8.784228e-02 8.087264e-02
+#&gt; tau6  7.978700e-02 1.247101e-01 6.527401e-02 1.350451e-01
+#&gt; tau5  3.925549e-01 3.921027e-02 6.513683e-02 9.763149e-02
+#&gt; tau4  1.718506e-01 2.832636e-01 5.744919e-02 1.128309e-01
+#&gt; tau3  7.051482e-02 2.775603e-01 2.779688e-02 7.298282e-02
+#&gt; tau2  6.498623e-02 9.937120e-02 2.833542e-01 1.023249e-01
+#&gt; tau1  2.369360e-07 8.090066e-07 9.649026e-07 2.182271e-07</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
-    <p>Chen Lin, Kevin Wang</p>
+    <p>Chen Lin, Kevin Wang, Samuel Mueller</p>
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Chen Lin, Kevin Wang, Samuel Mueller.</p>
+  <p>Developed by Kevin Wang, Chen Lin, Samuel Mueller.</p>
 </div>
 
 <div class="pkgdown">

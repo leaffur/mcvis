@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mcvis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.9</span>
       </span>
     </div>
 
@@ -134,9 +134,11 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mplot</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"artificialeg"</span>)
-<span class='no'>X</span><span class='kw'>=</span><span class='no'>artificialeg</span>[,<span class='fl'>1</span>:<span class='fl'>9</span>]
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>
+<span class='no'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='no'>X</span>[,<span class='fl'>1</span>] <span class='kw'>=</span> <span class='no'>X</span>[,<span class='fl'>2</span>] + <span class='no'>X</span>[,<span class='fl'>3</span>] + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>, <span class='fl'>0</span>, <span class='fl'>0.1</span>)
 <span class='no'>mcvis_result</span> <span class='kw'>=</span> <span class='fu'><a href='mcvis.html'>mcvis</a></span>(<span class='no'>X</span>)
 <span class='fu'>igraph_mcvis</span>(<span class='no'>mcvis_result</span>)</div><div class='img'><img src='igraph_mcvis-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
@@ -149,13 +151,13 @@
     </ul>
 
     <h2>Author</h2>
-    <p>Chen Lin</p>
+    <p>Chen Lin, Kevin Wang, Samuel Mueller</p>
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Chen Lin, Kevin Wang, Samuel Mueller.</p>
+  <p>Developed by Kevin Wang, Chen Lin, Samuel Mueller.</p>
 </div>
 
 <div class="pkgdown">

@@ -32,7 +32,12 @@
 
 <meta property="og:title" content="ggplot visualisation for mcvis method — ggplot_mcvis" />
 
-<meta property="og:description" content="ggplot visualisation for mcvis method" />
+<meta property="og:description" content="The main output of the `mcvis` function is the MC-index matrix,
+which has the tau's as rows and the original variables as columns.
+The ggplot_mcvis function first orders the matrix columns by
+the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
+Under this ordering, the main cause of collinearity is the first entry in the ordered matrix.
+Plotting parameters (e.g. thickness and categories) are then chosen to highlight." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mcvis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.9</span>
       </span>
     </div>
 
@@ -104,12 +109,17 @@
 
     <div class="ref-description">
     
-    <p>ggplot visualisation for mcvis method</p>
+    <p>The main output of the `mcvis` function is the MC-index matrix,
+which has the tau's as rows and the original variables as columns.
+The ggplot_mcvis function first orders the matrix columns by
+the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
+Under this ordering, the main cause of collinearity is the first entry in the ordered matrix.
+Plotting parameters (e.g. thickness and categories) are then chosen to highlight.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>ggplot_mcvis</span>(<span class='no'>mcvis_result</span>, <span class='kw'>eig.max</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>mcvis_result</span>$<span class='no'>MC</span>),
-  <span class='kw'>vol.max</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>mcvis_result</span>$<span class='no'>MC</span>))</pre>
+  <span class='kw'>var.max</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>mcvis_result</span>$<span class='no'>MC</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,16 +133,22 @@
       <td><p>The maximum number of eigenvalues to be displayed on the plot.</p></td>
     </tr>
     <tr>
-      <th>vol.max</th>
-      <td><p>The maximum number of variables to be displayed on the plot.</p></td>
+      <th>var.max</th>
+      <td><p>The maximum number of variables (i.e. columns) to be displayed on the plot.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A ggplot</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mplot</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"artificialeg"</span>)
-<span class='no'>X</span><span class='kw'>=</span><span class='no'>artificialeg</span>[,<span class='fl'>1</span>:<span class='fl'>9</span>]
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>
+<span class='no'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
+<span class='no'>X</span>[,<span class='fl'>1</span>] <span class='kw'>=</span> <span class='no'>X</span>[,<span class='fl'>2</span>] + <span class='no'>X</span>[,<span class='fl'>3</span>] + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>, <span class='fl'>0</span>, <span class='fl'>0.1</span>)
 <span class='no'>mcvis_result</span> <span class='kw'>=</span> <span class='fu'><a href='mcvis.html'>mcvis</a></span>(<span class='no'>X</span>)
 <span class='fu'>ggplot_mcvis</span>(<span class='no'>mcvis_result</span>)</div><div class='img'><img src='ggplot_mcvis-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
@@ -140,18 +156,20 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
-    <p>Chen Lin, Kevin Wang</p>
+    <p>Chen Lin, Kevin Wang, Samuel Mueller</p>
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Chen Lin, Kevin Wang, Samuel Mueller.</p>
+  <p>Developed by Kevin Wang, Chen Lin, Samuel Mueller.</p>
 </div>
 
 <div class="pkgdown">

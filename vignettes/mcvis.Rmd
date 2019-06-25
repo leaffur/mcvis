@@ -18,13 +18,13 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The `mcvis` package is a methodology that identifies multi-collinearity in linear regression. The `mcvis` method derives its own statistic (the `tau` statistic) that identify the relationship between the eigenvalues of the matrix $X^\top X$ and each of the original variable in $X$. 
+The `mcvis` package is a methodology that informs on multi-collinearity in linear regression. The `mcvis` method derives its own statistic (the MC-index) and measures the strength of association between variance inflation factors and eigenvalues. That is, it investigates which column(s) in the design matrix explain instability when inverting the $X^\top X$ matrix. 
 
 
 
 # Basic usage 
 
-Suppose that we have a simple scenario that two predictors are highly correlated. This high correlation is a potential cause of multicollinearity which could cause problems. 
+Suppose that we have a simple scenario that two predictors are highly correlated. This high correlation is a potential cause of multicollinearity which could cause problems in terms of very large variances of estimated model parameters in linear regression.
 
 ```{r setup, warning=FALSE, message=FALSE}
 library(mcvis)
@@ -47,7 +47,7 @@ ggplot_mcvis(mcvis_result)
 In practice, collinearity may not be solely caused by a single pair of highly correlated variables. In the `mplot` package, a simulated data was created with each of its column being a linear combination of other columns. In this case, the cause of the collinearity is not clear from the correlation matrix. 
 
 
-The `mcvis` visualisation plot identified that the 8th variable is the main cause of collinearity of this data. Upon consultation with the data generation in this simulation, we see that the X8 is a linear combination of all other predictor variables. 
+The `mcvis` visualisation plot identified that the 8th variable is the main cause of collinearity of this data. Upon consultation with the data generation in this simulation, we see that the x8 is a linear combination of all other predictor variables. 
 
 ```{r}
 library(mplot)
