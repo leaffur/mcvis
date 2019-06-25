@@ -7,6 +7,7 @@
 #' @import igraph
 #' @export
 #' @examples
+#' set.seed(1)
 #' library(mplot)
 #' data("artificialeg")
 #' X=artificialeg[,1:9]

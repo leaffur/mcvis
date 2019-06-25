@@ -1,12 +1,20 @@
 #' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title ggplot visualisation for mcvis method
+#' @description The main output of the `mcvis` function is the MC-index matrix,
+#' which has the tau's as rows and the original variables as columns.
+#' The ggplot_mcvis function first orders the matrix columns by
+#' the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
+#' Under this ordering, the main cause of collinearity is the first entry in the ordered matrix.
+#' Plotting parameters (e.g. thickness and categories) are then chosen to highlight.
 #' @param mcvis_result Output of the mcvis function
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
-#' @param vol.max The maximum number of variables to be displayed on the plot.
+#' @param var.max The maximum number of variables (i.e. columns) to be displayed on the plot.
 #' @import ggplot2
 #' @importFrom reshape2 melt
+#' @return A ggplot
 #' @export
 #' @examples
+#' set.seed(1)
 #' library(mplot)
 #' data("artificialeg")
 #' X=artificialeg[,1:9]
@@ -15,18 +23,18 @@
 
 ggplot_mcvis = function(mcvis_result,
                         eig.max = ncol(mcvis_result$MC),
-                        vol.max = ncol(mcvis_result$MC))
-##if eig.max==1 or vol.max==1, the function fails to give an output.
+                        var.max = ncol(mcvis_result$MC))
+##if eig.max==1 or var.max==1, the function fails to give an output.
 {
   g = 1-mcvis_result$MC
   col.names = mcvis_result$col.names
   p = ncol(g)
   eig.max = min(p, eig.max)
-  vol.max = min(p, vol.max)
+  var.max = min(p, var.max)
   or = order(g[p,]) ## Order the columns of g by the smallest eigen value
-  or = or[1:vol.max]
+  or = or[1:var.max]
   g.or = g[,or]
-  if (vol.max > 1) {g.or = g.or[p:(p-eig.max+1),]} else {g.or = as.matrix(g.or[p:(p-eig.max+1)])}
+  if (var.max > 1) {g.or = g.or[p:(p-eig.max+1),]} else {g.or = as.matrix(g.or[p:(p-eig.max+1)])}
   if (eig.max == 1) {g.or = t(g.or)}
 
   #################  ggplot #######################
@@ -99,8 +107,7 @@ ggplot_mcvis = function(mcvis_result,
     geom_segment(data=axis_2, aes(x=x, xend=x, y=y, yend=y+0.025), size=0.7) +
     geom_text(data=axis_1, aes(label=label, x=x, y=y - 0.075)) +
     geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
-    labs(title = "Visualise tau against original variables",
-         caption = "Largest Eigen = smallest Eigenvalue") +
+    labs(title = "Multi-collinearity plot") +
     guides(
       colour = FALSE,
       size = guide_legend(title = ""),

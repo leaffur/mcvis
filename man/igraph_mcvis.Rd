@@ -20,6 +20,7 @@ igraph_mcvis(mcvis_result, tau = 2/3, eig.max = ncol(mcvis_result$MC),
 Multi-collinearity Visualization
 }
 \examples{
+set.seed(1)
 library(mplot)
 data("artificialeg")
 X=artificialeg[,1:9]

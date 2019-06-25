@@ -5,19 +5,28 @@
 \title{ggplot visualisation for mcvis method}
 \usage{
 ggplot_mcvis(mcvis_result, eig.max = ncol(mcvis_result$MC),
-  vol.max = ncol(mcvis_result$MC))
+  var.max = ncol(mcvis_result$MC))
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function}
 
 \item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
 
-\item{vol.max}{The maximum number of variables to be displayed on the plot.}
+\item{var.max}{The maximum number of variables (i.e. columns) to be displayed on the plot.}
+}
+\value{
+A ggplot
 }
 \description{
-ggplot visualisation for mcvis method
+The main output of the `mcvis` function is the MC-index matrix,
+which has the tau's as rows and the original variables as columns.
+The ggplot_mcvis function first orders the matrix columns by
+the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
+Under this ordering, the main cause of collinearity is the first entry in the ordered matrix.
+Plotting parameters (e.g. thickness and categories) are then chosen to highlight.
 }
 \examples{
+set.seed(1)
 library(mplot)
 data("artificialeg")
 X=artificialeg[,1:9]

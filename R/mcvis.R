@@ -6,10 +6,12 @@
 #' @param steps Number of resampling runs we perform. Default is set to 1000.
 #' @param k Number of partitions in averaging theMC index. Default is set to 10.
 #' @return A list of outputs:
-#' \item{X: The original matrix of regressors (for plotting purposes)}
-#' \item{t_square: The t^2 statistics for the regression between the VIFs and the tau's.}
-#' \item{MC: The MC indices}
-#' \item{col.names: Column names (for plotting purposes)}
+#' \itemize{
+#' \item{X: }{The original matrix of regressors (for plotting purposes)}
+#' \item{t_square: }{The t^2 statistics for the regression between the VIFs and the tau's.}
+#' \item{MC: }{The MC indices}
+#' \item{col.names: }{Column names (for plotting purposes)}
+#' }
 #' @import igraph
 #' @importFrom magrittr %>%
 #' @importFrom purrr map map2
@@ -17,6 +19,7 @@
 #' @importFrom graphics par plot text
 #' @export
 #' @examples
+#' set.seed(1)
 #' library(mplot)
 #' data("artificialeg")
 #' X=artificialeg[,1:9]
@@ -101,4 +104,3 @@ mcvis <- function(X,
   )
   return(result)
 }
-

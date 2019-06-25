@@ -9,6 +9,7 @@
 #' @export
 #' @examples
 #' \dontrun{
+#' set.seed(1)
 #' library(mplot)
 #' data("artificialeg", package = "mplot")
 #' p = dim(artificialeg)[2]-1

@@ -18,15 +18,18 @@ Currently supports "bootstrap" or "cv" (cross-validation).}
 }
 \value{
 A list of outputs:
-\item{X: The original matrix of regressors (for plotting purposes)}
-\item{t_square: The t^2 statistics for the regression between the VIFs and the tau's.}
-\item{MC: The MC indices}
-\item{col.names: Column names (for plotting purposes)}
+\itemize{
+\item{X: }{The original matrix of regressors (for plotting purposes)}
+\item{t_square: }{The t^2 statistics for the regression between the VIFs and the tau's.}
+\item{MC: }{The MC indices}
+\item{col.names: }{Column names (for plotting purposes)}
+}
 }
 \description{
 Multi-collinearity Visualization
 }
 \examples{
+set.seed(1)
 library(mplot)
 data("artificialeg")
 X=artificialeg[,1:9]
