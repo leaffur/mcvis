@@ -118,7 +118,7 @@ ggplot_mcvis = function(mcvis_result,
     labs(title = "Multi-collinearity plot") +
     guides(
       colour = FALSE,
-      size = guide_legend(title = ""),
+      size = guide_legend(title = "MC categories"),
       alpha = guide_legend(title = "")
       )
   return(gg)

@@ -11,9 +11,9 @@
 #' p = 10
 #' n = 100
 #' X = matrix(rnorm(n*p), ncol = p)
-#' X[,1] = X[,2] + X[,3] + rnorm(n, 0, 0.1)
+#' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
-#' igraph_mcvis(mcvis_result)
+#' igraph_mcvis(mcvis_result, thres = 1)
 
 
 igraph_mcvis <- function(mcvis_result,
@@ -50,14 +50,15 @@ igraph_mcvis <- function(mcvis_result,
 
   graph_attr(G,'weight') = vec
   par(bg="white")
-  G.text<-paste('x',or," -- ", col.names,sep="")
-  val<-paste('tau',p:(p-eig.max+1),sep="")
-  col<-paste('x',or,sep="")
+  G.text <- paste0('x',or," -- ", col.names)
+  val <- paste0('tau', p:(p-eig.max+1))
+  # val<-paste(expression(beta),p:(p-eig.max+1),sep="")
+  col <- paste0('x', or)
 
   plot(G,
        edge.color = grey(graph_attr(G,'weight')),
        vertex.size=20,
-       vertex.label=c(val,col),
+       vertex.label=c(val, col),
        vertex.color=c("yellow","cyan")[V(G)$type+1],
        edge.width=(rep(1,length(vec))-graph_attr(G,'weight'))*10,
        layout=layout_as_bipartite,
