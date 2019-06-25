@@ -1,4 +1,4 @@
-#' @author Chen Lin
+#' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title Multi-collinearity Visualization
 #' @param mcvis_result Output of the mcvis function
 #' @param tau A parameter determining below which thickness the plotting lines hide.

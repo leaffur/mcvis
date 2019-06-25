@@ -1,4 +1,4 @@
-#' @author Chen Lin, Kevin Wang
+#' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title Shiny app for mcvis exploration
 #' @param mcvis_result Output of the mcvis function.
 #' @import ggplot2

@@ -1,0 +1,11 @@
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Article",
+         title = "{mcvis: A new framework for collinearity discovery, diagnostic and visualization}",
+         author = c(person("Chen", "Lin"),
+                    person("Kevin", "Wang"),
+                    person("Samuel", "Mueller")
+                    ),
+         year = "2019",
+         journal = "To be published",
+         header = "To cite mcvis in publications please use:")

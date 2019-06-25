@@ -1,9 +1,15 @@
-#' @author Chen Lin, Kevin Wang
+#' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title Multi-collinearity Visualization
 #' @param X A matrix of regressors (without intercept terms).
 #' @param method The resampling method for the data.
 #' Currently supports "bootstrap" or "cv" (cross-validation).
 #' @param steps Number of resampling runs we perform. Default is set to 1000.
+#' @param k Number of partitions in averaging theMC index. Default is set to 10.
+#' @return A list of outputs:
+#' \item{X: The original matrix of regressors (for plotting purposes)}
+#' \item{t_square: The t^2 statistics for the regression between the VIFs and the tau's.}
+#' \item{MC: The MC indices}
+#' \item{col.names: Column names (for plotting purposes)}
 #' @import igraph
 #' @importFrom magrittr %>%
 #' @importFrom purrr map map2
@@ -18,8 +24,9 @@
 
 
 mcvis <- function(X,
-                   method = "bootstrap",
-                   steps = 1000L)
+                  method = "bootstrap",
+                  steps = 1000L,
+                  k = 10L)
 {
   n = dim(X)[1]
   p = dim(X)[2] ## We now enforce no intercept terms
@@ -63,7 +70,7 @@ mcvis <- function(X,
     do.call(cbind, .)
   ##############################
 
-  indexList = unname(base::split(1:steps, sort((1:steps) %% 10)))
+  indexList = unname(base::split(1:steps, sort((1:steps) %% k)))
   tor = matrix(0, p, p)
 
   for (j in 1:p){
@@ -88,8 +95,8 @@ mcvis <- function(X,
   ####################################################################
   result = list(
     X = X,
-    t_sqaure = tor,
-    MC = 1-MC,
+    t_square = tor,
+    MC = 1 - MC,
     col.names = col.names
   )
   return(result)

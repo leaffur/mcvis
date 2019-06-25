@@ -27,5 +27,5 @@ mcvis_result = mcvis(X)
 igraph_mcvis(mcvis_result)
 }
 \author{
-Chen Lin
+Chen Lin, Kevin Wang, Samuel Mueller
 }

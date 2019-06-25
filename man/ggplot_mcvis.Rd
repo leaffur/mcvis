@@ -25,5 +25,5 @@ mcvis_result = mcvis(X)
 ggplot_mcvis(mcvis_result)
 }
 \author{
-Chen Lin, Kevin Wang
+Chen Lin, Kevin Wang, Samuel Mueller
 }

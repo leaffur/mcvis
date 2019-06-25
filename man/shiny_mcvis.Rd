@@ -23,5 +23,5 @@ shiny_mcvis(mcvis_result)
 }
 }
 \author{
-Chen Lin, Kevin Wang
+Chen Lin, Kevin Wang, Samuel Mueller
 }

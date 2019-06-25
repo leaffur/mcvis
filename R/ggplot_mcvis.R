@@ -1,4 +1,4 @@
-#' @author Chen Lin, Kevin Wang
+#' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title ggplot visualisation for mcvis method
 #' @param mcvis_result Output of the mcvis function
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.

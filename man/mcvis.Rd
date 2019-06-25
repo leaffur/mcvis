@@ -4,7 +4,7 @@
 \alias{mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis(X, method = "bootstrap", steps = 1000L)
+mcvis(X, method = "bootstrap", steps = 1000L, k = 10L)
 }
 \arguments{
 \item{X}{A matrix of regressors (without intercept terms).}
@@ -13,6 +13,15 @@ mcvis(X, method = "bootstrap", steps = 1000L)
 Currently supports "bootstrap" or "cv" (cross-validation).}
 
 \item{steps}{Number of resampling runs we perform. Default is set to 1000.}
+
+\item{k}{Number of partitions in averaging theMC index. Default is set to 10.}
+}
+\value{
+A list of outputs:
+\item{X: The original matrix of regressors (for plotting purposes)}
+\item{t_square: The t^2 statistics for the regression between the VIFs and the tau's.}
+\item{MC: The MC indices}
+\item{col.names: Column names (for plotting purposes)}
 }
 \description{
 Multi-collinearity Visualization
@@ -24,5 +33,5 @@ X=artificialeg[,1:9]
 mcvis(X)
 }
 \author{
-Chen Lin, Kevin Wang
+Chen Lin, Kevin Wang, Samuel Mueller
 }
