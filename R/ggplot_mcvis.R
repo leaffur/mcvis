@@ -1,11 +1,18 @@
 #' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title ggplot visualisation for mcvis method
-#' @description The main output of the `mcvis` function is the MC-index matrix,
-#' which has the tau's as rows and the original variables as columns.
-#' The ggplot_mcvis function first orders the matrix columns by
+#' @description
+#' The ggplot_mcvis function first orders the MC-index matrix columns by
 #' the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
-#' Under this ordering, the main cause of collinearity is the first entry in the ordered matrix.
-#' Plotting parameters (e.g. thickness and categories) are then chosen to highlight.
+#' Under this ordering,
+#' the first entry of the matrix is classified as a "category 5" thickness in plotting
+#' Subsequently, other lines are sequentially put in the categories of
+#' \itemize{
+#'  \item category 5: anything equal or above the first entry of the matrix
+#'  \item category 4: anything above 90 \% of the first entry of the matrix
+#'  \item category 3: anything above 70 \% of the first entry of the matrix
+#'  \item category 2: anything above 50 \% of the first entry of the matrix
+#'  \item category 1: anything above 1 \% of the first entry of the matrix
+#' }
 #' @param mcvis_result Output of the mcvis function
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
 #' @param var.max The maximum number of variables (i.e. columns) to be displayed on the plot.
@@ -18,7 +25,7 @@
 #' p = 10
 #' n = 100
 #' X = matrix(rnorm(n*p), ncol = p)
-#' X[,1] = X[,2] + X[,3] + rnorm(n, 0, 0.1)
+#' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
 #' ggplot_mcvis(mcvis_result)
 

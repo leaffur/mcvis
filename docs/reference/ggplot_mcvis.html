@@ -32,12 +32,17 @@
 
 <meta property="og:title" content="ggplot visualisation for mcvis method — ggplot_mcvis" />
 
-<meta property="og:description" content="The main output of the `mcvis` function is the MC-index matrix,
-which has the tau's as rows and the original variables as columns.
-The ggplot_mcvis function first orders the matrix columns by
+<meta property="og:description" content="The ggplot_mcvis function first orders the MC-index matrix columns by
 the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
-Under this ordering, the main cause of collinearity is the first entry in the ordered matrix.
-Plotting parameters (e.g. thickness and categories) are then chosen to highlight." />
+Under this ordering,
+the first entry of the matrix is classified as a &quot;category 5&quot; thickness in plotting
+Subsequently, other lines are sequentially put in the categories of
+category 5: anything equal or above the first entry of the matrix
+category 4: anything above 90 % of the first entry of the matrix
+category 3: anything above 70 % of the first entry of the matrix
+category 2: anything above 50 % of the first entry of the matrix
+category 1: anything above 1 % of the first entry of the matrix
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,12 +114,17 @@ Plotting parameters (e.g. thickness and categories) are then chosen to highlight
 
     <div class="ref-description">
     
-    <p>The main output of the `mcvis` function is the MC-index matrix,
-which has the tau's as rows and the original variables as columns.
-The ggplot_mcvis function first orders the matrix columns by
+    <p>The ggplot_mcvis function first orders the MC-index matrix columns by
 the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
-Under this ordering, the main cause of collinearity is the first entry in the ordered matrix.
-Plotting parameters (e.g. thickness and categories) are then chosen to highlight.</p>
+Under this ordering,
+the first entry of the matrix is classified as a "category 5" thickness in plotting
+Subsequently, other lines are sequentially put in the categories of</p><ul>
+<li><p>category 5: anything equal or above the first entry of the matrix</p></li>
+<li><p>category 4: anything above 90 % of the first entry of the matrix</p></li>
+<li><p>category 3: anything above 70 % of the first entry of the matrix</p></li>
+<li><p>category 2: anything above 50 % of the first entry of the matrix</p></li>
+<li><p>category 1: anything above 1 % of the first entry of the matrix</p></li>
+</ul>
     
     </div>
 
@@ -148,7 +158,7 @@ Plotting parameters (e.g. thickness and categories) are then chosen to highlight
 <span class='no'>p</span> <span class='kw'>=</span> <span class='fl'>10</span>
 <span class='no'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>
 <span class='no'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='no'>p</span>)
-<span class='no'>X</span>[,<span class='fl'>1</span>] <span class='kw'>=</span> <span class='no'>X</span>[,<span class='fl'>2</span>] + <span class='no'>X</span>[,<span class='fl'>3</span>] + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>, <span class='fl'>0</span>, <span class='fl'>0.1</span>)
+<span class='no'>X</span>[,<span class='fl'>1</span>] <span class='kw'>=</span> <span class='no'>X</span>[,<span class='fl'>2</span>] + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>, <span class='fl'>0</span>, <span class='fl'>0.1</span>)
 <span class='no'>mcvis_result</span> <span class='kw'>=</span> <span class='fu'><a href='mcvis.html'>mcvis</a></span>(<span class='no'>X</span>)
 <span class='fu'>ggplot_mcvis</span>(<span class='no'>mcvis_result</span>)</div><div class='img'><img src='ggplot_mcvis-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
