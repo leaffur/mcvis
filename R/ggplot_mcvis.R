@@ -11,7 +11,7 @@
 #'  \item category 4: anything above 90 \% of the first entry of the matrix
 #'  \item category 3: anything above 70 \% of the first entry of the matrix
 #'  \item category 2: anything above 50 \% of the first entry of the matrix
-#'  \item category 1: anything above 1 \% of the first entry of the matrix
+#'  \item category 1: anything above 10 \% of the first entry of the matrix
 #' }
 #' @param mcvis_result Output of the mcvis function
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
@@ -57,7 +57,7 @@ ggplot_mcvis = function(mcvis_result,
   # sizeCategory5 = 1
   # sizeCategory5 = max(thickness)
   sizeCategory5 = thickness[1]
-  sizeCategory1 = 0.01*sizeCategory5
+  sizeCategory1 = 0.1*sizeCategory5
   sizeCategory2 = 0.5*sizeCategory5
   sizeCategory3 = 0.7*sizeCategory5
   sizeCategory4 = 0.9*sizeCategory5
@@ -119,7 +119,7 @@ ggplot_mcvis = function(mcvis_result,
     guides(
       colour = FALSE,
       size = guide_legend(title = "MC categories"),
-      alpha = guide_legend(title = "")
+      alpha = FALSE
       )
   return(gg)
 

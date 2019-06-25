@@ -28,7 +28,7 @@ Subsequently, other lines are sequentially put in the categories of
  \item category 4: anything above 90 \% of the first entry of the matrix
  \item category 3: anything above 70 \% of the first entry of the matrix
  \item category 2: anything above 50 \% of the first entry of the matrix
- \item category 1: anything above 1 \% of the first entry of the matrix
+ \item category 1: anything above 10 \% of the first entry of the matrix
 }
 }
 \examples{
