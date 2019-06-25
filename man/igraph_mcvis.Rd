@@ -4,17 +4,17 @@
 \alias{igraph_mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-igraph_mcvis(mcvis_result, tau = 2/3, eig.max = ncol(mcvis_result$MC),
-  vol.max = ncol(mcvis_result$MC))
+igraph_mcvis(mcvis_result, thres = 2/3,
+  eig.max = ncol(mcvis_result$MC), var.max = ncol(mcvis_result$MC))
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function}
 
-\item{tau}{A parameter determining below which thickness the plotting lines hide.}
+\item{thres}{A parameter determining below which thickness the plotting lines hide.}
 
 \item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
 
-\item{vol.max}{The maximum number of variables to be displayed on the plot.}
+\item{var.max}{The maximum number of variables to be displayed on the plot.}
 }
 \description{
 Multi-collinearity Visualization
