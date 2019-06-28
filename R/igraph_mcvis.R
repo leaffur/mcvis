@@ -35,7 +35,7 @@ igraph_mcvis <- function(mcvis_result,
   if (var.max > 1) {g.or = g.or[p:(p-eig.max+1),]} else {g.or = as.matrix(g.or[p:(p-eig.max+1)])}
   if (eig.max == 1) {g.or = t(g.or)}
 
- ######################
+  ######################
   ## igraph plotting
   g.or[g.or > 1-thres/p] = 1
   ## For plotting purpose, if the values of g.or is above a certain threshold, then we set it to 1
@@ -51,8 +51,7 @@ igraph_mcvis <- function(mcvis_result,
   graph_attr(G,'weight') = vec
   par(bg="white")
   G.text <- paste0('x',or," -- ", col.names)
-  val <- paste0('tau', p:(p-eig.max+1))
-  # val<-paste(expression(beta),p:(p-eig.max+1),sep="")
+  val <- as.expression(lapply(1:10, function(i) bquote(tau[.(i)])))
   col <- paste0('x', or)
 
   plot(G,
@@ -69,5 +68,5 @@ igraph_mcvis <- function(mcvis_result,
   {text(x=rep(1.7,var.max),y=(1:var.max)*2/(1-var.max)+(var.max+1)/(var.max-1),G.text)}
 
   if (var.max==1) {text(x=2,y=0,G.text)}
-  text(x=0,y=-1.4,"tau1: the inverse of the smallest eigenvalue")
+  text(x=0,y=-1.4, expression(paste(tau, "1: the inverse of the smallest eigenvalue")))
 }
