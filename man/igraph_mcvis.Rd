@@ -27,6 +27,7 @@ X = matrix(rnorm(n*p), ncol = p)
 X[,1] = X[,2] + rnorm(n, 0, 0.1)
 mcvis_result = mcvis(X)
 igraph_mcvis(mcvis_result, thres = 1)
+igraph_mcvis(mcvis_result, thres = 1, eig.max = 1)
 }
 \author{
 Chen Lin, Kevin Wang, Samuel Mueller

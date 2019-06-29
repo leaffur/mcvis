@@ -14,6 +14,7 @@
 #' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
 #' igraph_mcvis(mcvis_result, thres = 1)
+#' igraph_mcvis(mcvis_result, thres = 1, eig.max = 1)
 
 
 igraph_mcvis <- function(mcvis_result,
@@ -51,7 +52,8 @@ igraph_mcvis <- function(mcvis_result,
   graph_attr(G,'weight') = vec
   par(bg="white")
   G.text <- paste0('x',or," -- ", col.names)
-  val <- as.expression(lapply((p-eig.max+1):p, function(i) bquote(tau[.(i)])))
+  # val <- as.expression(lapply((p-eig.max+1):p, function(i) bquote(tau[.(i)])))
+  val <- as.expression(lapply(1:eig.max, function(i) bquote(tau[.(i)])))
   col <- paste0('x', or)
 
   plot(G,
