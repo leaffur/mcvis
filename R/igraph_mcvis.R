@@ -51,7 +51,7 @@ igraph_mcvis <- function(mcvis_result,
   graph_attr(G,'weight') = vec
   par(bg="white")
   G.text <- paste0('x',or," -- ", col.names)
-  val <- as.expression(lapply(p:(p-eig.max+1), function(i) bquote(tau[.(i)])))
+  val <- as.expression(lapply((p-eig.max+1):p, function(i) bquote(tau[.(i)])))
   col <- paste0('x', or)
 
   plot(G,

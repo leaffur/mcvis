@@ -72,6 +72,8 @@ ggplot_mcvis = function(mcvis_result,
     thickness <= sizeCategory5 ~ "category5",
     thickness > sizeCategory5 ~ "category5"
   )
+  ggplotSizeCategory = factor(ggplotSizeCategory,
+                              levels = paste0("category", 1:5))
 
   ggplotAlphaManual = c(0, 0.2, 0.5, 0.8, 1.0)
 
