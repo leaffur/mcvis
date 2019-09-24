@@ -24,7 +24,7 @@ igraph_mcvis <- function(mcvis_result,
 {
   #####################
   g = 1-mcvis_result$MC
-  col.names = mcvis_result$col.names
+  col_names = mcvis_result$col_names
   #####################
 
   p = ncol(g)
@@ -40,7 +40,7 @@ igraph_mcvis <- function(mcvis_result,
   ## igraph plotting
   g.or[g.or > 1-thres/p] = 1
   ## For plotting purpose, if the values of g.or is above a certain threshold, then we set it to 1
-  col.names = col.names[or]
+  col_names = col_names[or]
   ## reorder the variables by the connection with the smallest eigenvalue
 
   M = matrix(1,eig.max,var.max)
@@ -51,7 +51,7 @@ igraph_mcvis <- function(mcvis_result,
 
   graph_attr(G,'weight') = vec
   par(bg="white")
-  G.text <- paste0('x',or," -- ", col.names)
+  G.text <- paste0('x',or," -- ", col_names)
   # val <- as.expression(lapply((p-eig.max+1):p, function(i) bquote(tau[.(i)])))
   val <- as.expression(lapply(1:eig.max, function(i) bquote(tau[.(i)])))
   col <- paste0('x', or)

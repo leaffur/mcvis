@@ -4,15 +4,15 @@
 \alias{ggplot_mcvis}
 \title{ggplot visualisation for mcvis method}
 \usage{
-ggplot_mcvis(mcvis_result, eig.max = ncol(mcvis_result$MC),
-  var.max = ncol(mcvis_result$MC))
+ggplot_mcvis(mcvis_result, eig_max = ncol(mcvis_result$MC),
+  var_max = ncol(mcvis_result$MC))
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function}
 
-\item{eig.max}{The maximum number of eigenvalues to be displayed on the plot.}
+\item{eig_max}{The maximum number of eigenvalues to be displayed on the plot.}
 
-\item{var.max}{The maximum number of variables (i.e. columns) to be displayed on the plot.}
+\item{var_max}{The maximum number of variables (i.e. columns) to be displayed on the plot.}
 }
 \value{
 A ggplot

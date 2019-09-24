@@ -4,10 +4,12 @@
 \alias{shiny_mcvis}
 \title{Shiny app for mcvis exploration}
 \usage{
-shiny_mcvis(mcvis_result)
+shiny_mcvis(mcvis_result, X)
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function.}
+
+\item{X}{The original X matrix}
 }
 \description{
 Shiny app for mcvis exploration
@@ -20,7 +22,7 @@ data("artificialeg", package = "mplot")
 p = dim(artificialeg)[2]-1
 X = artificialeg[,1:p]
 mcvis_result = mcvis(X)
-shiny_mcvis(mcvis_result)
+shiny_mcvis(mcvis_result, X)
 }
 }
 \author{

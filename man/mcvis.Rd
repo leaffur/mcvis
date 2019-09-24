@@ -4,7 +4,7 @@
 \alias{mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis(X, method = "bootstrap", steps = 1000L, k = 10L)
+mcvis(X, method = "bootstrap", times = 1000L, k = 10L)
 }
 \arguments{
 \item{X}{A matrix of regressors (without intercept terms).}
@@ -12,7 +12,7 @@ mcvis(X, method = "bootstrap", steps = 1000L, k = 10L)
 \item{method}{The resampling method for the data.
 Currently supports "bootstrap" or "cv" (cross-validation).}
 
-\item{steps}{Number of resampling runs we perform. Default is set to 1000.}
+\item{times}{Number of resampling runs we perform. Default is set to 1000.}
 
 \item{k}{Number of partitions in averaging theMC index. Default is set to 10.}
 }
@@ -33,7 +33,7 @@ set.seed(1)
 p = 10
 n = 100
 X = matrix(rnorm(n*p), ncol = p)
-X[,1] = X[,2] + X[,3] + rnorm(n, 0, 0.1)
+X[,1] = X[,2] + rnorm(n, 0, 0.1)
 mcvis_result = mcvis(X)
 mcvis_result$MC
 }

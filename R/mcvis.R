@@ -3,7 +3,7 @@
 #' @param X A matrix of regressors (without intercept terms).
 #' @param method The resampling method for the data.
 #' Currently supports "bootstrap" or "cv" (cross-validation).
-#' @param steps Number of resampling runs we perform. Default is set to 1000.
+#' @param times Number of resampling runs we perform. Default is set to 1000.
 #' @param k Number of partitions in averaging theMC index. Default is set to 10.
 #' @return A list of outputs:
 #' \itemize{
@@ -12,7 +12,6 @@
 #' \item{MC: }{The MC indices}
 #' \item{col.names: }{Column names (for plotting purposes)}
 #' }
-#' @import igraph
 #' @importFrom magrittr %>%
 #' @importFrom purrr map map2
 #' @importFrom stats coef lm
@@ -23,86 +22,90 @@
 #' p = 10
 #' n = 100
 #' X = matrix(rnorm(n*p), ncol = p)
-#' X[,1] = X[,2] + X[,3] + rnorm(n, 0, 0.1)
+#' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
 #' mcvis_result$MC
 
-
 mcvis <- function(X,
-                  method = "bootstrap",
-                  steps = 1000L,
-                  k = 10L)
+                   method = "bootstrap",
+                   times = 1000L,
+                   k = 10L)
 {
-  n = dim(X)[1]
-  p = dim(X)[2] ## We now enforce no intercept terms
-  col.names = colnames(X)
+  n = nrow(X)
+  p = ncol(X) ## We now enforce no intercept terms
+
+  if(is.null(colnames(X))){
+    col_names = sprintf("col_%02d", seq_len(p))
+  } else {
+    col_names = colnames(X)
+  }
+
 
   ## One can choose the max variables and eigenvectors in the plot
 
   ## Initialise the matrice
-  vif = v2 = matrix(0, p, steps)
 
   X = as.matrix(X)
 
   if (method == "bootstrap") {
-    index.b = replicate(steps, sample(n, replace = TRUE), simplify = FALSE)
+    index = replicate(times, sample(n, replace = TRUE), simplify = FALSE)
   }
 
   if (method == "cv") {
-    index.b = replicate(steps, sample(n, replace = FALSE)[1:(floor(sqrt(p*n)))], simplify = FALSE)
+    index = replicate(times, sample(n, replace = FALSE)[1:(floor(sqrt(p*n)))], simplify = FALSE)
   }
 
-
-  X1 = purrr::map(index.b, ~ X[.x, ]) ##Resampling
-  X2 = purrr::map(X1, ~ sweep(x = .x, MARGIN = 2, STATS = colMeans(.x), FUN = "-")) ##Centering
-  s = purrr::map(X2, ~ as.matrix(sqrt(colSums(.x^2))))
-  Z = purrr::map2(
-    .x = X2,
-    .y = s,
-    .f = ~ sweep(x = .x, MARGIN = 2, STATS = as.vector(.y), FUN = "/")
-  ) ## Standardizing
-
-  x.norm = purrr::map(X1, ~as.matrix(sqrt(colSums(.x^2))))
-  v = purrr::map2(.x = x.norm,
-                  .y = s,
-                  ~ as.vector(.y/.x))
-  D = purrr::map(.x = v, .f = diag)
-  Z1 = purrr::map2(Z, D, ~ .x %*% .y)
-  crossprodZ1 = purrr::map(Z1, ~ crossprod(.x, .x))
-  v2 = purrr::map(.x = crossprodZ1, ~ 1/svd(.x)$d) %>%
+  list_mcvis_result = purrr::map(.x = index,
+                                 .f = ~ one_mcvis(X = X, index = .x))
+  list_tau = purrr::map(list_mcvis_result, "tau") %>%
     do.call(cbind, .)
-  vif = purrr::map(.x = crossprodZ1, ~ diag(solve(.x))) %>%
+  list_vif = purrr::map(list_mcvis_result, "vif") %>%
     do.call(cbind, .)
   ##############################
 
-  indexList = unname(base::split(1:steps, sort((1:steps) %% k)))
-  tor = matrix(0, p, p)
+  list_index_block = unname(base::split(1:times, sort((1:times) %% k)))
+  t_square = matrix(0, p, p)
 
   for (j in 1:p){
 
-    tstatList = lapply(
-      indexList,
-      function(thisIndex){
-        lmObj = lm(v2[j, thisIndex] ~ t(vif[,thisIndex]))
-        tstat = coef(summary(lmObj))[, "t value"]
-
+    list_tstat = lapply(
+      list_index_block,
+      function(this_index){
+        lm_obj = lm(list_tau[j, this_index] ~ t(list_vif[,this_index]))
+        tstat = coef(summary(lm_obj))[, "t value"]
       }
     )
 
-    tstatMat = unname(do.call(cbind, tstatList))
-    tor[j, ] = rowMeans(tstatMat^2)[-1]
+    tstat_mat = unname(do.call(cbind, list_tstat))
+    t_square[j, ] = rowMeans(tstat_mat^2)[-1]
   }
 
-  MC = sweep(tor, 1, rowSums(tor), "/")
+  MC = t_square/rowSums(t_square)
   ## MC[j,i]: jth smallest eigenvalue with ith variable
   rownames(MC) = paste0("tau", p:1)
   colnames(MC) = paste0("col", 1:p)
   ####################################################################
   result = list(
-    X = X,
-    t_square = tor,
+    t_square = t_square,
     MC = MC,
-    col.names = col.names
+    col_names = col_names
   )
+  return(result)
+}
+
+one_mcvis = function(X, index){
+  X1 = X[index, ] ## Resampling on the rows
+  X2 = sweep(x = X1, MARGIN = 2, STATS = colMeans(X1), FUN = "-")
+  s = as.matrix(sqrt(colSums(X2^2)))
+  Z = sweep(x = X2, MARGIN = 2, STATS = as.vector(s), FUN = "/") ## Standardizing
+  x_norm = as.matrix(sqrt(colSums(X1^2)))
+  v = as.vector(s/x_norm)
+  D = diag(v)
+  Z1 = Z %*% D
+  crossprodZ1 = crossprod(Z1, Z1)
+  tau = 1/svd(crossprodZ1)$d
+  vif = diag(solve(crossprodZ1))
+  result = list(tau = tau,
+                vif = vif)
   return(result)
 }

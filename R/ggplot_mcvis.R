@@ -14,8 +14,8 @@
 #'  \item category 1: anything above 10 \% of the first entry of the matrix
 #' }
 #' @param mcvis_result Output of the mcvis function
-#' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
-#' @param var.max The maximum number of variables (i.e. columns) to be displayed on the plot.
+#' @param eig_max The maximum number of eigenvalues to be displayed on the plot.
+#' @param var_max The maximum number of variables (i.e. columns) to be displayed on the plot.
 #' @import ggplot2
 #' @importFrom reshape2 melt
 #' @return A ggplot
@@ -30,23 +30,27 @@
 #' ggplot_mcvis(mcvis_result)
 
 ggplot_mcvis = function(mcvis_result,
-                        eig.max = ncol(mcvis_result$MC),
-                        var.max = ncol(mcvis_result$MC))
-##if eig.max==1 or var.max==1, the function fails to give an output.
+                        eig_max = ncol(mcvis_result$MC),
+                        var_max = ncol(mcvis_result$MC))
+  ##if eig_max==1 or var_max==1, the function fails to give an output.
 {
-  g = 1-mcvis_result$MC
-  col.names = mcvis_result$col.names
-  p = ncol(g)
-  eig.max = min(p, eig.max)
-  var.max = min(p, var.max)
-  or = order(g[p,]) ## Order the columns of g by the smallest eigen value
-  or = or[1:var.max]
-  g.or = g[,or]
-  if (var.max > 1) {g.or = g.or[p:(p-eig.max+1),]} else {g.or = as.matrix(g.or[p:(p-eig.max+1)])}
-  if (eig.max == 1) {g.or = t(g.or)}
+  MC = 1 - mcvis_result$MC
+  col_names = mcvis_result$col_names
+  p = length(col_names)
+  eig_max = min(p, eig_max)
+  var_max = min(p, var_max)
+  or = order(MC[p,]) ## Order the columns of g by the smallest eigen value
+  or = or[1:var_max]
+  MC_ordered = MC[,or]
+  if (var_max > 1) {
+    MC_ordered = MC_ordered[p:(p-eig_max+1),]
+  } else {
+    MC_ordered = as.matrix(MC_ordered[p:(p-eig_max+1)])
+  }
+  if (eig_max == 1) {MC_ordered = t(MC_ordered)}
 
   #################  ggplot #######################
-  preDat = reshape2::melt(g.or,
+  preDat = reshape2::melt(MC_ordered,
                           varnames = c("X2", "X1"),
                           value.name = "weights")
 
@@ -122,7 +126,7 @@ ggplot_mcvis = function(mcvis_result,
       colour = FALSE,
       size = guide_legend(title = "MC categories"),
       alpha = FALSE
-      )
+    )
   return(gg)
 
 }

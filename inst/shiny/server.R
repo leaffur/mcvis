@@ -13,7 +13,7 @@
 shinyServer(function(input, output, session) {
 
   output$variableTables = DT::renderDataTable(
-    cleanDigits(psych::describe(mcvis_result$X))
+    cleanDigits(psych::describe(shiny_mcvis_result$X))
 
     )
 
@@ -21,13 +21,13 @@ shinyServer(function(input, output, session) {
   # highlight selected rows in the scatterplot
   output$ggplotOutput = renderPlot({
     s = input$variableTables_rows_selected
-    if(is.null(s)) {return(ggplot_mcvis(mcvis_result))}
+    if(is.null(s)) {return(ggplot_mcvis(shiny_mcvis_result))}
 
-    g = mcvis_result$MC
+    g = shiny_mcvis_result$MC
     eig.max = ncol(g)
     vol.max = ncol(g)
 
-    col.names = mcvis_result$col.names
+    col.names = shiny_mcvis_result$col.names
     p = ncol(g)
 
     eig.max = min(p, eig.max)
