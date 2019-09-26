@@ -1,8 +1,12 @@
 #' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title Multi-collinearity Visualization
 #' @param X A matrix of regressors (without intercept terms).
-#' @param method The resampling method for the data.
+#' @param sampling_method The resampling method for the data.
 #' Currently supports "bootstrap" or "cv" (cross-validation).
+#' @param standardise_method The standardisation method for the data.
+#' Currently supports "euclidean" (default, centred by mean and divide by Euclidiean length)
+#' and "studentise" (centred by mean and divide by standard deviation)
+#' and "none" (no standardisation)
 #' @param times Number of resampling runs we perform. Default is set to 1000.
 #' @param k Number of partitions in averaging theMC index. Default is set to 10.
 #' @return A list of outputs:
@@ -27,9 +31,10 @@
 #' mcvis_result$MC
 
 mcvis <- function(X,
-                   method = "bootstrap",
-                   times = 1000L,
-                   k = 10L)
+                  sampling_method = "bootstrap",
+                  standardise_method = "euclidean",
+                  times = 1000L,
+                  k = 10L)
 {
   n = nrow(X)
   p = ncol(X) ## We now enforce no intercept terms
@@ -47,16 +52,21 @@ mcvis <- function(X,
 
   X = as.matrix(X)
 
-  if (method == "bootstrap") {
+  if (sampling_method == "bootstrap") {
     index = replicate(times, sample(n, replace = TRUE), simplify = FALSE)
-  }
-
-  if (method == "cv") {
+  } else if (sampling_method == "cv") {
     index = replicate(times, sample(n, replace = FALSE)[1:(floor(sqrt(p*n)))], simplify = FALSE)
+  } else {
+    stop("Only bootstrap and cross-validation are currently supported")
   }
 
-  list_mcvis_result = purrr::map(.x = index,
-                                 .f = ~ one_mcvis(X = X, index = .x))
+  list_mcvis_result = switch(standardise_method,
+    "euclidean" = purrr::map(.x = index, .f = ~ one_mcvis_euclidean(X = X, index = .x)),
+    "studentise" = purrr::map(.x = index, .f = ~ one_mcvis_studentise(X = X, index = .x)),
+    "none" = purrr::map(.x = index, .f = ~ one_mcvis_none(X = X, index = .x))
+  )
+
+
   list_tau = purrr::map(list_mcvis_result, "tau") %>%
     do.call(cbind, .)
   list_vif = purrr::map(list_mcvis_result, "vif") %>%
@@ -93,7 +103,7 @@ mcvis <- function(X,
   return(result)
 }
 
-one_mcvis = function(X, index){
+one_mcvis_euclidean = function(X, index){
   X1 = X[index, ] ## Resampling on the rows
   X2 = sweep(x = X1, MARGIN = 2, STATS = colMeans(X1), FUN = "-")
   s = as.matrix(sqrt(colSums(X2^2)))
@@ -105,6 +115,27 @@ one_mcvis = function(X, index){
   crossprodZ1 = crossprod(Z1, Z1)
   tau = 1/svd(crossprodZ1)$d
   vif = diag(solve(crossprodZ1))
+  result = list(tau = tau,
+                vif = vif)
+  return(result)
+}
+
+
+one_mcvis_studentise = function(X, index){
+  X1_student = scale(X[index, ]) ## Resampling on the rows
+  crossprodX1 = crossprod(X1_student, X1_student)
+  tau = 1/svd(crossprodX1)$d
+  vif = diag(solve(crossprodX1))
+  result = list(tau = tau,
+                vif = vif)
+  return(result)
+}
+
+one_mcvis_none = function(X, index){
+  X1 = X[index, ] ## Resampling on the rows
+  crossprodX1 = crossprod(X1, X1)
+  tau = 1/svd(crossprodX1)$d
+  vif = diag(solve(crossprodX1))
   result = list(tau = tau,
                 vif = vif)
   return(result)

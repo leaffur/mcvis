@@ -135,6 +135,5 @@ ggplot_mcvis = function(mcvis_result,
 #' @author Chen Lin, Kevin Wang
 #' @title Range transform
 #' @param x numeric vector
-#' @export
 rangeTransform = function(x){ (x - min(x)) / (max(x) - min(x))}
 ##################

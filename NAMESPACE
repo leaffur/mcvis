@@ -3,7 +3,6 @@
 export(ggplot_mcvis)
 export(igraph_mcvis)
 export(mcvis)
-export(rangeTransform)
 export(shiny_mcvis)
 import(ggplot2)
 import(igraph)

@@ -4,13 +4,19 @@
 \alias{mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis(X, method = "bootstrap", times = 1000L, k = 10L)
+mcvis(X, sampling_method = "bootstrap",
+  standardise_method = "euclidean", times = 1000L, k = 10L)
 }
 \arguments{
 \item{X}{A matrix of regressors (without intercept terms).}
 
-\item{method}{The resampling method for the data.
+\item{sampling_method}{The resampling method for the data.
 Currently supports "bootstrap" or "cv" (cross-validation).}
+
+\item{standardise_method}{The standardisation method for the data.
+Currently supports "euclidean" (default, centred by mean and divide by Euclidiean length)
+and "studentise" (centred by mean and divide by standard deviation)
+and "none" (no standardisation)}
 
 \item{times}{Number of resampling runs we perform. Default is set to 1000.}
 
