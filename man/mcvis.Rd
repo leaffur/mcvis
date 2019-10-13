@@ -25,10 +25,9 @@ and "none" (no standardisation)}
 \value{
 A list of outputs:
 \itemize{
-\item{X: }{The original matrix of regressors (for plotting purposes)}
-\item{t_square: }{The t^2 statistics for the regression between the VIFs and the tau's.}
-\item{MC: }{The MC indices}
-\item{col.names: }{Column names (for plotting purposes)}
+\item{t_square:}{The t^2 statistics for the regression between the VIFs and the tau's.}
+\item{MC:}{The MC indices}
+\item{col_names:}{Column names (export for plotting purposes)}
 }
 }
 \description{

@@ -11,10 +11,9 @@
 #' @param k Number of partitions in averaging theMC index. Default is set to 10.
 #' @return A list of outputs:
 #' \itemize{
-#' \item{X: }{The original matrix of regressors (for plotting purposes)}
-#' \item{t_square: }{The t^2 statistics for the regression between the VIFs and the tau's.}
-#' \item{MC: }{The MC indices}
-#' \item{col.names: }{Column names (for plotting purposes)}
+#' \item{t_square:}{The t^2 statistics for the regression between the VIFs and the tau's.}
+#' \item{MC:}{The MC indices}
+#' \item{col_names:}{Column names (export for plotting purposes)}
 #' }
 #' @importFrom magrittr %>%
 #' @importFrom purrr map map2
@@ -40,7 +39,7 @@ mcvis <- function(X,
   p = ncol(X) ## We now enforce no intercept terms
 
   if(is.null(colnames(X))){
-    col_names = sprintf("col_%02d", seq_len(p))
+    col_names = sprintf("X%02d", seq_len(p))
   } else {
     col_names = colnames(X)
   }
@@ -92,8 +91,9 @@ mcvis <- function(X,
 
   MC = t_square/rowSums(t_square)
   ## MC[j,i]: jth smallest eigenvalue with ith variable
+  # rownames(MC) = sprintf("tau_%02d", rev(seq_len(p)))
   rownames(MC) = paste0("tau", p:1)
-  colnames(MC) = paste0("col", 1:p)
+  colnames(MC) = col_names
   ####################################################################
   result = list(
     t_square = t_square,
