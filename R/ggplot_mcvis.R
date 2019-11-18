@@ -7,11 +7,11 @@
 #' the first entry of the matrix is classified as a "category 5" thickness in plotting
 #' Subsequently, other lines are sequentially put in the categories of
 #' \itemize{
-#'  \item category 5: anything equal or above the first entry of the matrix
-#'  \item category 4: anything above 90 \% of the first entry of the matrix
-#'  \item category 3: anything above 70 \% of the first entry of the matrix
-#'  \item category 2: anything above 50 \% of the first entry of the matrix
-#'  \item category 1: anything above 10 \% of the first entry of the matrix
+#'  \item category 5: 0.5 or above
+#'  \item category 4: 0.3 - 0.5
+#'  \item category 3: 0.2 - 0.3
+#'  \item category 2: 0.1 - 0.2
+#'  \item category 1: 0.0 - 0.1
 #' }
 #' @param mcvis_result Output of the mcvis function
 #' @param eig_max The maximum number of eigenvalues to be displayed on the plot.
@@ -28,10 +28,10 @@
 #' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
 #' ggplot_mcvis(mcvis_result)
-#' ggplot_mcvis(mcvis_result, eig_max = 1)
+#' ggplot_mcvis(mcvis_result, eig_max = p)
 
 ggplot_mcvis = function(mcvis_result,
-                        eig_max = ncol(mcvis_result$MC),
+                        eig_max = 1L,
                         var_max = ncol(mcvis_result$MC))
   ##if eig_max==1 or var_max==1, the function fails to give an output.
 {
@@ -101,11 +101,17 @@ make_plotdf = function(MC_ordered){
   ## Size category is the scale of the g-matrix.
   # size_cat_5 = 0
   # size_cat_5 = max(thickness)
-  size_cat_5 = thickness[1]
-  size_cat_1 = 0.1*size_cat_5
-  size_cat_2 = 0.5*size_cat_5
-  size_cat_3 = 0.7*size_cat_5
-  size_cat_4 = 0.9*size_cat_5
+  # size_cat_5 = thickness[1]
+  # size_cat_1 = 0.1*size_cat_5
+  # size_cat_2 = 0.5*size_cat_5
+  # size_cat_3 = 0.7*size_cat_5
+  # size_cat_4 = 0.9*size_cat_5
+
+  size_cat_1 = 0.1
+  size_cat_2 = 0.2
+  size_cat_3 = 0.3
+  size_cat_4 = 0.5
+  size_cat_5 = 0.8
 
   ggplot_size_cat = dplyr::case_when(
     thickness <= size_cat_1 ~ "category1",

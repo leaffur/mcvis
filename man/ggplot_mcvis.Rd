@@ -4,7 +4,7 @@
 \alias{ggplot_mcvis}
 \title{ggplot visualisation for mcvis method}
 \usage{
-ggplot_mcvis(mcvis_result, eig_max = ncol(mcvis_result$MC),
+ggplot_mcvis(mcvis_result, eig_max = 1L,
   var_max = ncol(mcvis_result$MC))
 }
 \arguments{
@@ -24,11 +24,11 @@ Under this ordering,
 the first entry of the matrix is classified as a "category 5" thickness in plotting
 Subsequently, other lines are sequentially put in the categories of
 \itemize{
- \item category 5: anything equal or above the first entry of the matrix
- \item category 4: anything above 90 \% of the first entry of the matrix
- \item category 3: anything above 70 \% of the first entry of the matrix
- \item category 2: anything above 50 \% of the first entry of the matrix
- \item category 1: anything above 10 \% of the first entry of the matrix
+ \item category 5: 0.5 or above
+ \item category 4: 0.3 - 0.5
+ \item category 3: 0.2 - 0.3
+ \item category 2: 0.1 - 0.2
+ \item category 1: 0.0 - 0.1
 }
 }
 \examples{
@@ -39,7 +39,7 @@ X = matrix(rnorm(n*p), ncol = p)
 X[,1] = X[,2] + rnorm(n, 0, 0.1)
 mcvis_result = mcvis(X)
 ggplot_mcvis(mcvis_result)
-ggplot_mcvis(mcvis_result, eig_max = 1)
+ggplot_mcvis(mcvis_result, eig_max = p)
 }
 \author{
 Chen Lin, Kevin Wang, Samuel Mueller
