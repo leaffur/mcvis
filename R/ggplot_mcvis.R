@@ -42,8 +42,8 @@ ggplot_mcvis = function(mcvis_result,
 
   #################  ggplot #######################
   plotdf = make_plotdf(MC_ordered)
-  ggplot_size_manual = c(0, 0.1, 0.5, 1, 2)
-  ggplot_alpha_manual = c(0, 0.1, 0.5, 0.8, 1.0)
+  ggplot_size_manual = c(0, 0.5, 0.5, 1, 2)
+  ggplot_alpha_manual = c(0, 0.2, 0.5, 0.8, 1.0)
 
   axis_1 = data.frame(x=rangeTransform(as.integer(unique(plotdf$cols))),
                       y=0, label=as.character(unique(plotdf$cols)))
