@@ -28,7 +28,7 @@
 #' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
 #' ggplot_mcvis(mcvis_result)
-#' ggplot_mcvis(mcvis_result, 2, 4)
+#' ggplot_mcvis(mcvis_result, eig_max = 1)
 
 ggplot_mcvis = function(mcvis_result,
                         eig_max = ncol(mcvis_result$MC),
@@ -80,7 +80,13 @@ ggplot_mcvis = function(mcvis_result,
   return(gg)
 }
 
-rangeTransform = function(x){ (x - min(x)) / (max(x) - min(x))}
+rangeTransform = function(x){
+  if(min(x) == max(x)){
+    return(0)
+  } else {
+    return((x - min(x)) / (max(x) - min(x)))
+  }
+}
 
 
 make_plotdf = function(MC_ordered){
@@ -130,16 +136,16 @@ make_MC_ordered = function(mcvis_result, eig_max, var_max){
   p = length(col_names)
   eig_max = min(p, eig_max)
   var_max = min(p, var_max)
-  or = order(MC[p,]) ## Order the columns of g by the smallest eigen value
+  or = order(MC[p,,drop = FALSE]) ## Order the columns of g by the smallest eigen value
   or = or[1:var_max]
-  MC_ordered = MC[,or]
+  MC_ordered = MC[,or,drop = FALSE]
 
   if (var_max > 1) {
-    MC_ordered = MC_ordered[p:(p-eig_max+1),]
+    MC_ordered = MC_ordered[p:(p-eig_max+1),,drop=FALSE]
   } else {
     MC_ordered = as.matrix(MC_ordered[p:(p-eig_max+1)])
   }
-  if (eig_max == 1) {MC_ordered = t(MC_ordered)}
+  # if (eig_max == 1) {MC_ordered = t(MC_ordered)}
 
   return(MC_ordered)
 }

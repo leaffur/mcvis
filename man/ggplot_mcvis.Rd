@@ -39,7 +39,7 @@ X = matrix(rnorm(n*p), ncol = p)
 X[,1] = X[,2] + rnorm(n, 0, 0.1)
 mcvis_result = mcvis(X)
 ggplot_mcvis(mcvis_result)
-ggplot_mcvis(mcvis_result, 2, 4)
+ggplot_mcvis(mcvis_result, eig_max = 1)
 }
 \author{
 Chen Lin, Kevin Wang, Samuel Mueller
