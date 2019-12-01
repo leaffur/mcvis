@@ -67,7 +67,7 @@ ggplot_mcvis = function(mcvis_result,
     scale_colour_brewer(palette = "Set1", drop = FALSE, direction = -1) +
     scale_size_manual(values = ggplot_size_manual, drop = FALSE) +
     scale_alpha_manual(values = ggplot_alpha_manual, drop = FALSE) +
-    scale_linetype_manual(values = c("dotted", "solid")) +
+    scale_linetype_manual(values = c("dotted", "solid"), drop = FALSE) +
     geom_segment(x=0, xend=1, y=0, yend=0, size=0.7) +
     geom_segment(x=0, xend=1, y=1, yend=1, size=0.7) +
     scale_y_continuous(limits=c(-0.2, 1.2), expand=c(0, 0)) +
