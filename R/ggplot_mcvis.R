@@ -43,7 +43,7 @@ ggplot_mcvis = function(mcvis_result,
   #################  ggplot #######################
   plotdf = make_plotdf(MC_ordered)
   ggplot_size_manual = c(0.2, 0.2, 0.5, 1, 2)
-  ggplot_alpha_manual = c(0, 0.1, 0.3, 0.8, 1.0)
+  ggplot_alpha_manual = c(0, 0.2, 0.5, 1, 1)
 
   axis_1 = data.frame(x=rangeTransform(as.integer(unique(plotdf$cols))),
                       y=0, label=as.character(unique(plotdf$cols)))
@@ -61,10 +61,13 @@ ggplot_mcvis = function(mcvis_result,
       x=cols_norm, xend=taus_norm,
       y=y1, yend=y2,
       colour = ggplot_size_cat,
-      size = ggplot_size_cat, alpha = ggplot_size_cat)) +
+      size = ggplot_size_cat,
+      alpha = ggplot_size_cat,
+      linetype = linetype)) +
     scale_colour_brewer(palette = "Set1", drop = FALSE, direction = -1) +
     scale_size_manual(values = ggplot_size_manual, drop = FALSE) +
     scale_alpha_manual(values = ggplot_alpha_manual, drop = FALSE) +
+    scale_linetype_manual(values = c("dotted", "solid")) +
     geom_segment(x=0, xend=1, y=0, yend=0, size=0.7) +
     geom_segment(x=0, xend=1, y=1, yend=1, size=0.7) +
     scale_y_continuous(limits=c(-0.2, 1.2), expand=c(0, 0)) +
@@ -78,6 +81,7 @@ ggplot_mcvis = function(mcvis_result,
       # size = guide_legend(title = "MC categories"),
       colour = guide_legend(title = "MC categories"),
       size = FALSE,
+      linetype = FALSE,
       alpha = FALSE)
   gg
   return(gg)
@@ -135,6 +139,8 @@ make_plotdf = function(MC_ordered){
 
   plotdf$y1 = 0
   plotdf$y2 = 1
+
+  plotdf$linetype = ifelse(plotdf$taus == "tau1", "tau1", "others")
   return(plotdf)
 }
 
