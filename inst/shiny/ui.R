@@ -27,7 +27,7 @@ fluidPage(
     mainPanel(
       DT::dataTableOutput('variableTables'),
       hr(),
-      plotOutput('ggplotOutput', height = 500)
+      plotOutput('ggplotOutput', height = 400)
     ) ## End mainPanel
   )
 )

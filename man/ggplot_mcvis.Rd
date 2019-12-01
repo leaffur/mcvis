@@ -35,7 +35,7 @@ Subsequently, other lines are sequentially put in the categories of
 set.seed(1)
 p = 10
 n = 100
-X = matrix(rnorm(n*p), ncol = p)
+X = matrix(rnorm(n*p, 0, 5), ncol = p)
 X[,1] = X[,2] + rnorm(n, 0, 0.1)
 mcvis_result = mcvis(X)
 ggplot_mcvis(mcvis_result)

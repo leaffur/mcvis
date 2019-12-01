@@ -24,7 +24,7 @@
 #' set.seed(1)
 #' p = 10
 #' n = 100
-#' X = matrix(rnorm(n*p), ncol = p)
+#' X = matrix(rnorm(n*p, 0, 5), ncol = p)
 #' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
 #' ggplot_mcvis(mcvis_result)
@@ -42,7 +42,7 @@ ggplot_mcvis = function(mcvis_result,
 
   #################  ggplot #######################
   plotdf = make_plotdf(MC_ordered)
-  ggplot_size_manual = c(0, 0.5, 0.5, 1, 2)
+  ggplot_size_manual = c(0.2, 0.5, 0.8, 1, 2)
   ggplot_alpha_manual = c(0, 0.2, 0.5, 0.8, 1.0)
 
   axis_1 = data.frame(x=rangeTransform(as.integer(unique(plotdf$cols))),
@@ -108,10 +108,10 @@ make_plotdf = function(MC_ordered){
   # size_cat_4 = 0.9*size_cat_5
 
   size_cat_1 = 0.1
-  size_cat_2 = 0.2
-  size_cat_3 = 0.3
+  size_cat_2 = 0.3
+  size_cat_3 = 0.4
   size_cat_4 = 0.5
-  size_cat_5 = 0.8
+  size_cat_5 = 0.6
 
   ggplot_size_cat = dplyr::case_when(
     thickness <= size_cat_1 ~ "category1",
