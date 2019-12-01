@@ -42,8 +42,8 @@ ggplot_mcvis = function(mcvis_result,
 
   #################  ggplot #######################
   plotdf = make_plotdf(MC_ordered)
-  ggplot_size_manual = c(0.2, 0.5, 0.8, 1, 2)
-  ggplot_alpha_manual = c(0, 0.2, 0.5, 0.8, 1.0)
+  ggplot_size_manual = c(0.2, 0.2, 0.5, 1, 2)
+  ggplot_alpha_manual = c(0, 0.1, 0.3, 0.8, 1.0)
 
   axis_1 = data.frame(x=rangeTransform(as.integer(unique(plotdf$cols))),
                       y=0, label=as.character(unique(plotdf$cols)))
@@ -60,8 +60,9 @@ ggplot_mcvis = function(mcvis_result,
     geom_segment(aes(
       x=cols_norm, xend=taus_norm,
       y=y1, yend=y2,
-      colour = taus,
+      colour = ggplot_size_cat,
       size = ggplot_size_cat, alpha = ggplot_size_cat)) +
+    scale_colour_brewer(palette = "Set1", drop = FALSE, direction = -1) +
     scale_size_manual(values = ggplot_size_manual, drop = FALSE) +
     scale_alpha_manual(values = ggplot_alpha_manual, drop = FALSE) +
     geom_segment(x=0, xend=1, y=0, yend=0, size=0.7) +
@@ -73,10 +74,12 @@ ggplot_mcvis = function(mcvis_result,
     geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
     labs(title = "Multi-collinearity plot") +
     guides(
-      colour = FALSE,
-      size = guide_legend(title = "MC categories"),
+      # colour = FALSE,
+      # size = guide_legend(title = "MC categories"),
+      colour = guide_legend(title = "MC categories"),
+      size = FALSE,
       alpha = FALSE)
-
+  gg
   return(gg)
 }
 
@@ -108,8 +111,8 @@ make_plotdf = function(MC_ordered){
   # size_cat_4 = 0.9*size_cat_5
 
   size_cat_1 = 0.1
-  size_cat_2 = 0.3
-  size_cat_3 = 0.4
+  size_cat_2 = 0.2
+  size_cat_3 = 0.3
   size_cat_4 = 0.5
   size_cat_5 = 0.6
 
