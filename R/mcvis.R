@@ -92,7 +92,7 @@ mcvis <- function(X,
   MC = t_square/rowSums(t_square)
   ## MC[j,i]: jth smallest eigenvalue with ith variable
   # rownames(MC) = sprintf("tau_%02d", rev(seq_len(p)))
-  rownames(MC) = paste0("tau", p:1)
+  rownames(MC) = paste0("tau", 1:p)
   colnames(MC) = col_names
   ####################################################################
   result = list(

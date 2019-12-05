@@ -4,8 +4,13 @@
 \alias{mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-mcvis(X, sampling_method = "bootstrap",
-  standardise_method = "euclidean", times = 1000L, k = 10L)
+mcvis(
+  X,
+  sampling_method = "bootstrap",
+  standardise_method = "euclidean",
+  times = 1000L,
+  k = 10L
+)
 }
 \arguments{
 \item{X}{A matrix of regressors (without intercept terms).}

@@ -40,6 +40,8 @@ ggplot_mcvis = function(mcvis_result,
     eig_max = eig_max,
     var_max = var_max)
 
+  taup = rownames(MC_ordered)[1]
+
   #################  ggplot #######################
   plotdf = make_plotdf(MC_ordered)
   ggplot_size_manual = c(0, 0.2, 0.5, 1, 2)
@@ -50,6 +52,9 @@ ggplot_mcvis = function(mcvis_result,
 
   axis_2 = data.frame(x=rangeTransform(as.integer(unique(plotdf$taus))),
                       y=1, label=as.character(unique(plotdf$taus)))
+
+  linetype_manual = c("dotted","solid")
+  names(linetype_manual) = c("others", taup)
 
   gg = ggplot2::ggplot(data=plotdf) +
     theme_bw() +
@@ -67,7 +72,7 @@ ggplot_mcvis = function(mcvis_result,
     scale_colour_brewer(palette = "Set1", drop = FALSE, direction = -1) +
     scale_size_manual(values = ggplot_size_manual, drop = FALSE) +
     scale_alpha_manual(values = ggplot_alpha_manual, drop = FALSE) +
-    scale_linetype_manual(values = c("others" = "dotted", "tau1" = "solid"), drop = FALSE) +
+    scale_linetype_manual(values = linetype_manual, drop = FALSE) +
     geom_segment(x=0, xend=1, y=0, yend=0, size=0.7) +
     geom_segment(x=0, xend=1, y=1, yend=1, size=0.7) +
     scale_y_continuous(limits=c(-0.2, 1.2), expand=c(0, 0)) +
@@ -140,7 +145,7 @@ make_plotdf = function(MC_ordered){
   plotdf$y1 = 0
   plotdf$y2 = 1
 
-  plotdf$linetype = ifelse(plotdf$taus == "tau1", "tau1", "others")
+  plotdf$linetype = ifelse(plotdf$taus == rownames(MC_ordered)[1], rownames(MC_ordered)[1], "others")
   return(plotdf)
 }
 

@@ -4,8 +4,12 @@
 \alias{igraph_mcvis}
 \title{Multi-collinearity Visualization}
 \usage{
-igraph_mcvis(mcvis_result, thres = 2/3,
-  eig.max = ncol(mcvis_result$MC), var.max = ncol(mcvis_result$MC))
+igraph_mcvis(
+  mcvis_result,
+  thres = 2/3,
+  eig.max = ncol(mcvis_result$MC),
+  var.max = ncol(mcvis_result$MC)
+)
 }
 \arguments{
 \item{mcvis_result}{Output of the mcvis function}
