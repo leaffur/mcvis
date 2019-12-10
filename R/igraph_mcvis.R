@@ -53,7 +53,7 @@ igraph_mcvis <- function(mcvis_result,
   par(bg="white")
   G.text <- paste0('x',or," -- ", col_names)
   # val <- as.expression(lapply((p-eig.max+1):p, function(i) bquote(tau[.(i)])))
-  val <- as.expression(lapply(1:eig.max, function(i) bquote(tau[.(i)])))
+  val <- as.expression(lapply(eig.max:1, function(i) bquote(tau[.(i)])))
   col <- paste0('x', or)
 
   plot(G,
@@ -70,5 +70,5 @@ igraph_mcvis <- function(mcvis_result,
   {text(x=rep(1.7,var.max),y=(1:var.max)*2/(1-var.max)+(var.max+1)/(var.max-1),G.text)}
 
   if (var.max==1) {text(x=2,y=0,G.text)}
-  text(x=0,y=-1.4, expression(paste(tau, "1: the inverse of the smallest eigenvalue")))
+  # text(x=0,y=-1.4, expression(paste(tau, "1: the inverse of the smallest eigenvalue")))
 }
