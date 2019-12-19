@@ -31,7 +31,7 @@
 
 mcvis <- function(X,
                   sampling_method = "bootstrap",
-                  standardise_method = "euclidean",
+                  standardise_method = "studentise",
                   times = 1000L,
                   k = 10L)
 {
@@ -92,7 +92,7 @@ mcvis <- function(X,
   MC = t_square/rowSums(t_square)
   ## MC[j,i]: jth smallest eigenvalue with ith variable
   # rownames(MC) = sprintf("tau_%02d", rev(seq_len(p)))
-  rownames(MC) = paste0("tau", p:1)
+  rownames(MC) = paste0("tau", 1:p)
   colnames(MC) = col_names
   ####################################################################
   result = list(
@@ -124,6 +124,7 @@ one_mcvis_euclidean = function(X, index){
 one_mcvis_studentise = function(X, index){
   X1_student = scale(X[index, ]) ## Resampling on the rows
   crossprodX1 = crossprod(X1_student, X1_student)
+  n = nrow(X1_student)
   tau = 1/svd(crossprodX1)$d
   vif = diag(solve(crossprodX1))
   result = list(tau = tau,
