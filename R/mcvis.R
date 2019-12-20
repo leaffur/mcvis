@@ -31,7 +31,7 @@
 
 mcvis <- function(X,
                   sampling_method = "bootstrap",
-                  standardise_method = "euclidean",
+                  standardise_method = "studentise",
                   times = 1000L,
                   k = 10L)
 {
@@ -114,7 +114,12 @@ one_mcvis_euclidean = function(X, index){
   Z1 = Z %*% D
   crossprodZ1 = crossprod(Z1, Z1)
   tau = 1/svd(crossprodZ1)$d
-  vif = diag(solve(crossprodZ1))
+
+  X1_student = scale(X1)
+  n = nrow(X1_student)
+  crossprodX1 = crossprod(X1_student, X1_student)
+  vif = (n-1) * diag(solve(crossprodX1))
+
   result = list(tau = tau,
                 vif = vif)
   return(result)
@@ -124,8 +129,9 @@ one_mcvis_euclidean = function(X, index){
 one_mcvis_studentise = function(X, index){
   X1_student = scale(X[index, ]) ## Resampling on the rows
   crossprodX1 = crossprod(X1_student, X1_student)
+  n = nrow(X1_student)
   tau = 1/svd(crossprodX1)$d
-  vif = diag(solve(crossprodX1))
+  vif = (n-1) * diag(solve(crossprodX1))
   result = list(tau = tau,
                 vif = vif)
   return(result)
@@ -135,7 +141,12 @@ one_mcvis_none = function(X, index){
   X1 = X[index, ] ## Resampling on the rows
   crossprodX1 = crossprod(X1, X1)
   tau = 1/svd(crossprodX1)$d
-  vif = diag(solve(crossprodX1))
+
+  X1_student = scale(X1)
+  n = nrow(X1_student)
+  crossprodX1_std = crossprod(X1_student, X1_student)
+  vif = (n-1) * diag(solve(crossprodX1_std))
+
   result = list(tau = tau,
                 vif = vif)
   return(result)
