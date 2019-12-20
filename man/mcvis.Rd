@@ -7,7 +7,7 @@
 mcvis(
   X,
   sampling_method = "bootstrap",
-  standardise_method = "euclidean",
+  standardise_method = "studentise",
   times = 1000L,
   k = 10L
 )

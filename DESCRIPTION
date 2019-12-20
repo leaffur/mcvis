@@ -1,7 +1,7 @@
 Package: mcvis
 Type: Package
 Title: Multi-collinearity Visualization
-Version: 0.2.15
+Version: 0.3.0
 Authors@R: c(
     person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre")),
     person(given = "Chen", family = "Lin", email = "16300180053@fudan.edu.cn", role = c("aut")),
@@ -21,7 +21,7 @@ Imports:
   dplyr, 
   psych,
   mplot
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 License: GPL-3
 Suggests: 
     testthat (>= 2.1.0),
