@@ -8,7 +8,7 @@ r_github_packages:
 before_cache: Rscript -e 'install.packages("pkgdown")'
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github(tarball = ".")'
+  script: Rscript -e 'pkgdown::deploy_site_github()'
   skip_cleanup: true
 
 after_success:
