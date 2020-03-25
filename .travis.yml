@@ -4,9 +4,7 @@ language: r
 cache: packages
 r_github_packages:
   - r-lib/covr
-
-script:
-  - R -e 'install.packages("pkgdown")'
+  - r-lib/pkgdown
 
 deploy:
   provider: script
