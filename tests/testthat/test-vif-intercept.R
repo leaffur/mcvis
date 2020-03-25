@@ -18,5 +18,14 @@ df = data.frame(X, y)
 vif_car = car::vif(lm(y ~ . -1, data = df))
 vif_car
 
+
+crossprodX = crossprod(X, X)
+svd_obj = svd(crossprodX)
+tau = 1/svd_obj$d
+g = svd_obj$u
+head((g*g) %*% tau)
+head(vif_car)
+
+
 # expect_equal(unname(vif_car),
 #              unname(vif_mcvis))

@@ -137,15 +137,26 @@ one_mcvis_studentise = function(X, index){
   return(result)
 }
 
-one_mcvis_none = function(X, index){
+one_mcvis_none_noint = function(X, index){
   X1 = X[index, ] ## Resampling on the rows
-  crossprodX1 = crossprod(X1, X1)
-  tau = 1/svd(crossprodX1)$d
+  p = ncol(X1)
+  # r2 = vector("numeric", p + 1) ## Include intercept
+  #
+  # for(j in 1:(p+1)){
+  #   y = X1[,j,drop = FALSE]
+  #   r2[j] = summary(lm(y ~ X1[,-j]))$r.squared
+  # }
+  #
+  # vif = 1/(1-r2)
+  # tau =
 
-  X1_student = scale(X1)
-  n = nrow(X1_student)
-  crossprodX1_std = crossprod(X1_student, X1_student)
-  vif = (n-1) * diag(solve(crossprodX1_std))
+  # crossprodX1 = crossprod(X1, X1)
+  # tau = 1/svd(crossprodX1)$d
+  #
+  # X1_student = scale(X1)
+  # n = nrow(X1_student)
+  # crossprodX1_std = crossprod(X1_student, X1_student)
+  # vif = (n-1) * diag(solve(crossprodX1_std))
 
   result = list(tau = tau,
                 vif = vif)
