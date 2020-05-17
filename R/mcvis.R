@@ -19,6 +19,7 @@
 #' @importFrom purrr map map2
 #' @importFrom stats coef lm
 #' @importFrom graphics par plot text
+#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' set.seed(1)
@@ -35,6 +36,8 @@ mcvis <- function(X,
                   times = 1000L,
                   k = 10L)
 {
+  X = as.matrix(X)
+
   n = nrow(X)
   p = ncol(X) ## We now enforce no intercept terms
 
@@ -137,26 +140,22 @@ one_mcvis_studentise = function(X, index){
   return(result)
 }
 
-one_mcvis_none_noint = function(X, index){
+one_mcvis_none = function(X, index){
   X1 = X[index, ] ## Resampling on the rows
   p = ncol(X1)
-  # r2 = vector("numeric", p + 1) ## Include intercept
-  #
-  # for(j in 1:(p+1)){
-  #   y = X1[,j,drop = FALSE]
-  #   r2[j] = summary(lm(y ~ X1[,-j]))$r.squared
-  # }
-  #
-  # vif = 1/(1-r2)
-  # tau =
 
-  # crossprodX1 = crossprod(X1, X1)
-  # tau = 1/svd(crossprodX1)$d
-  #
-  # X1_student = scale(X1)
-  # n = nrow(X1_student)
-  # crossprodX1_std = crossprod(X1_student, X1_student)
-  # vif = (n-1) * diag(solve(crossprodX1_std))
+  r2 = vector("numeric", p)
+
+  for(j in 1:p){
+    y = X1[,j,drop = FALSE]
+    r2[j] = summary(lm(y ~ X1[,-j]))$r.squared
+  }
+  vif = 1/(1-r2)
+  names(vif) = colnames(X1)
+
+  crossprodX1 = crossprod(X1, X1)
+  svd_obj = svd(crossprodX1)
+  tau = 1/svd_obj$d
 
   result = list(tau = tau,
                 vif = vif)
