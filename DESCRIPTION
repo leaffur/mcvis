@@ -11,7 +11,6 @@ Description: A package to visulize the relationship between valuables and eigenv
     which helps to deduce the cause of collinearity.
 Encoding: UTF-8
 Imports:
-  assertthat,
   igraph,
   car,
   ggplot2,
@@ -29,6 +28,5 @@ Suggests:
     testthat (>= 2.1.0),
     covr,
     knitr,
-    rmarkdown,
-    vdiffr
+    rmarkdown
 VignetteBuilder: knitr

@@ -19,7 +19,6 @@
 #' @importFrom purrr map map2
 #' @importFrom stats coef lm
 #' @importFrom graphics par plot text
-#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' set.seed(1)
