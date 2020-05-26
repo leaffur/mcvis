@@ -13,7 +13,7 @@
 #'  \item category 2: 0.1 - 0.2
 #'  \item category 1: 0.0 - 0.1
 #' }
-#' @param mcvis_result Output of the mcvis function
+#' @param x Output of the mcvis function
 #' @param eig_max The maximum number of eigenvalues to be displayed on the plot.
 #' @param var_max The maximum number of variables (i.e. columns) to be displayed on the plot.
 #' @import ggplot2
@@ -21,22 +21,23 @@
 #' @return A ggplot
 #' @export
 #' @examples
+#' library(ggplot2)
 #' set.seed(1)
 #' p = 10
 #' n = 100
 #' X = matrix(rnorm(n*p, 0, 5), ncol = p)
 #' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
-#' ggplot_mcvis(mcvis_result)
-#' ggplot_mcvis(mcvis_result, eig_max = p)
+#' ggplot(mcvis_result)
+#' ggplot(mcvis_result, eig_max = p)
 
-ggplot_mcvis = function(mcvis_result,
+ggplot.mcvis = function(x,
                         eig_max = 1L,
-                        var_max = ncol(mcvis_result$MC))
+                        var_max = ncol(x$MC))
   ##if eig_max==1 or var_max==1, the function fails to give an output.
 {
   MC_ordered = make_MC_ordered(
-    mcvis_result = mcvis_result,
+    mcvis_result = x,
     eig_max = eig_max,
     var_max = var_max)
 

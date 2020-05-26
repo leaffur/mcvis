@@ -19,6 +19,8 @@
 #' @importFrom purrr map map2
 #' @importFrom stats coef lm
 #' @importFrom graphics par plot text
+#' @importFrom assertthat assert_that
+#' @rdname mcvis
 #' @export
 #' @examples
 #' set.seed(1)
@@ -26,16 +28,25 @@
 #' n = 100
 #' X = matrix(rnorm(n*p), ncol = p)
 #' X[,1] = X[,2] + rnorm(n, 0, 0.1)
-#' mcvis_result = mcvis(X)
-#' mcvis_result$MC
-
+#' mcvis_result = mcvis(X = X)
+#' mcvis_result
 mcvis <- function(X,
                   sampling_method = "bootstrap",
                   standardise_method = "studentise",
                   times = 1000L,
                   k = 10L)
 {
+  assertthat::assert_that(all(sapply(X, is.numeric)),
+                          msg = "All columns of X must be numeric")
   X = as.matrix(X)
+
+  dup_columns = duplicated(X, MARGIN = 2)
+
+  if(any(dup_columns)){
+    warning("Duplicated columns found, mcvis is stopped. \n Returning indices of duplicated columns.")
+    return(dup_columns)
+  }
+
 
   n = nrow(X)
   p = ncol(X) ## We now enforce no intercept terms
@@ -102,8 +113,17 @@ mcvis <- function(X,
     MC = MC,
     col_names = col_names
   )
+
+  class(result) = "mcvis"
   return(result)
 }
+
+#' @export
+print.mcvis = function(mcvis_result){
+  print(round(mcvis_result$MC, 2))
+}
+
+
 
 one_mcvis_euclidean = function(X, index){
   X1 = X[index, ] ## Resampling on the rows

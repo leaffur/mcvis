@@ -1,6 +1,11 @@
 ---
 title: "mcvis: Multi-collinearity Visualization"
-output: rmarkdown::html_vignette
+author: "Kevin Wang, Chen Lin and Samuel Mueller"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    fig_height: 6
+    fig_width: 8
 vignette: >
   %\VignetteIndexEntry{mcvis}
   %\VignetteEngine{knitr::rmarkdown}
@@ -18,33 +23,56 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The `mcvis` package is a methodology that informs on multi-collinearity in linear regression. The `mcvis` method derives its own statistic (the MC-index) and measures the strength of association between variance inflation factors and eigenvalues. That is, it investigates which column(s) in the design matrix explain instability when inverting the $X^\top X$ matrix. 
-
+The `mcvis` package provides functions for detecting multi-collinearity (also known as collinearity) in linear regression. In simple terms, the `mcvis` method investigates variables with strong influences on collinearity in a graphical manner. 
 
 
 # Basic usage 
 
-Suppose that we have a simple scenario that two predictors are highly correlated. This high correlation is a potential cause of multicollinearity which could cause problems in terms of very large variances of estimated model parameters in linear regression.
+Suppose that we have a simple scenario that two predictors are highly correlated. This high correlation is a sufficient cause of collinearity which can be shown through large variances of estimated model parameters in linear regression.
 
 ```{r setup, warning=FALSE, message=FALSE}
-library(mcvis)
-
+## Simulating some data
 set.seed(1)
-p = 10
+p = 6
 n = 100
 
 X = matrix(rnorm(n*p), ncol = p)
-X[,1] = X[,2] + X[,3] + rnorm(n, 0, 0.1)
+X[,1] = X[,2] + X[,3] + rnorm(n, 0, 0.01)
 
-
-mcvis_result = mcvis(X)
-ggplot_mcvis(mcvis_result)
+y = rnorm(n)
+summary(lm(y ~ X))
 ```
 
 
-# An advanced example from the `mplot` package
+The `mcvis` method highlights the major collinearity-causing variables on a bipartite graph. There are three major components of this graph:
+ + the top row is the "tau" statistics which measure the extent of collinearity in the data. By default, only one tau statistic is shown. 
+ + the bottom row is the original variables
+ + the two rows are linked through the MC-indices that we have developed, which are represented as lines of different shades. Darker lines implies larger values of MC-index and stronger the cause of collinearity. 
+ 
+ 
+If you are interested in how MC-index is calculated, our paper is published as *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. Journal of Computational and Graphical Statistics, In Press.*
 
-In practice, collinearity may not be solely caused by a single pair of highly correlated variables. In the `mplot` package, a simulated data was created with each of its column being a linear combination of other columns. In this case, the cause of the collinearity is not clear from the correlation matrix. 
+```{r}
+library(mcvis)
+mcvis_result = mcvis(X = X)
+
+plot(mcvis_result)
+
+mcvis_result
+```
+
+
+We also provide a ggplot version of the mcvis graph. 
+
+```{r}
+library(ggplot2)
+ggplot(mcvis_result)
+```
+
+
+# (Extension) why not just look at the correlation matrix?
+
+In practice, high correlation between variables is not a necessary criterion for collinearity. In the `mplot` package, a simulated data was created with each of its column being a linear combination of other columns. In this case, the cause of the collinearity is not clear from the correlation matrix. 
 
 
 The `mcvis` visualisation plot identified that the 8th variable is the main cause of collinearity of this data. Upon consultation with the data generation in this simulation, we see that the x8 is a linear combination of all other predictor variables. 
@@ -53,21 +81,30 @@ The `mcvis` visualisation plot identified that the 8th variable is the main caus
 library(mplot)
 data("artificialeg")
 X = artificialeg[,1:9]
+round(cor(X), 2)
 
 mcvis_result = mcvis(X)
-igraph_mcvis(mcvis_result)
-ggplot_mcvis(mcvis_result)
+plot(mcvis_result)
+ggplot(mcvis_result)
 ```
+
 
 # Shiny implementation
 
-We also offer a shiny app implementation of `mcvis` in our package. Suppose that we have a `mcvis` object stored in the memory of `R`. You can simply call the function `shiny_mcvis` to load up a Shiny app. 
+We also offer a shiny app implementation of `mcvis` in our package. Suppose that we have a `mcvis_result` object stored in the memory of `R`. You can simply call the function `shiny_mcvis` to load up a Shiny app. 
+
+```{r}
+class(mcvis_result)
+```
+
 
 ```{r, eval = FALSE}
 shiny_mcvis(mcvis_result)
 ```
 
+# Reference
 
++ *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. Journal of Computational and Graphical Statistics, In Press.*
 
 # Session Info
 

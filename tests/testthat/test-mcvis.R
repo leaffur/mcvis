@@ -4,3 +4,10 @@ n = 50
 X = matrix(rnorm(n*p), ncol = p)
 X[,1] = X[,2] + rnorm(n, 0, 0.1)
 mcvis_result = mcvis(X)
+
+
+X[,1] = X[,2]
+testthat::expect_warning(mcvis(X))
+
+X[,1] = "abc"
+testthat::expect_error(mcvis(X))

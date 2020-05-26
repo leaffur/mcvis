@@ -44,8 +44,8 @@ p = 10
 n = 100
 X = matrix(rnorm(n*p), ncol = p)
 X[,1] = X[,2] + rnorm(n, 0, 0.1)
-mcvis_result = mcvis(X)
-mcvis_result$MC
+mcvis_result = mcvis(X = X)
+mcvis_result
 }
 \author{
 Chen Lin, Kevin Wang, Samuel Mueller

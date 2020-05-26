@@ -1,9 +1,10 @@
 #' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title Multi-collinearity Visualization
-#' @param mcvis_result Output of the mcvis function
+#' @param x Output of the mcvis function
 #' @param thres A parameter determining below which thickness the plotting lines hide.
 #' @param eig.max The maximum number of eigenvalues to be displayed on the plot.
 #' @param var.max The maximum number of variables to be displayed on the plot.
+#' @param ... additional arguments (currently unused)
 #' @import igraph
 #' @export
 #' @examples
@@ -13,18 +14,17 @@
 #' X = matrix(rnorm(n*p), ncol = p)
 #' X[,1] = X[,2] + rnorm(n, 0, 0.1)
 #' mcvis_result = mcvis(X)
-#' igraph_mcvis(mcvis_result, thres = 1)
-#' igraph_mcvis(mcvis_result, thres = 1, eig.max = 1)
+#' plot(mcvis_result, thres = 1)
 
 
-igraph_mcvis <- function(mcvis_result,
+plot.mcvis <- function(x,
                          thres = 2/3,
-                         eig.max = ncol(mcvis_result$MC),
-                         var.max = ncol(mcvis_result$MC))
+                         eig.max = 1,
+                         var.max = ncol(x$MC), ...)
 {
   #####################
-  g = 1-mcvis_result$MC
-  col_names = mcvis_result$col_names
+  g = 1-x$MC
+  col_names = x$col_names
   #####################
 
   p = ncol(g)

@@ -21,7 +21,7 @@ shinyServer(function(input, output, session) {
   # highlight selected rows in the scatterplot
   output$ggplotOutput = renderPlot({
     s = input$variableTables_rows_selected
-    if(is.null(s)) {return(ggplot_mcvis(shiny_mcvis_result))}
+    # if(is.null(s)) {return(ggplot(shiny_mcvis_result))}
 
     g = shiny_mcvis_result$MC
     eig.max = ncol(g)

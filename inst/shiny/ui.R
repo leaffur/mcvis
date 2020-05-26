@@ -1,33 +1,11 @@
 fluidPage(
-
-  title = 'mcvis',
-
-  h1('mcvis'),
-
-
+  h1('mcvis shiny app'),
   hr(),
 
-  # App title ----
-  titlePanel("Shiny Text"),
-
-  # Sidebar layout with a input and output definitions ----
-  sidebarLayout(
-
-    # Sidebar panel for inputs ----
-    sidebarPanel(
-      # sliderInput(inputId = "sizeCategory5",
-      #             label = "Size of line",
-      #             min = 0, max = 1, value = 1, step = 0.1)
-
-
-      h2("Some inputs if needed")
-    ),
-
-    # Main panel for displaying outputs ----
-    mainPanel(
-      DT::dataTableOutput('variableTables'),
-      hr(),
-      plotOutput('ggplotOutput', height = 400)
-    ) ## End mainPanel
-  )
+  mainPanel(
+    h1("Summary statistics of your input data"),
+    DT::dataTableOutput('variableTables'),
+    hr(),
+    plotOutput('ggplotOutput', height = 400)
+  ) ## End mainPanel
 )
