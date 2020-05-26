@@ -16,12 +16,12 @@ mcvis(
 \item{X}{A matrix of regressors (without intercept terms).}
 
 \item{sampling_method}{The resampling method for the data.
-Currently supports "bootstrap" or "cv" (cross-validation).}
+Currently supports 'bootstrap' or 'cv' (cross-validation).}
 
 \item{standardise_method}{The standardisation method for the data.
-Currently supports "euclidean" (default, centered by mean and divide by Euclidiean length)
-and "studentise" (centred by mean and divide by standard deviation)
-and "none" (no standardisation)}
+Currently supports 'euclidean' (default, centered by mean and divide by Euclidiean length)
+and 'studentise' (centred by mean and divide by standard deviation)
+and 'none' (no standardisation)}
 
 \item{times}{Number of resampling runs we perform. Default is set to 1000.}
 

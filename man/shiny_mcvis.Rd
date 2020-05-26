@@ -18,7 +18,7 @@ Shiny app for mcvis exploration
 \dontrun{
 set.seed(1)
 library(mplot)
-data("artificialeg", package = "mplot")
+data('artificialeg', package = 'mplot')
 p = dim(artificialeg)[2]-1
 X = artificialeg[,1:p]
 mcvis_result = mcvis(X)
