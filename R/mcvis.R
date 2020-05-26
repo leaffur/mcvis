@@ -119,8 +119,8 @@ mcvis <- function(X,
 }
 
 #' @export
-print.mcvis = function(mcvis_result){
-  print(round(mcvis_result$MC, 2))
+print.mcvis = function(x, ...){
+  print(round(x$MC, 2))
 }
 
 
