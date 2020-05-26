@@ -3,7 +3,7 @@ Type: Package
 Title: Multi-collinearity Visualization
 Version: 1.0.0
 Authors@R: c(
-    person(given = "Kevin", family = "Wang", email = "kevin.wang@sydney.edu.au", role = c("aut", "cre")),
+    person(given = "Kevin", family = "Wang", email = "kevin.wang09@gmail.com", role = c("aut", "cre")),
     person(given = "Chen", family = "Lin", email = "16300180053@fudan.edu.cn", role = c("aut")),
     person(given = "Samuel", family = "Mueller", email = "samuel.mueller@sydney.edu.au", role = c("aut"))
     )
