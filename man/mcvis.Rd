@@ -19,19 +19,19 @@ mcvis(
 Currently supports "bootstrap" or "cv" (cross-validation).}
 
 \item{standardise_method}{The standardisation method for the data.
-Currently supports "euclidean" (default, centred by mean and divide by Euclidiean length)
+Currently supports "euclidean" (default, centered by mean and divide by Euclidiean length)
 and "studentise" (centred by mean and divide by standard deviation)
 and "none" (no standardisation)}
 
 \item{times}{Number of resampling runs we perform. Default is set to 1000.}
 
-\item{k}{Number of partitions in averaging theMC index. Default is set to 10.}
+\item{k}{Number of partitions in averaging the MC-index. Default is set to 10.}
 }
 \value{
 A list of outputs:
 \itemize{
 \item{t_square:}{The t^2 statistics for the regression between the VIFs and the tau's.}
-\item{MC:}{The MC indices}
+\item{MC:}{The MC-indices}
 \item{col_names:}{Column names (export for plotting purposes)}
 }
 }
