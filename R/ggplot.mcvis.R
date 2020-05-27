@@ -18,6 +18,7 @@
 #' @param var_max The maximum number of variables (i.e. columns) to be displayed on the plot.
 #' @import ggplot2
 #' @importFrom reshape2 melt
+#' @importFrom rlang .data
 #' @return A ggplot
 #' @export
 #' @examples
@@ -64,12 +65,12 @@ ggplot.mcvis = function(x,
     theme(axis.ticks=element_blank()) +
     theme(panel.grid=element_blank()) +
     geom_segment(aes(
-      x=cols_norm, xend=taus_norm,
-      y=y1, yend=y2,
-      colour = ggplot_size_cat,
-      size = ggplot_size_cat,
-      alpha = ggplot_size_cat,
-      linetype = linetype)) +
+      x=.data$cols_norm, xend=.data$taus_norm,
+      y=.data$y1, yend=.data$y2,
+      colour = .data$ggplot_size_cat,
+      size = .data$ggplot_size_cat,
+      alpha = .data$ggplot_size_cat,
+      linetype = .data$linetype)) +
     scale_colour_brewer(palette = "Set1", drop = FALSE, direction = -1) +
     scale_size_manual(values = ggplot_size_manual, drop = FALSE) +
     scale_alpha_manual(values = ggplot_alpha_manual, drop = FALSE) +
@@ -77,10 +78,10 @@ ggplot.mcvis = function(x,
     geom_segment(x=0, xend=1, y=0, yend=0, size=0.7) +
     geom_segment(x=0, xend=1, y=1, yend=1, size=0.7) +
     scale_y_continuous(limits=c(-0.2, 1.2), expand=c(0, 0)) +
-    geom_segment(data=axis_1, aes(x=x, xend=x, y=y, yend=y-0.025), size=0.7) +
-    geom_segment(data=axis_2, aes(x=x, xend=x, y=y, yend=y+0.025), size=0.7) +
-    geom_text(data=axis_1, aes(label=label, x=x, y=y - 0.075)) +
-    geom_text(data=axis_2, aes(label=label, x=x, y=y + 0.075)) +
+    geom_segment(data=axis_1, aes(x=.data$x, xend=.data$x, y=.data$y, yend=.data$y-0.025), size=0.7) +
+    geom_segment(data=axis_2, aes(x=.data$x, xend=.data$x, y=.data$y, yend=.data$y+0.025), size=0.7) +
+    geom_text(data=axis_1, aes(label=.data$label, x=.data$x, y=.data$y - 0.075)) +
+    geom_text(data=axis_2, aes(label=.data$label, x=.data$x, y=.data$y + 0.075)) +
     labs(title = "Multi-collinearity plot") +
     guides(
       # colour = FALSE,

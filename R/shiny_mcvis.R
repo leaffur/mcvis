@@ -3,18 +3,17 @@
 #' @param mcvis_result Output of the mcvis function.
 #' @param X The original X matrix
 #' @import ggplot2
+#' @import shiny
 #' @importFrom dplyr case_when
 #' @importFrom dplyr mutate
-#' @importFrom DT renderDataTable
 #' @importFrom psych describe
 #' @export
 #' @examples
 #' \dontrun{
 #' set.seed(1)
-#' library(mplot)
-#' data('artificialeg', package = 'mplot')
-#' p = dim(artificialeg)[2]-1
-#' X = artificialeg[,1:p]
+#' p = 10
+#' n = 100
+#' X = matrix(rnorm(n*p), ncol = p)
 #' mcvis_result = mcvis(X)
 #' shiny_mcvis(mcvis_result, X)
 #' }

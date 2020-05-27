@@ -1,18 +1,6 @@
-# library(shiny)
-# library(ggplot2)
-# library(DT)
-
-# data("artificialeg")
-# p = dim(artificialeg)[2]-1
-# X = artificialeg[,1:p]
-# mcvis_result = mcvis(X)
-
-
-
-
 shinyServer(function(input, output, session) {
 
-  output$variableTables = DT::renderDataTable(
+  output$variableTables = shiny::renderDataTable(
     cleanDigits(psych::describe(shiny_mcvis_result$X))
 
     )

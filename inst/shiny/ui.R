@@ -4,7 +4,7 @@ fluidPage(
 
   mainPanel(
     h1("Summary statistics of your input data"),
-    DT::dataTableOutput('variableTables'),
+    shiny::dataTableOutput('variableTables'),
     hr(),
     plotOutput('ggplotOutput', height = 400)
   ) ## End mainPanel
