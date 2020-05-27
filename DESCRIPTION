@@ -1,14 +1,13 @@
 Package: mcvis
 Type: Package
-Title: Multi-collinearity Visualization
+Title: Multi-Collinearity Visualization
 Version: 1.0.0
 Authors@R: c(
     person(given = "Kevin", family = "Wang", email = "kevin.wang09@gmail.com", role = c("aut", "cre")),
     person(given = "Chen", family = "Lin", email = "16300180053@fudan.edu.cn", role = c("aut")),
     person(given = "Samuel", family = "Mueller", email = "samuel.mueller@sydney.edu.au", role = c("aut"))
     )
-Description: A package to visulize the relationship between valuables and eigenvalues of the design matrix in multiple linear regression model,
-    which helps to deduce the cause of collinearity.
+Description: Visualize the relationship between linear regression variables and causes of mutli-collinearity.
 Encoding: UTF-8
 Imports:
   assertthat,

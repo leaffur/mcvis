@@ -5,7 +5,7 @@
 [![Codecov test
 coverage](https://codecov.io/gh/kevinwang09/mcvis/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinwang09/mcvis?branch=master)
 
-<img src="inst/mcvis_logo.png" align="right" width="200" />
+<img src="https://github.com/kevinwang09/mcvis/raw/master/inst/mcvis_logo.png" align="right" width="200" />
 
 ## Introduction
 
@@ -32,6 +32,7 @@ statistics (top row).
 
 ``` r
 library(mcvis)
+library(ggplot2)
 
 set.seed(1)
 p = 10
@@ -43,7 +44,7 @@ X[,1] = X[,2] + rnorm(n, 0, 0.1)
 
 
 mcvis_result = mcvis(X)
-ggplot_mcvis(mcvis_result)
+ggplot(mcvis_result)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->

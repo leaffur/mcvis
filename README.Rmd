@@ -6,7 +6,7 @@ output: github_document
 ![R-CMD-check](https://github.com/leaffur/mcvis/workflows/R-CMD-check/badge.svg)
 [![Codecov test coverage](https://codecov.io/gh/kevinwang09/mcvis/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinwang09/mcvis?branch=master)
 
-<img src="inst/mcvis_logo.png" align="right" width="200" />
+<img src="https://github.com/kevinwang09/mcvis/raw/master/inst/mcvis_logo.png" align="right" width="200" />
 
 ## Introduction
 
@@ -30,6 +30,7 @@ Using a `mcvis` bipartite plot, variables (bottom row) that cause strong colline
 
 ```{r}
 library(mcvis)
+library(ggplot2)
 
 set.seed(1)
 p = 10
@@ -41,11 +42,11 @@ X[,1] = X[,2] + rnorm(n, 0, 0.1)
 
 
 mcvis_result = mcvis(X)
-ggplot_mcvis(mcvis_result)
+ggplot(mcvis_result)
 ```
 
 
 
 # Reference
 
-**mcvis: A new framework for collinearity discovery, diagnostic and visualisation**. Lin. C, Wang, Y.X. K and Mueller S.
++ *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. Journal of Computational and Graphical Statistics, In Press.*
