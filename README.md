@@ -51,5 +51,6 @@ ggplot(mcvis_result)
 
 # Reference
 
-**mcvis: A new framework for collinearity discovery, diagnostic and
-visualisation**. Lin. C, Wang, Y.X. K and Mueller S.
+  - *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new
+    framework for collinearity discovery, diagnostic and visualization.
+    Journal of Computational and Graphical Statistics, In Press.*

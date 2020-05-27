@@ -28,7 +28,7 @@ devtools::install_github("leaffur/mcvis")
 
 Using a `mcvis` bipartite plot, variables (bottom row) that cause strong collinearity are visualised as bolded lines connecting with our "tau" statistics (top row). 
 
-```{r}
+```{r, warning = FALSE, message = FALSE, cache = TRUE}
 library(mcvis)
 library(ggplot2)
 
