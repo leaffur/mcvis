@@ -52,7 +52,8 @@ plot.mcvis <- function(x, thres = 2/3, eig.max = 1, var.max = ncol(x$MC), ...) {
 
 
     graph_attr(G, "weight") = vec
-    par(bg = "white")
+    opar <- par(bg = "white")
+    on.exit(par(opar))
     G.text <- paste0("x", or, " -- ", col_names)
     # val <- as.expression(lapply((p-eig.max+1):p, function(i) bquote(tau[.(i)])))
     val <- as.expression(lapply(p:(p - eig.max + 1), function(i) bquote(tau[.(i)])))
@@ -69,4 +70,5 @@ plot.mcvis <- function(x, thres = 2/3, eig.max = 1, var.max = ncol(x$MC), ...) {
         text(x = 2, y = 0, G.text)
     }
     # text(x=0,y=-1.4, expression(paste(tau, '1: the inverse of the smallest eigenvalue')))
+
 }

@@ -7,7 +7,7 @@ Authors@R: c(
     person(given = "Chen", family = "Lin", email = "16300180053@fudan.edu.cn", role = c("aut")),
     person(given = "Samuel", family = "Mueller", email = "samuel.mueller@sydney.edu.au", role = c("aut"))
     )
-Description: Visualize the relationship between linear regression variables and causes of mutli-collinearity.
+Description: Visualize the relationship between linear regression variables and causes of multi-collinearity.
 Encoding: UTF-8
 Imports:
   assertthat,
