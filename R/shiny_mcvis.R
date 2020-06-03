@@ -9,7 +9,7 @@
 #' @importFrom psych describe
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' set.seed(1)
 #' p = 10
 #' n = 100
