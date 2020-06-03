@@ -15,7 +15,7 @@ shiny_mcvis(mcvis_result, X)
 Shiny app for mcvis exploration
 }
 \examples{
-\dontrun{
+\donttest{
 set.seed(1)
 p = 10
 n = 100
