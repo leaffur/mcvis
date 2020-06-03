@@ -9,7 +9,7 @@
 #' @importFrom psych describe
 #' @export
 #' @examples
-#' \dontrun{
+#' if(interactive()){
 #' set.seed(1)
 #' p = 10
 #' n = 100
