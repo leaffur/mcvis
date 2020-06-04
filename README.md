@@ -1,7 +1,7 @@
 
 # mcvis: visualisation of multicollinearity in data
 
-![R-CMD-check](https://github.com/leaffur/mcvis/workflows/R-CMD-check/badge.svg)
+![R-CMD-check](https://github.com/kevinwang09/mcvis/workflows/R-CMD-check/badge.svg)
 [![Codecov test
 coverage](https://codecov.io/gh/kevinwang09/mcvis/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinwang09/mcvis?branch=master)
 
@@ -14,14 +14,14 @@ design matrix. The underlying methodology uses resampling techniques to
 identify groups of variables that causes multicollinearity.
 
 You can learn more about `mcvis` from [this
-vignette](https://leaffur.github.io/mcvis/articles/mcvis.html).
+vignette](https://kevinwang09.github.io/mcvis/articles/mcvis.html).
 
 ## Installation
 
 `mcvis` can be installed using the `devtools` package.
 
 ``` r
-devtools::install_github("leaffur/mcvis")
+devtools::install_github("kevinwang09/mcvis")
 ```
 
 ## A quick example
