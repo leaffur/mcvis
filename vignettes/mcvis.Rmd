@@ -28,7 +28,7 @@ The `mcvis` package provides functions for detecting multi-collinearity (also kn
 
 # Basic usage 
 
-Suppose that we have a simple scenario that two predictors are highly correlated. This high correlation is a sufficient cause of collinearity which can be shown through large variances of estimated model parameters in linear regression.
+Suppose that we have a simple scenario that one predictor $X_1$ is almost linearly dependent on another two predictors $X_2$ and $X_3$, thus $X_1$ is strongly correlated with these two predictors. The dependence among these three variables is a sufficient cause for collinearity which can be shown through large variances of estimated model parameters in linear regression. We illustrate this with a simple example:
 
 ```{r setup, warning=FALSE, message=FALSE}
 ## Simulating some data
@@ -45,24 +45,27 @@ summary(lm(y ~ X))
 
 
 The `mcvis` method highlights the major collinearity-causing variables on a bipartite graph. There are three major components of this graph:
- + the top row is the "tau" statistics which measure the extent of collinearity in the data. By default, only one tau statistic is shown. 
- + the bottom row is the original variables
- + the two rows are linked through the MC-indices that we have developed, which are represented as lines of different shades. Darker lines implies larger values of MC-index and stronger the cause of collinearity. 
+ + the top row renders the "tau" statistics and by default, only one tau statistic is shown ($\tau_p$, where $p$ is the number of predictors). This tau statistic measures the extent of collinearity in the data and relates to the eigenvalues of the correlation matrix in $X$.
+ + the bottom row renders all original predictors.
+ + the two rows are linked through the MC-indices that we have developed, which are represented as lines of different shades and thickness. Darker lines implies larger values of the MC-index indicate what predictor contribute more to causing collinearity. 
  
  
-If you are interested in how MC-index is calculated, our paper is published as *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. Journal of Computational and Graphical Statistics, In Press.*
+If you are interested in how the tau statistics and the resampling-based MC-index are calculated, our paper is published as *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. _Journal of Computational and Graphical Statistics_, https://doi.org/10.1080/10618600.2020.1779729*
 
 ```{r}
 library(mcvis)
 mcvis_result = mcvis(X = X)
 
-plot(mcvis_result)
-
 mcvis_result
 ```
 
+This matrix of MC-indices is the main numeric output of `mcvis` and our visualisation techniques are focused on visualising this matrix. Below is a bipartite graph visualising the last row of this matrix, which is the main visualisation plot of `mcvis`. 
 
-We also provide a ggplot version of the mcvis graph. 
+```{r}
+plot(mcvis_result)
+```
+
+We also provide a ggplot version of the mcvis bipartite graph. 
 
 ```{r}
 library(ggplot2)
@@ -72,10 +75,10 @@ ggplot(mcvis_result)
 
 # (Extension) why not just look at the correlation matrix?
 
-In practice, high correlation between variables is not a necessary criterion for collinearity. In the `mplot` package, a simulated data was created with each of its column being a linear combination of other columns. In this case, the cause of the collinearity is not clear from the correlation matrix. 
+In practice, high correlation between variables is not a necessary criterion for collinearity. In the `mplot` package (Tarr et. al. 2018), a simulated data was created with many of its columns being a linear combination of other columns plus noise. In this case, the cause of the collinearity is not clear from the correlation matrix. 
 
 
-The `mcvis` visualisation plot identified that the 8th variable is the main cause of collinearity of this data. Upon consultation with the data generation in this simulation, we see that the x8 is a linear combination of all other predictor variables. 
+The `mcvis` visualisation plot identified that the 8th variable (x8) is the main cause of collinearity of this data. Upon consultation with the data generation in this simulation, we see that x8 is a linear combination of all other predictor variables (plus noise). 
 
 ```{r}
 library(mplot)
@@ -84,6 +87,7 @@ X = artificialeg[,1:9]
 round(cor(X), 2)
 
 mcvis_result = mcvis(X)
+mcvis_result
 plot(mcvis_result)
 ggplot(mcvis_result)
 ```
@@ -97,14 +101,19 @@ We also offer a shiny app implementation of `mcvis` in our package. Suppose that
 class(mcvis_result)
 ```
 
-
 ```{r, eval = FALSE}
 shiny_mcvis(mcvis_result)
 ```
 
 # Reference
 
-+ *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. Journal of Computational and Graphical Statistics, In Press.*
++ *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. _Journal of Computational and Graphical Statistics_, https://doi.org/10.1080/10618600.2020.1779729*
+
++ *Tarr G, Müller S, Welsh AH (2018). mplot: An R Package for Graphical Model Stability and Variable
+Selection Procedures. Journal of Statistical Software, 83(9), 1-28. doi: 10.18637/jss.v083.i09
+(URL: https://doi.org/10.18637/jss.v083.i09)*.
+
+
 
 # Session Info
 
