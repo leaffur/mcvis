@@ -3,6 +3,7 @@
 S3method(ggplot,mcvis)
 S3method(plot,mcvis)
 S3method(print,mcvis)
+export(alt_plot)
 export(mcvis)
 export(shiny_mcvis)
 import(ggplot2)

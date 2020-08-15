@@ -1,5 +1,5 @@
 #' @author Chen Lin, Kevin Wang, Samuel Mueller
-#' @title ggplot visualisation for mcvis method
+#' @title Alternative (ggplot) visualisation for mcvis method
 #' @description
 #' The ggplot_mcvis function first orders the MC-index matrix columns by
 #' the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
@@ -27,12 +27,15 @@
 #' p = 10
 #' n = 100
 #' X = matrix(rnorm(n*p, 0, 5), ncol = p)
-#' X[,1] = X[,2] + rnorm(n, 0, 0.1)
+#' X[,1] = X[,2] + rnorm(n, 0, 1)
 #' mcvis_result = mcvis(X)
-#' ggplot(mcvis_result)
-#' ggplot(mcvis_result, eig_max = p)
+#' alt_plot(mcvis_result)
+#'
+#' X[,1] = X[,2] + rnorm(n, 0, 100)
+#' mcvis_result2 = mcvis(X)
+#' alt_plot(mcvis_result2)
 
-ggplot.mcvis = function(x,
+alt_plot = function(x,
                         eig_max = 1L,
                         var_max = ncol(x$MC))
   ##if eig_max==1 or var_max==1, the function fails to give an output.
@@ -43,12 +46,41 @@ ggplot.mcvis = function(x,
     var_max = var_max)
 
   taup = rownames(MC_ordered)[1]
+  p = ncol(x$MC)
+  ############################################
+  melt_MC = reshape2::melt(
+    MC_ordered,
+    varnames = c("taus", "cols"),
+    value.name = "weights")
 
+  thickness = 1 - melt_MC$weights
+  thickness = thickness - (1/p)
+
+  ggplot_size_cat = dplyr::case_when(
+    thickness <= 0.1 ~ "Not expected to cause MC",
+    thickness <= 0.2 ~ "Small chance to cause MC",
+    thickness <= 0.3 ~ "Fair chance to cause MC",
+    TRUE ~ "Strong chance to cause MC")
+
+  ggplot_size_cat = factor(
+    ggplot_size_cat,
+    levels = c("Not expected to cause MC",
+               "Small chance to cause MC",
+               "Fair chance to cause MC",
+               "Strong chance to cause MC"))
+
+  plotdf = dplyr::mutate(melt_MC, thickness, ggplot_size_cat)
+
+  plotdf$cols_norm = rangeTransform(as.integer(plotdf$cols))
+  plotdf$taus_norm = rangeTransform(as.integer(plotdf$taus))
+
+  plotdf$y1 = 0
+  plotdf$y2 = 1
+
+  plotdf$linetype = ifelse(plotdf$taus == rownames(MC_ordered)[1], rownames(MC_ordered)[1], "others")
   #################  ggplot #######################
-  plotdf = make_plotdf(MC_ordered)
-  ggplot_size_manual = c(0, 0.2, 0.5, 1, 2)
-  ggplot_alpha_manual = c(0, 0.2, 0.5, 1, 1)
-
+  ggplot_size_manual = c(0, 0.5, 1, 2)
+  ggplot_alpha_manual = c(0, 0.5, 1, 1)
   axis_1 = data.frame(x=rangeTransform(as.integer(unique(plotdf$cols))),
                       y=0, label=as.character(unique(plotdf$cols)))
 
@@ -90,82 +122,4 @@ ggplot.mcvis = function(x,
           panel.grid=element_blank())
   gg
   return(gg)
-}
-
-rangeTransform = function(x){
-  if(min(x) == max(x)){
-    return(0)
-  } else {
-    return((x - min(x)) / (max(x) - min(x)))
-  }
-}
-
-
-make_plotdf = function(MC_ordered){
-  melt_MC = reshape2::melt(
-    MC_ordered,
-    varnames = c("taus", "cols"),
-    value.name = "weights")
-
-  thickness = 1 - melt_MC$weights
-
-
-  ## Size category is the scale of the g-matrix.
-  # size_cat_5 = 0
-  # size_cat_5 = max(thickness)
-  # size_cat_5 = thickness[1]
-  # size_cat_1 = 0.1*size_cat_5
-  # size_cat_2 = 0.5*size_cat_5
-  # size_cat_3 = 0.7*size_cat_5
-  # size_cat_4 = 0.9*size_cat_5
-
-  size_cat_1 = 0.1
-  size_cat_2 = 0.15
-  size_cat_3 = 0.2
-  size_cat_4 = 0.4
-  size_cat_5 = 0.6
-
-  ggplot_size_cat = dplyr::case_when(
-    thickness <= size_cat_1 ~ "category1",
-    thickness <= size_cat_2 ~ "category2",
-    thickness <= size_cat_3 ~ "category3",
-    thickness <= size_cat_4 ~ "category4",
-    thickness <= size_cat_5 ~ "category5",
-    thickness > size_cat_5 ~ "category5"
-  )
-  ggplot_size_cat = factor(
-    ggplot_size_cat,
-    levels = paste0("category", 1:5))
-
-  plotdf = dplyr::mutate(melt_MC, thickness, ggplot_size_cat)
-
-  plotdf$cols_norm = rangeTransform(as.integer(plotdf$cols))
-  plotdf$taus_norm = rangeTransform(as.integer(plotdf$taus))
-
-  plotdf$y1 = 0
-  plotdf$y2 = 1
-
-  plotdf$linetype = ifelse(plotdf$taus == rownames(MC_ordered)[1], rownames(MC_ordered)[1], "others")
-  return(plotdf)
-}
-
-
-make_MC_ordered = function(mcvis_result, eig_max, var_max){
-  MC = 1 - mcvis_result$MC
-  col_names = mcvis_result$col_names
-  p = length(col_names)
-  eig_max = min(p, eig_max)
-  var_max = min(p, var_max)
-  or = order(MC[p,,drop = FALSE]) ## Order the columns of g by the smallest eigen value
-  or = or[1:var_max]
-  MC_ordered = MC[,or,drop = FALSE]
-
-  if (var_max > 1) {
-    MC_ordered = MC_ordered[p:(p-eig_max+1),,drop=FALSE]
-  } else {
-    MC_ordered = as.matrix(MC_ordered[p:(p-eig_max+1)])
-  }
-  # if (eig_max == 1) {MC_ordered = t(MC_ordered)}
-
-  return(MC_ordered)
 }
