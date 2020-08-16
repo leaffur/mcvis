@@ -73,8 +73,9 @@ mcvis <- function(X, sampling_method = "bootstrap", standardise_method = "studen
 
     list_tau = purrr::map(list_mcvis_result, "tau") %>% do.call(cbind, .)
     list_vif = purrr::map(list_mcvis_result, "vif") %>% do.call(cbind, .)
+    mean_vif = rowMeans(list_vif)
+    names(mean_vif) = col_names
     ##############################
-
     list_index_block = unname(base::split(1:times, sort((1:times)%%k)))
     t_square = matrix(0, p, p)
 
@@ -94,7 +95,7 @@ mcvis <- function(X, sampling_method = "bootstrap", standardise_method = "studen
     rownames(MC) = paste0("tau", 1:p)
     colnames(MC) = col_names
     ####################################################################
-    result = list(t_square = t_square, MC = MC, col_names = col_names)
+    result = list(mean_vif = mean_vif, t_square = t_square, MC = MC, col_names = col_names)
 
     class(result) = "mcvis"
     return(result)

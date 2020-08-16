@@ -2,7 +2,7 @@
 % Please edit documentation in R/alt_plot.R
 \name{alt_plot}
 \alias{alt_plot}
-\title{ggplot visualisation for mcvis method}
+\title{Alternative (ggplot) visualisation for mcvis method}
 \usage{
 alt_plot(x, eig_max = 1L, var_max = ncol(x$MC))
 }
