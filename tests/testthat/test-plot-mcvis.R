@@ -7,6 +7,3 @@ X[,1] = X[,2] + rnorm(n, 0, 0.1)
 ## default plotting
 mcvis_result = mcvis(X, standardise_method = "studentise")
 plot(mcvis_result)
-
-## ggplot
-ggplot(mcvis_result)

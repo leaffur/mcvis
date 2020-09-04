@@ -32,6 +32,7 @@
 #' mcvis_result
 mcvis <- function(X, sampling_method = "bootstrap", standardise_method = "studentise", times = 1000L, k = 10L) {
     assertthat::assert_that(all(sapply(X, is.numeric)), msg = "All columns of X must be numeric")
+    assertthat::assert_that(sum(is.na(X)) == 0, msg = "Missing values detected. Please remove.")
     X = as.matrix(X)
 
     dup_columns = duplicated(X, MARGIN = 2)

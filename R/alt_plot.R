@@ -1,52 +1,22 @@
-#' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title Alternative (ggplot) visualisation for mcvis method
-#' @description
-#' The ggplot_mcvis function first orders the MC-index matrix columns by
-#' the magnitude of the MC-index for the tau1, which is the inverse of the smallest eigenvalue
-#' Under this ordering,
-#' the first entry of the matrix is classified as a "category 5" thickness in plotting
-#' Subsequently, other lines are sequentially put in the categories of
-#' \itemize{
-#'  \item category 5: 0.5 or above
-#'  \item category 4: 0.3 - 0.5
-#'  \item category 3: 0.2 - 0.3
-#'  \item category 2: 0.1 - 0.2
-#'  \item category 1: 0.0 - 0.1
-#' }
-#' @param x Output of the mcvis function
-#' @param eig_max The maximum number of eigenvalues to be displayed on the plot.
-#' @param var_max The maximum number of variables (i.e. columns) to be displayed on the plot.
 #' @import ggplot2
 #' @importFrom reshape2 melt
 #' @importFrom rlang .data
 #' @return A ggplot
+#' @rdname plot.mcvis
 #' @export
-#' @examples
-#' library(ggplot2)
-#' set.seed(1)
-#' p = 10
-#' n = 100
-#' X = matrix(rnorm(n*p, 0, 5), ncol = p)
-#' X[,1] = X[,2] + rnorm(n, 0, 1)
-#' mcvis_result = mcvis(X)
-#' alt_plot(mcvis_result)
-#'
-#' X[,1] = X[,2] + rnorm(n, 0, 100)
-#' mcvis_result2 = mcvis(X)
-#' alt_plot(mcvis_result2)
-
-alt_plot = function(x,
-                        eig_max = 1L,
-                        var_max = ncol(x$MC))
+alt_mcvis = function(mcvis_result,
+                     eig_max = 1L,
+                     var_max = ncol(mcvis_result$MC))
   ##if eig_max==1 or var_max==1, the function fails to give an output.
 {
   MC_ordered = make_MC_ordered(
-    mcvis_result = x,
+    mcvis_result = mcvis_result,
     eig_max = eig_max,
     var_max = var_max)
 
   taup = rownames(MC_ordered)[1]
-  p = ncol(x$MC)
+  p = ncol(mcvis_result$MC)
   ############################################
   melt_MC = reshape2::melt(
     MC_ordered,

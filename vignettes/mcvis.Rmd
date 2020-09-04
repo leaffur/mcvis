@@ -65,11 +65,10 @@ This matrix of MC-indices is the main numeric output of `mcvis` and our visualis
 plot(mcvis_result)
 ```
 
-We also provide a ggplot version of the mcvis bipartite graph. 
+We also provide a igraph version of the mcvis bipartite graph. 
 
 ```{r}
-library(ggplot2)
-ggplot(mcvis_result)
+plot(mcvis_result, type = "igraph")
 ```
 
 
@@ -89,7 +88,6 @@ round(cor(X), 2)
 mcvis_result = mcvis(X)
 mcvis_result
 plot(mcvis_result)
-ggplot(mcvis_result)
 ```
 
 
