@@ -1,13 +1,12 @@
 #' @author Chen Lin, Kevin Wang, Samuel Mueller
-#' @title Multi-collinearity Visualization
+#' @title Multi-collinearity Visualization plots
 #' @param x Output of the mcvis function
 #' @param type Plotting mcvis result using "igraph" or "ggplot". Default to "ggplot".
 #' @param eig_max The maximum number of eigenvalues to be displayed on the plot.
 #' @param var_max The maximum number of variables to be displayed on the plot.
 #' @param ... additional arguments (currently unused)
-#' @import igraph
 #' @rdname plot.mcvis
-#' @importFrom grDevices grey
+#' @return A mcvis visualization plot
 #' @export
 #' @examples
 #' set.seed(1)

@@ -1,8 +1,7 @@
-#' @title Alternative (ggplot) visualisation for mcvis method
+#' @title Multi-collinearity Visualization plots
 #' @import ggplot2
 #' @importFrom reshape2 melt
 #' @importFrom rlang .data
-#' @return A ggplot
 #' @rdname plot.mcvis
 #' @export
 alt_mcvis = function(mcvis_result,

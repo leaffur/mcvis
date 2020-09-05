@@ -6,13 +6,13 @@
 \alias{ggplot_mcvis}
 \alias{igraph_mcvis}
 \alias{plot.mcvis}
-\title{Alternative (ggplot) visualisation for mcvis method}
+\title{Multi-collinearity Visualization plots}
 \usage{
 alt_mcvis(mcvis_result, eig_max = 1L, var_max = ncol(mcvis_result$MC))
 
 ggplot_mcvis(mcvis_result, eig_max = 1L, var_max = ncol(mcvis_result$MC))
 
-igraph_mcvis(mcvis_result, eig_max = 1L, var_max = ncol(mcvis_result$MC), ...)
+igraph_mcvis(mcvis_result, eig_max = 1L, var_max = ncol(mcvis_result$MC))
 
 \method{plot}{mcvis}(
   x,
@@ -29,25 +29,23 @@ igraph_mcvis(mcvis_result, eig_max = 1L, var_max = ncol(mcvis_result$MC), ...)
 
 \item{var_max}{The maximum number of variables to be displayed on the plot.}
 
-\item{...}{additional arguments (currently unused)}
-
 \item{x}{Output of the mcvis function}
 
 \item{type}{Plotting mcvis result using "igraph" or "ggplot". Default to "ggplot".}
+
+\item{...}{additional arguments (currently unused)}
 }
 \value{
-A ggplot
-
-A ggplot
+A mcvis visualization plot
 }
 \description{
-Alternative (ggplot) visualisation for mcvis method
+Multi-collinearity Visualization plots
 
-Multi-collinearity Visualization using ggplot2
+Multi-collinearity Visualization plots
 
-Multi-collinearity Visualization plot using igraph
+Multi-collinearity Visualization plots
 
-Multi-collinearity Visualization
+Multi-collinearity Visualization plots
 }
 \examples{
 set.seed(1)
@@ -61,7 +59,5 @@ plot(mcvis_result, type = "igraph")
 plot(mcvis_result, type = "alt")
 }
 \author{
-Chen Lin, Kevin Wang, Samuel Mueller
-
 Chen Lin, Kevin Wang, Samuel Mueller
 }

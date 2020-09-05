@@ -44,7 +44,7 @@ X[,1] = X[,2] + rnorm(n, 0, 0.1)
 
 
 mcvis_result = mcvis(X)
-ggplot(mcvis_result)
+plot(mcvis_result)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->

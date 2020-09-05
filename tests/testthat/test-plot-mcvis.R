@@ -6,4 +6,6 @@ X[,1] = X[,2] + rnorm(n, 0, 0.1)
 
 ## default plotting
 mcvis_result = mcvis(X, standardise_method = "studentise")
-plot(mcvis_result)
+plot(mcvis_result, type = "ggplot")
+plot(mcvis_result, type = "igraph")
+plot(mcvis_result, type = "alt")

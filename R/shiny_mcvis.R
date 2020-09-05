@@ -1,6 +1,6 @@
 #' @author Chen Lin, Kevin Wang, Samuel Mueller
 #' @title Shiny app for mcvis exploration
-#' @param mcvis_result Output of the mcvis function.
+#' @param mcvis_result Output of the mcvis function
 #' @param X The original X matrix
 #' @import ggplot2
 #' @import shiny
@@ -15,7 +15,7 @@
 #' n = 100
 #' X = matrix(rnorm(n*p), ncol = p)
 #' mcvis_result = mcvis(X)
-#' shiny_mcvis(mcvis_result, X)
+#' shiny_mcvis(mcvis_result = mcvis_result, X = X)
 #' }
 
 shiny_mcvis <- function(mcvis_result, X) {

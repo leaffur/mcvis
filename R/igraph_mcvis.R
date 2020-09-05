@@ -1,9 +1,9 @@
-#' @title Multi-collinearity Visualization plot using igraph
+#' @title Multi-collinearity Visualization plots
 #' @import igraph
 #' @rdname plot.mcvis
 #' @importFrom grDevices grey
 #' @export
-igraph_mcvis <- function(mcvis_result, eig_max = 1L, var_max = ncol(mcvis_result$MC), ...) {
+igraph_mcvis <- function(mcvis_result, eig_max = 1L, var_max = ncol(mcvis_result$MC)) {
   #####################
   g = 1 - mcvis_result$MC
   col_names = mcvis_result$col_names

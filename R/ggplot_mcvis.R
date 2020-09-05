@@ -1,11 +1,9 @@
-#' @author Chen Lin, Kevin Wang, Samuel Mueller
-#' @title Multi-collinearity Visualization using ggplot2
+#' @title Multi-collinearity Visualization plots
 #' @param mcvis_result Output of the mcvis function
 #' @import ggplot2
 #' @importFrom reshape2 melt
 #' @importFrom rlang .data
 #' @rdname plot.mcvis
-#' @return A ggplot
 #' @export
 ggplot_mcvis = function(mcvis_result,
                         eig_max = 1L,
