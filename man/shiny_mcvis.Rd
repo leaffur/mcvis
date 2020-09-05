@@ -7,7 +7,7 @@
 shiny_mcvis(mcvis_result, X)
 }
 \arguments{
-\item{mcvis_result}{Output of the mcvis function.}
+\item{mcvis_result}{Output of the mcvis function}
 
 \item{X}{The original X matrix}
 }
@@ -21,7 +21,7 @@ p = 10
 n = 100
 X = matrix(rnorm(n*p), ncol = p)
 mcvis_result = mcvis(X)
-shiny_mcvis(mcvis_result, X)
+shiny_mcvis(mcvis_result = mcvis_result, X = X)
 }
 }
 \author{

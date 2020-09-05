@@ -67,15 +67,18 @@ mcvis <- function(X, sampling_method = "bootstrap", standardise_method = "studen
         stop("Only bootstrap and cross-validation are currently supported")
     }
 
-    list_mcvis_result = switch(standardise_method, euclidean = purrr::map(.x = index, .f = ~one_mcvis_euclidean(X = X, index = .x)),
-        studentise = purrr::map(.x = index, .f = ~one_mcvis_studentise(X = X, index = .x)), none = purrr::map(.x = index, .f = ~one_mcvis_none(X = X,
-            index = .x)))
-
+    list_mcvis_result = switch(standardise_method,
+                               euclidean = purrr::map(.x = index, .f = ~ one_mcvis_euclidean(X = X, index = .x)),
+                               studentise = purrr::map(.x = index, .f = ~ one_mcvis_studentise(X = X, index = .x)),
+                               none = purrr::map(.x = index, .f = ~ one_mcvis_none(X = X, index = .x)))
 
     list_tau = purrr::map(list_mcvis_result, "tau") %>% do.call(cbind, .)
     list_vif = purrr::map(list_mcvis_result, "vif") %>% do.call(cbind, .)
     mean_vif = rowMeans(list_vif)
     names(mean_vif) = col_names
+
+    avg_eigenv = rowMeans(1/list_tau)
+    conditional_number = sqrt(avg_eigenv[1]/avg_eigenv[p])
     ##############################
     list_index_block = unname(base::split(1:times, sort((1:times)%%k)))
     t_square = matrix(0, p, p)
@@ -96,7 +99,8 @@ mcvis <- function(X, sampling_method = "bootstrap", standardise_method = "studen
     rownames(MC) = paste0("tau", 1:p)
     colnames(MC) = col_names
     ####################################################################
-    result = list(mean_vif = mean_vif, t_square = t_square, MC = MC, col_names = col_names)
+    result = list(mean_vif = mean_vif, t_square = t_square, MC = MC, col_names = col_names,
+                  conditional_number = conditional_number)
 
     class(result) = "mcvis"
     return(result)
@@ -117,7 +121,8 @@ one_mcvis_euclidean = function(X, index) {
     D = diag(v)
     Z1 = Z %*% D
     crossprodZ1 = crossprod(Z1, Z1)
-    tau = 1/svd(crossprodZ1)$d
+    svd_obj = svd(crossprodZ1)
+    tau = 1/svd_obj$d
 
     X1_student = scale(X1)
     n = nrow(X1_student)
@@ -133,7 +138,8 @@ one_mcvis_studentise = function(X, index) {
     X1_student = scale(X[index, ])  ## Resampling on the rows
     crossprodX1 = crossprod(X1_student, X1_student)
     n = nrow(X1_student)
-    tau = 1/svd(crossprodX1)$d
+    svd_obj = svd(crossprodX1)
+    tau = 1/svd_obj$d
     vif = (n - 1) * diag(solve(crossprodX1))
     result = list(tau = tau, vif = vif)
     return(result)
