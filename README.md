@@ -53,4 +53,4 @@ plot(mcvis_result)
 
   - *Lin, C., Wang, K. Y. X., & Mueller, S. (2021). mcvis: A new
     framework for collinearity discovery, diagnostic and visualization.
-    Journal of Computational and Graphical Statistics, 30:1, 125-132, DOI: 10.1080/10618600.2020.1779729.*
+    Journal of Computational and Graphical Statistics, 30:1, 125-132.*
