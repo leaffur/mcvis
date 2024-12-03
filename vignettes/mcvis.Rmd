@@ -105,7 +105,7 @@ shiny_mcvis(mcvis_result)
 
 # Reference
 
-+ *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. _Journal of Computational and Graphical Statistics_, https://doi.org/10.1080/10618600.2020.1779729*
++ *Lin, C., Wang, K. Y. X., & Mueller, S. (2020). mcvis: A new framework for collinearity discovery, diagnostic and visualization. Journal of Computational and Graphical Statistics, 30(1), 125–132. https://doi.org/10.1080/10618600.2020.1779729*
 
 + *Tarr G, Müller S, Welsh AH (2018). mplot: An R Package for Graphical Model Stability and Variable
 Selection Procedures. Journal of Statistical Software, 83(9), 1-28. doi: 10.18637/jss.v083.i09
